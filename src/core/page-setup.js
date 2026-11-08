@@ -1,6 +1,7 @@
 import '../styles/tokens.css';
 import '../styles/base.css';
 import '../styles/components.css';
+import '../styles/content.css';
 import { applyCalmMode } from './calm-mode.js';
 import { renderNav } from './nav.js';
 import { renderFooterNext } from './footer-next.js';

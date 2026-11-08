@@ -63,6 +63,7 @@
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
+  white-space: nowrap;
   transition-property: color, background-color;
   transition-duration: 150ms;
   transition-timing-function: ease-out;
@@ -92,6 +93,7 @@
   font: 500 13px var(--font-sans);
   min-height: var(--tap-min);
   padding: 0 14px;
+  white-space: nowrap;
   cursor: pointer;
   transition-property: border-color, transform;
   transition-duration: 150ms;
@@ -117,7 +119,7 @@
   background: var(--c-good);
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1000px) {
   .nav .nav__menu-button {
     display: flex;
     margin-left: auto;

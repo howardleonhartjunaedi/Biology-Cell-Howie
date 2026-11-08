@@ -177,3 +177,50 @@ Nanti tiap halaman menambahkan kodenya sendiri di sini (adegan 3D, kuis, dan lai
 Kode modul biasa (`src/...`) dijalankan terlambat untuk menangkapnya. Skrip biasa di `<head>` dijalankan lebih dulu.
 **Kemungkinan pertanyaan guru & jawabannya:**
 - T: Apa itu promise? J: Janji bahwa suatu proses akan selesai nanti, entah berhasil atau gagal. `.catch()` menangani kalau gagal.
+
+---
+
+## index.html (Beranda — versi teks, Fase 1)
+**Tugas file ini:** Halaman pertama. Berisi 8 "adegan" perjalanan menyelam dalam bentuk HTML biasa, sesuai `KONTEN-MATERI.md` §1.
+**Cara kerja:**
+1. Setiap adegan adalah satu `<section class="scene">` dengan `id` (`permukaan`, `menyelam`, `terumbu`, `sel-hewan`, `karang`, `sel-tumbuhan`, `ringkasan`, `gelap`).
+2. Warna latar tiap adegan makin gelap (biru laguna → biru dalam → hijau lamun → lumpur → hitam), seolah kita makin dalam menyelam.
+3. Tombol "Lewati intro" adalah tautan ke `#gelap`, jadi langsung melompat ke adegan terakhir.
+4. Teks inilah yang dibaca mesin pencari, pembaca layar, dan dipakai di Mode Tenang. Nanti adegan 3D digambar di belakangnya.
+**Bagian penting:**
+- `<dl class="term-list">` — daftar istilah: `<dt>` nama organel, `<dd>` fungsinya. Cocok untuk pasangan "istilah: arti".
+- `<table>` dengan `<th scope="col">` dan `<th scope="row">` — pembaca layar tahu mana judul kolom dan judul baris.
+- `aria-labelledby` — tiap section diberi nama dari judulnya. Judul yang tidak perlu terlihat memakai kelas `visually-hidden`.
+**Kemungkinan pertanyaan guru & jawabannya:**
+- T: Kenapa teksnya ditulis di HTML, padahal nanti ada 3D? J: Supaya isi tetap bisa dibaca walau 3D mati (laptop lemah, Mode Tenang), dan bisa dibaca mesin pencari.
+
+## src/styles/content.css
+**Tugas file ini:** Gaya untuk isi materi yang dipakai di banyak halaman: section, kutipan, kotak fakta, daftar istilah, tangga skala, tabel.
+**Bagian penting:**
+- `.table-wrap { overflow-x: auto }` — di ponsel, tabel yang lebar bisa digeser sendiri tanpa membuat seluruh halaman bergeser ke samping.
+- `.scale-steps li + li::before { content: '›' }` — tanda panah kecil hanya muncul di antara angka skala, bukan sebelum angka pertama.
+- `font-variant-numeric: tabular-nums` — angka punya lebar sama, rapi saat nanti dianimasikan.
+
+## src/pages/landing/landing.css
+**Tugas file ini:** Gaya khusus Beranda: adegan setinggi layar (`min-height: 100svh`), warna latar per adegan, judul besar SEL.
+**Bagian penting:**
+- `100svh` — tinggi layar yang benar di ponsel (tidak tertutup bilah alamat browser).
+- `letter-spacing: 0.18em; margin-right: -0.18em` — huruf SEL direnggangkan; margin negatif membuang spasi ekstra setelah huruf terakhir supaya judul tetap tepat di tengah.
+
+## src/core/smooth-scroll.js
+**Tugas file ini:** Membuat gulir halus dengan library **Lenis** dan menyambungkannya ke **GSAP ScrollTrigger**.
+**Cara kerja:**
+1. `start()` membuat Lenis. Setiap kali Lenis menggulir, `ScrollTrigger.update` dipanggil agar animasi tahu posisi gulir terbaru.
+2. `gsap.ticker.add(onTick)` — Lenis digerakkan oleh "detak jam" GSAP, jadi keduanya selalu sinkron.
+3. Kalau Mode Tenang aktif, Lenis tidak dibuat (gulir biasa). Kalau Mode Tenang dinyalakan/dimatikan, `stop()`/`start()` dipanggil.
+**Kemungkinan pertanyaan guru & jawabannya:**
+- T: Kenapa tidak pakai gulir biasa? J: Gulir halus membuat adegan 3D yang mengikuti gulir terasa mulus, tidak patah-patah. Tetapi gulir biasa tetap dipakai untuk Mode Tenang.
+
+## src/pages/landing/word-reveal.js
+**Tugas file ini:** Efek kata demi kata: kalimat besar di adegan 2 mula-mula redup (30%), lalu setiap kata menyala berurutan saat digulir.
+**Cara kerja:**
+1. `wrapWords` mencari semua potongan teks di dalam elemen (termasuk di dalam `<strong>`), lalu membungkus tiap kata dengan `<span class="reveal-word">`. Spasi dibiarkan apa adanya.
+2. `gsap.fromTo(words, {opacity: 0.3}, {opacity: 1, stagger: 0.1, scrollTrigger: {..., scrub: 1}})` — kecerahan tiap kata dihubungkan dengan posisi gulir. `stagger` membuat kata berikutnya menyusul sedikit kemudian.
+3. Di Mode Tenang, kata tetap dibungkus tetapi tidak dianimasikan, jadi semua langsung terang.
+**Kemungkinan pertanyaan guru & jawabannya:**
+- T: Apa arti `scrub: 1`? J: Animasi tidak berjalan sendiri, melainkan "ditarik" oleh gulir. Angka 1 artinya animasi menyusul posisi gulir dalam ±1 detik supaya halus.

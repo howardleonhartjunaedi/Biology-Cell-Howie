@@ -37,3 +37,16 @@ Catatan harian untuk laporan (BAB IV Kendala, BAB VI Evaluasi).
   lompatan transisi (`public/view-transition.js`). Dicek di versi build: tidak ada error baru.
 - Beberapa aturan skill bertentangan dengan rancangan yang sudah disetujui (eyebrow, panah di tombol). Dicatat di
   `docs/DESIGN.md` bagian 4 untuk diputuskan Howard.
+
+## Minggu, 8 November 2026 (lanjutan) — Beranda versi teks
+**Yang dikerjakan**
+- Memakai skill cinematic-gsap-lenis-motion-system (gulir halus Lenis + ScrollTrigger), build-threejs-scroll-worlds
+  (rencana satu dunia 3D yang dikendalikan gulir, untuk Fase 2), dan landing-page-design (efek kata menyala saat digulir).
+- Membuat 8 adegan Beranda lengkap dengan teks dari KONTEN-MATERI §1, tabel "Dua sel, satu laguna", dan tombol "Lewati intro".
+- Warna latar adegan makin gelap mengikuti kedalaman.
+
+**Kendala dan solusi**
+- Menu atas pecah menjadi dua baris di layar sedang. Solusi: `white-space: nowrap` dan menu ponsel mulai di lebar 1000 px.
+- Kata "bakteri" terpisah ke baris sendiri di kotak fakta karena aturan CSS lama. Solusi: aturan itu dihapus.
+- Skill landing-page-design melarang huruf miring dan meminta struktur halaman jualan (FAQ, harga). Tidak dipakai karena
+  Beranda adalah perjalanan belajar, bukan halaman jualan, dan rancangan sudah disetujui.

@@ -1,0 +1,145 @@
+.landing main.dive {
+  max-width: none;
+  padding: 0;
+}
+
+.landing .footer-next {
+  background: #000;
+  border-top-color: #000;
+}
+
+.scene {
+  --scene-bg: var(--c-deep);
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  background: var(--scene-bg);
+  scroll-margin-top: 0;
+}
+
+.scene__wrap {
+  width: 100%;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: calc(var(--nav-height) + 48px) var(--gutter) 80px;
+}
+
+.scene--surface {
+  --scene-bg: #0A5867;
+}
+
+.poetic--large {
+  font-size: clamp(1.9rem, 4.6vw, 3.4rem);
+  line-height: 1.2;
+  color: var(--c-cream);
+}
+
+.reveal-word {
+  display: inline;
+}
+
+.scene--dive { --scene-bg: var(--c-deep); }
+.scene--reef { --scene-bg: #05333F; }
+.scene--animal { --scene-bg: #042B35; }
+.scene--coral { --scene-bg: #04252D; }
+.scene--seagrass { --scene-bg: #0A2A24; }
+.scene--mud { --scene-bg: #17191A; }
+.scene--dark { --scene-bg: #000; }
+
+.scene--mud {
+  --c-muted: #8E9AA3;
+}
+
+.scene--mud .table th,
+.scene--mud .table td {
+  border-bottom-color: #2B3033;
+}
+
+.scene__wrap--hero {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-title {
+  margin: 0;
+  font-weight: 800;
+  font-size: clamp(5rem, 20vw, 13rem);
+  line-height: 1;
+  letter-spacing: 0.18em;
+  margin-right: -0.18em;
+  color: var(--c-cream);
+}
+
+.hero-tagline {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  color: var(--c-aqua);
+  margin: 16px auto 0;
+}
+
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: 56px;
+}
+
+.hero-hint,
+.skip-intro {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-min);
+  padding: 0 12px;
+  text-decoration: none;
+}
+
+.hero-hint {
+  color: var(--c-cream);
+  font-weight: 500;
+}
+
+.skip-intro {
+  color: var(--c-muted);
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.hero-hint:hover,
+.skip-intro:hover {
+  color: var(--c-aqua);
+}
+
+.scene__wrap--end {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.scene__wrap--end .poetic {
+  margin-bottom: 8px;
+}
+
+.scene__wrap--end .button {
+  margin-top: 24px;
+}
+
+.scene--dark .button {
+  font-size: 17px;
+  padding: 16px 28px;
+}
+
+.scene .poetic {
+  max-width: 28ch;
+  margin-top: 0;
+}
+
+.scene__wrap--end .poetic,
+.scene__wrap--hero .hero-tagline {
+  max-width: none;
+}
