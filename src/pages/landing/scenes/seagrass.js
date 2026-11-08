@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import fragmentShader from '../shaders/caustics.frag.glsl?raw';
+import { labEnvironment } from '../../../core/materials.js';
 import { createGodRays } from './god-rays.js';
 import { addSway, createDriftParticles, lerp, makeCamera, seededRandom, smooth } from './shared.js';
 
@@ -24,7 +25,7 @@ function bladeGeometry() {
 }
 
 function createMeadow(count) {
-  const material = new THREE.MeshStandardMaterial({ color: '#2E7D4F', roughness: 0.6, side: THREE.DoubleSide });
+  const material = new THREE.MeshStandardMaterial({ color: '#2E7D4F', roughness: 0.45, side: THREE.DoubleSide });
   const sway = addSway(material, { strength: 0.35, speed: 1.4 });
   const mesh = new THREE.InstancedMesh(bladeGeometry(), material, count);
   const random = seededRandom(57);
@@ -42,7 +43,7 @@ function createMeadow(count) {
   return { mesh, sway };
 }
 
-export function createSeagrassScene({ tier }) {
+export function createSeagrassScene({ tier, renderer }) {
   const scene = new THREE.Scene();
   const camera = makeCamera(50);
   scene.background = WATER.clone();
@@ -78,7 +79,9 @@ export function createSeagrassScene({ tier }) {
   particles.points.position.y = 3;
   scene.add(particles.points);
 
-  scene.add(new THREE.HemisphereLight('#DDF7E4', '#2C2A1E', 1.3));
+  scene.environment = labEnvironment(renderer);
+  scene.environmentIntensity = 0.3;
+  scene.add(new THREE.HemisphereLight('#DDF7E4', '#2C2A1E', 1.1));
   const sun = new THREE.DirectionalLight('#FFF4D6', 1.4);
   sun.position.set(-3, 10, 4);
   scene.add(sun);

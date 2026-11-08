@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { createFishSchool } from './fish-school.js';
 import { createCoralGarden } from './coral-garden.js';
 import { createGodRays } from './god-rays.js';
+import { labEnvironment } from '../../../core/materials.js';
 import { createDriftParticles, lerp, makeCamera, rangeT, smooth } from './shared.js';
 
 const WATER = new THREE.Color('#0A4F5E');
@@ -10,7 +11,7 @@ const CORAL_CENTER = new THREE.Vector3(34, FLOOR_Y, 0);
 const CORAL_START = 0.6;
 const VIEW_SHIFT = 0.2;
 
-export function createReefScene({ tier }) {
+export function createReefScene({ tier, renderer }) {
   const scene = new THREE.Scene();
   const camera = makeCamera(50);
   scene.background = WATER.clone();
@@ -44,7 +45,9 @@ export function createReefScene({ tier }) {
   particles.points.position.x = 16;
   scene.add(particles.points);
 
-  scene.add(new THREE.HemisphereLight('#BFF3EE', '#3A3226', 1.4));
+  scene.environment = labEnvironment(renderer);
+  scene.environmentIntensity = 0.35;
+  scene.add(new THREE.HemisphereLight('#BFF3EE', '#3A3226', 1.1));
   const sun = new THREE.DirectionalLight('#FFF4D6', 1.6);
   sun.position.set(-4, 12, 6);
   scene.add(sun);

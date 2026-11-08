@@ -3,6 +3,7 @@ import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeom
 import { activePart } from '../dom-sync.js';
 import { subjectShift } from './animal-cell.js';
 import { createHighlighter, membraneMaterial, meshesOf, partMaterial } from './cell-parts.js';
+import { useLabLighting } from '../../../core/materials.js';
 import { createDriftParticles, lerp, makeCamera, rangeT, seededRandom, smooth } from './shared.js';
 
 const WATER = new THREE.Color('#0A2A24');
@@ -30,13 +31,13 @@ function buildCell() {
   vacuole.position.x = 0.4;
   cell.add(vacuole);
 
-  const nucleus = new THREE.Mesh(new THREE.SphereGeometry(0.62, 24, 16), new THREE.MeshStandardMaterial({ color: '#3D7FC4', roughness: 0.5 }));
+  const nucleus = new THREE.Mesh(new THREE.SphereGeometry(0.62, 24, 16), new THREE.MeshPhysicalMaterial({ color: '#3D7FC4', roughness: 0.4, clearcoat: 0.5 }));
   nucleus.position.set(-2.3, 0.9, 0.6);
   cell.add(nucleus);
 
   const chloroplasts = new THREE.Group();
   const random = seededRandom(73);
-  const chloroGeometry = new THREE.SphereGeometry(0.28, 16, 12);
+  const chloroGeometry = new THREE.SphereGeometry(0.28, 32, 20);
   chloroGeometry.scale(1.6, 0.8, 1);
   const chloroMaterial = partMaterial('#3FA55A');
   for (let i = 0; i < 16; i += 1) {
@@ -56,7 +57,7 @@ function buildCell() {
   return { cell, groups: [[wall], meshesOf(chloroplasts), [vacuole]] };
 }
 
-export function createPlantCellScene({ tier }) {
+export function createPlantCellScene({ tier, renderer }) {
   const scene = new THREE.Scene();
   const camera = makeCamera(45);
   scene.background = WATER.clone();
@@ -75,12 +76,7 @@ export function createPlantCellScene({ tier }) {
   });
   scene.add(particles.points);
 
-  scene.add(new THREE.HemisphereLight('#E8FFE6', '#0A2A24', 1.1));
-  const key = new THREE.DirectionalLight('#FFF4D6', 2);
-  key.position.set(-5, 6, 6);
-  const rim = new THREE.DirectionalLight('#4CC38A', 1.2);
-  rim.position.set(6, -2, -6);
-  scene.add(key, rim);
+  useLabLighting(scene, renderer, { intensity: 0.7, rim: '#4CC38A' });
 
   function update(dt, progress, time) {
     particles.update(time);

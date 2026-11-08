@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { activePart } from '../dom-sync.js';
 import { addWobble, capsule, createHighlighter, membraneMaterial, meshesOf, partMaterial, stackedArcs } from './cell-parts.js';
+import { useLabLighting } from '../../../core/materials.js';
 import { createDriftParticles, lerp, makeCamera, rangeT, smooth } from './shared.js';
 
 const WATER = new THREE.Color('#06303A');
@@ -37,10 +38,10 @@ function buildCell(uniforms) {
   cell.add(mitochondria);
 
   const reGolgi = new THREE.Group();
-  const er = stackedArcs({ count: 4, radius: 1.55, tube: 0.06, arc: Math.PI * 1.3, gap: 0.14, color: '#4CC38A' });
+  const er = stackedArcs({ count: 4, radius: 1.55, tube: 0.085, arc: Math.PI * 1.3, gap: 0.14, color: '#4CC38A' });
   er.position.copy(nucleus.position);
   er.rotation.set(0.2, 0.4, 2.2);
-  const golgi = stackedArcs({ count: 5, radius: 0.55, tube: 0.07, arc: Math.PI * 0.9, gap: 0.16, color: '#F2B544' });
+  const golgi = stackedArcs({ count: 5, radius: 0.55, tube: 0.1, arc: Math.PI * 0.9, gap: 0.16, color: '#F2B544' });
   golgi.position.set(1.4, -1.2, -0.3);
   golgi.rotation.set(0.6, -0.5, 0.9);
   reGolgi.add(er, golgi);
@@ -69,7 +70,7 @@ function buildCell(uniforms) {
   };
 }
 
-export function createAnimalCellScene({ tier }) {
+export function createAnimalCellScene({ tier, renderer }) {
   const scene = new THREE.Scene();
   const camera = makeCamera(45);
   scene.background = WATER.clone();
@@ -89,12 +90,7 @@ export function createAnimalCellScene({ tier }) {
   });
   scene.add(particles.points);
 
-  scene.add(new THREE.HemisphereLight('#DFFFFB', '#062A33', 1.1));
-  const key = new THREE.DirectionalLight('#FFF4D6', 2);
-  key.position.set(-5, 6, 6);
-  const rim = new THREE.DirectionalLight('#1FC8C8', 1.4);
-  rim.position.set(6, -2, -6);
-  scene.add(key, rim);
+  useLabLighting(scene, renderer, { intensity: 0.7 });
 
   function update(dt, progress, time) {
     uniforms.uTime.value = time;

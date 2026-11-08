@@ -32,7 +32,7 @@ function addSwimWiggle(material, uniforms) {
 
 export function createFishSchool({ count }) {
   const uniforms = { uTime: { value: 0 } };
-  const material = new THREE.MeshStandardMaterial({ roughness: 0.35, metalness: 0.3 });
+  const material = new THREE.MeshPhysicalMaterial({ roughness: 0.3, metalness: 0.25, clearcoat: 0.8, clearcoatRoughness: 0.2, iridescence: 0.4 });
   addSwimWiggle(material, uniforms);
 
   const mesh = new THREE.InstancedMesh(fishGeometry(), material, count);

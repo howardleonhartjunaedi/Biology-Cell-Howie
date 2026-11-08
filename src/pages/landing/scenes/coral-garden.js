@@ -4,13 +4,13 @@ import { addSway, seededRandom } from './shared.js';
 const CORAL_COLORS = ['#FF7A59', '#F2B544', '#E5735B', '#F4C9A8', '#D9584A'];
 
 function branchGeometry() {
-  const geometry = new THREE.CylinderGeometry(0.06, 0.1, 1, 6, 4);
+  const geometry = new THREE.CylinderGeometry(0.05, 0.1, 1, 10, 6);
   geometry.translate(0, 0.5, 0);
   return geometry;
 }
 
 function bumpyMound() {
-  const geometry = new THREE.IcosahedronGeometry(1, 3);
+  const geometry = new THREE.IcosahedronGeometry(1, 6);
   const positions = geometry.attributes.position;
   const point = new THREE.Vector3();
   for (let i = 0; i < positions.count; i += 1) {
@@ -51,7 +51,7 @@ export function createCoralGarden({ center, branches, mounds }) {
   }
   group.add(branchMesh);
 
-  const moundMesh = new THREE.InstancedMesh(bumpyMound(), new THREE.MeshStandardMaterial({ roughness: 0.9, flatShading: true }), mounds);
+  const moundMesh = new THREE.InstancedMesh(bumpyMound(), new THREE.MeshStandardMaterial({ roughness: 0.85 }), mounds);
   for (let i = 0; i < mounds; i += 1) {
     const angle = random() * Math.PI * 2;
     const distance = 1.5 + random() * 7;
