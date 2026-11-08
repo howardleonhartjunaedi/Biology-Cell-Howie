@@ -1,0 +1,27 @@
+:root {
+  --c-deep: #063B4C;
+  --c-lagoon: #1FC8C8;
+  --c-aqua: #B8F1EC;
+  --c-forest: #2E7D4F;
+  --c-cream: #FFF4D6;
+  --c-coral: #FF7A59;
+  --c-lab: #0E1116;
+  --c-lab-2: #151B22;
+  --c-line: #26303A;
+  --c-muted: #6B7A86;
+  --c-text: #D3D9DE;
+  --c-good: #4CC38A;
+  --c-warn: #F2B544;
+  --c-bad: #E5534B;
+
+  --font-sans: 'Montserrat', system-ui, sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+
+  --radius: 12px;
+  --radius-pill: 999px;
+  --nav-height: 64px;
+  --page-max: 1120px;
+  --gutter: clamp(16px, 4vw, 40px);
+
+  --ease-ui: cubic-bezier(0.22, 1, 0.36, 1);
+}
