@@ -274,3 +274,70 @@
   color: var(--c-text);
   font-size: 14px;
 }
+
+.info-card-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.info-card-layer svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.info-card__line {
+  stroke: var(--c-cream);
+  stroke-width: 1.5;
+  opacity: 0.8;
+}
+
+.info-card__pin {
+  fill: var(--c-coral);
+  stroke: var(--c-cream);
+  stroke-width: 2;
+}
+
+.info-card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 260px;
+  padding: 16px 18px;
+  border-radius: var(--radius);
+  border: 1px solid var(--c-line);
+  background: color-mix(in srgb, var(--c-lab-2) 94%, transparent);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.35);
+  pointer-events: auto;
+}
+
+.info-card__name {
+  margin: 0 0 4px;
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--c-cream);
+}
+
+.info-card__text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.info-card__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-min);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--c-coral);
+  font: 600 14px var(--font-sans);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}

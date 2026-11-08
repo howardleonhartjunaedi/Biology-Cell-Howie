@@ -1,0 +1,221 @@
+.lab-page main.lab {
+  max-width: none;
+  padding: 0;
+  position: relative;
+}
+
+.lab-view {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  grid-template-rows: auto 1fr;
+  gap: 0 24px;
+  padding: calc(var(--nav-height) + 32px) var(--gutter) 32px;
+}
+
+.lab-header {
+  grid-column: 1 / 2;
+  position: relative;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.lab-title {
+  margin-bottom: 4px;
+}
+
+.lab-hint {
+  margin: 0;
+}
+
+.lab-stage {
+  grid-column: 1 / 2;
+  position: relative;
+  min-height: 460px;
+}
+
+.lab-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  touch-action: pan-y;
+}
+
+.lab-view > *:not(.lab-stage),
+.lab-stage > * {
+  position: relative;
+  z-index: 3;
+}
+
+.lab-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lab-arrow--prev { left: 0; }
+.lab-arrow--next { right: 0; }
+
+.round-button {
+  width: var(--tap-min);
+  height: var(--tap-min);
+  border-radius: 50%;
+  border: 1px solid var(--c-line);
+  background: color-mix(in srgb, var(--c-lab-2) 80%, transparent);
+  color: var(--c-cream);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition-property: border-color, transform;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+.round-button:hover { border-color: var(--c-coral); }
+.lab-arrow.round-button:active { transform: translateY(-50%) scale(0.95); }
+
+.cell-switch {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--c-line);
+  background: color-mix(in srgb, var(--c-lab-2) 85%, transparent);
+}
+
+.cell-switch__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--c-muted);
+  font: 500 14px var(--font-sans);
+  cursor: pointer;
+}
+
+.cell-switch__item::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+}
+
+.cell-switch__item[aria-pressed='true'] {
+  color: var(--c-cream);
+  background: var(--c-lab);
+}
+
+.cell-switch__item[aria-pressed='true']::before {
+  background: var(--c-coral);
+  border-color: var(--c-coral);
+}
+
+.lab-illustration {
+  position: absolute;
+  right: 0;
+  bottom: 28px;
+  margin: 0;
+}
+
+.organelle-list {
+  grid-column: 2 / 3;
+  grid-row: 1 / 3;
+  align-self: start;
+}
+
+.organelle-list__box {
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--c-lab-2) 88%, transparent);
+}
+
+.organelle-list__summary {
+  display: flex;
+  align-items: center;
+  min-height: var(--tap-min);
+  padding: 0 16px;
+  font-weight: 600;
+  color: var(--c-cream);
+  cursor: pointer;
+}
+
+.organelle-list__items {
+  list-style: none;
+  margin: 0;
+  padding: 0 8px 8px;
+}
+
+.organelle-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: var(--tap-min);
+  padding: 0 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--c-text);
+  font: 500 14px var(--font-sans);
+  text-align: left;
+  cursor: pointer;
+  transition-property: background-color, color;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+.organelle-button:hover,
+.organelle-button.is-active {
+  background: var(--c-lab);
+  color: var(--c-coral);
+}
+
+.organelle-button__meta {
+  font-size: 12px;
+  color: var(--c-muted);
+}
+
+.lab-loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+  color: var(--c-muted);
+  font-size: 14px;
+}
+
+.lab-loader__line {
+  width: 160px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--c-coral) var(--progress, 30%), var(--c-line) 0);
+}
+
+.lab-loader[hidden] { display: none; }
+
+@media (max-width: 900px) {
+  .lab-view {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(380px, 60svh) auto;
+  }
+
+  .organelle-list {
+    grid-column: 1;
+    grid-row: 3;
+  }
+}

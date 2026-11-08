@@ -1,0 +1,334 @@
+{
+  "cells": {
+    "hewan": {
+      "title": "SEL HEWAN",
+      "label": "Hewan",
+      "breadcrumb": "Sel Hewan",
+      "organelles": [
+        "membran-plasma",
+        "sitoplasma",
+        "nukleus",
+        "mitokondria",
+        "re-kasar",
+        "re-halus",
+        "ribosom",
+        "golgi",
+        "lisosom",
+        "peroksisom",
+        "sentriol"
+      ]
+    },
+    "tumbuhan": {
+      "title": "SEL TUMBUHAN",
+      "label": "Tumbuhan",
+      "breadcrumb": "Sel Tumbuhan",
+      "organelles": [
+        "dinding-sel",
+        "membran-plasma",
+        "sitoplasma",
+        "nukleus",
+        "mitokondria",
+        "kloroplas",
+        "vakuola",
+        "re-kasar",
+        "re-halus",
+        "ribosom",
+        "golgi",
+        "peroksisom"
+      ]
+    }
+  },
+  "organelles": {
+    "nukleus": {
+      "name": "Nukleus",
+      "short": "Pusat kendali sel yang menyimpan informasi genetik (DNA).",
+      "membrane": "Membran ganda",
+      "detail": "full",
+      "fungsi": [
+        "Mengendalikan metabolisme sel.",
+        "Mengontrol sintesis protein (membuat mRNA sesuai perintah DNA).",
+        "Menyimpan informasi genetik.",
+        "Tempat replikasi DNA."
+      ],
+      "parts": [
+        {
+          "id": "karioteka",
+          "name": "Membran inti (karioteka)",
+          "deskripsi": "Membran lapis dua yang berpori dan terhubung dengan RE kasar.",
+          "fungsi": "Memisahkan isi nukleus dari sitoplasma."
+        },
+        {
+          "id": "pori-nukleus",
+          "name": "Pori nukleus",
+          "deskripsi": "Lubang-lubang pada membran inti.",
+          "fungsi": "Jalur keluar masuk molekul, misalnya mRNA."
+        },
+        {
+          "id": "nukleoplasma",
+          "name": "Nukleoplasma",
+          "deskripsi": "Cairan inti berbentuk gel berisi ion, protein, nukleotida, dan benang kromatin.",
+          "fungsi": "Tempat keberadaan materi genetik."
+        },
+        {
+          "id": "nukleolus",
+          "name": "Nukleolus (anak inti)",
+          "deskripsi": "Bagian bulat, padat, dan berwarna gelap di dalam nukleus.",
+          "fungsi": "Tempat sintesis rRNA dan perakitan subunit ribosom."
+        },
+        {
+          "id": "kromatin",
+          "name": "Kromatin",
+          "deskripsi": "Untaian DNA dan protein yang membentuk benang panjang; saat menggulung menjadi kromosom.",
+          "fungsi": "Menyimpan materi genetik."
+        }
+      ],
+      "tahukahKamu": "Sel darah merah manusia dewasa tidak punya nukleus, sedangkan sel otot rangka punya banyak nukleus."
+    },
+    "mitokondria": {
+      "name": "Mitokondria",
+      "short": "Tempat respirasi sel yang menghasilkan energi (ATP).",
+      "membrane": "Membran ganda",
+      "detail": "full",
+      "deskripsi": "Ukuran ±0,5 µm, bentuk seperti sosis; organel semiotonom.",
+      "fungsi": [
+        "Tempat respirasi sel yang menghasilkan energi (ATP)."
+      ],
+      "parts": [
+        {
+          "id": "membran-luar",
+          "name": "Membran luar",
+          "deskripsi": "Membran pembungkus paling luar.",
+          "fungsi": "Pembatas antara mitokondria dengan sitoplasma."
+        },
+        {
+          "id": "membran-dalam",
+          "name": "Membran dalam",
+          "deskripsi": "Membran kedua di sebelah dalam.",
+          "fungsi": "Tempat rantai respirasi yang menghasilkan ATP."
+        },
+        {
+          "id": "krista",
+          "name": "Krista",
+          "deskripsi": "Lipatan-lipatan membran dalam.",
+          "fungsi": "Memperluas permukaan untuk respirasi sehingga ATP yang dihasilkan lebih banyak."
+        },
+        {
+          "id": "matriks",
+          "name": "Matriks",
+          "deskripsi": "Cairan di dalam mitokondria yang mengandung DNA sirkuler, RNA, dan ribosom.",
+          "fungsi": "Tempat berbagai reaksi respirasi; DNA-nya membuat mitokondria bisa memperbanyak diri."
+        }
+      ],
+      "tahukahKamu": "Makin besar kebutuhan energi, makin banyak mitokondria. Contoh: sel hati bisa punya sekitar 1000 mitokondria."
+    },
+    "kloroplas": {
+      "name": "Kloroplas",
+      "short": "Plastida berwarna hijau, tempat fotosintesis.",
+      "membrane": "Membran ganda",
+      "detail": "full",
+      "fungsi": [
+        "Tempat fotosintesis."
+      ],
+      "parts": [
+        {
+          "id": "membran-kloroplas",
+          "name": "Membran luar & membran dalam",
+          "fungsi": "Pelindung dan pemisah antara kloroplas dan sitoplasma."
+        },
+        {
+          "id": "tilakoid",
+          "name": "Tilakoid",
+          "deskripsi": "Kantong-kantong pipih.",
+          "fungsi": "Menyusun grana; tempat reaksi terang."
+        },
+        {
+          "id": "grana",
+          "name": "Grana (granum)",
+          "deskripsi": "Tumpukan tilakoid yang mengandung klorofil dan karotenoid.",
+          "fungsi": "Aktif dalam reaksi terang fotosintesis."
+        },
+        {
+          "id": "stroma",
+          "name": "Stroma",
+          "deskripsi": "Cairan di luar tilakoid.",
+          "fungsi": "Tempat reaksi gelap (siklus Calvin)."
+        }
+      ],
+      "tahukahKamu": "Kloroplas punya DNA sendiri, seperti mitokondria. Plastida lain: kromoplas (warna selain hijau, misal wortel) dan leukoplas (tidak berwarna, menyimpan cadangan makanan: amiloplas, elaioplas, proteinoplas)."
+    },
+    "golgi": {
+      "name": "Badan Golgi",
+      "short": "\"Kantor pos\" sel: mengubah, mengemas, dan mengirim protein.",
+      "membrane": "Membran tunggal",
+      "detail": "full",
+      "deskripsi": "Ada di sel hewan dan tumbuhan; pada tumbuhan disebut diktiosom.",
+      "fungsi": [
+        "Mengubah, mengemas, dan mengirim protein.",
+        "Membentuk lisosom, akrosom (pada sperma), glikolipid, dan vesikel sekresi; banyak di sel kelenjar."
+      ],
+      "parts": [
+        {
+          "id": "sisterna",
+          "name": "Sisterna",
+          "deskripsi": "Kantong pipih yang bertumpuk.",
+          "fungsi": "Tempat protein dimodifikasi (misalnya ditambah karbohidrat menjadi glikoprotein)."
+        },
+        {
+          "id": "sisi-cis",
+          "name": "Sisi cis",
+          "fungsi": "Sisi yang menerima vesikel dari RE."
+        },
+        {
+          "id": "sisi-trans",
+          "name": "Sisi trans",
+          "fungsi": "Sisi tempat keluarnya hasil olahan."
+        },
+        {
+          "id": "vesikel",
+          "name": "Vesikel",
+          "deskripsi": "Gelembung kecil.",
+          "fungsi": "Mengangkut makromolekul ke tujuan atau keluar sel."
+        }
+      ]
+    },
+    "re-kasar": {
+      "name": "RE kasar",
+      "short": "Retikulum endoplasma yang ditempeli ribosom; tempat sintesis protein.",
+      "membrane": "Membran tunggal",
+      "detail": "full",
+      "detailOf": "re",
+      "part": "re-kasar"
+    },
+    "re-halus": {
+      "name": "RE halus",
+      "short": "Retikulum endoplasma tanpa ribosom; sintesis lipid dan menetralkan racun.",
+      "membrane": "Membran tunggal",
+      "detail": "full",
+      "detailOf": "re",
+      "part": "re-halus"
+    },
+    "re": {
+      "name": "Retikulum Endoplasma",
+      "short": "Jaringan saluran bermembran yang terhubung dengan membran inti.",
+      "membrane": "Membran tunggal",
+      "detail": "full",
+      "fungsi": [
+        "Jaringan saluran bermembran yang terhubung dengan membran inti."
+      ],
+      "parts": [
+        {
+          "id": "re-kasar",
+          "name": "RE kasar",
+          "deskripsi": "Ditempeli ribosom.",
+          "fungsi": "Sintesis protein yang lalu dibungkus vesikel dan diproses di badan Golgi."
+        },
+        {
+          "id": "re-halus",
+          "name": "RE halus",
+          "deskripsi": "Tanpa ribosom.",
+          "fungsi": "Sintesis lipid (fosfolipid, steroid), metabolisme karbohidrat, menetralkan racun."
+        },
+        {
+          "id": "lumen",
+          "name": "Lumen/sisterna",
+          "deskripsi": "Ruang di dalam saluran RE.",
+          "fungsi": "Tempat menampung dan mengangkut hasil sintesis."
+        }
+      ],
+      "tahukahKamu": "RE halus banyak di sel hati (detoksifikasi). Di sel otot, RE halus disebut retikulum sarkoplasma."
+    },
+    "membran-plasma": {
+      "name": "Membran plasma",
+      "short": "Mengatur zat yang keluar dan masuk sel.",
+      "membrane": "Pembatas sel",
+      "detail": "simple",
+      "deskripsi": "Selaput tipis pembatas sel, tersusun fosfolipid dua lapis + protein + karbohidrat (model mozaik fluida).",
+      "fungsi": [
+        "Mengatur keluar masuk zat (selektif permeabel).",
+        "Menerima rangsang (reseptor).",
+        "Melindungi sel."
+      ],
+      "tahukahKamu": "Tebalnya hanya 5–10 nm."
+    },
+    "sitoplasma": {
+      "name": "Sitoplasma",
+      "short": "Tempat organel dan sebagian besar reaksi metabolisme.",
+      "membrane": "Cairan sel",
+      "detail": "simple",
+      "deskripsi": "Cairan sel di luar nukleus berisi sitosol dan organel, bersifat koloid (bisa berubah sol ↔ gel).",
+      "fungsi": [
+        "Tempat organel dan sebagian besar reaksi metabolisme."
+      ]
+    },
+    "ribosom": {
+      "name": "Ribosom",
+      "short": "Tempat sintesis protein.",
+      "membrane": "Tidak bermembran",
+      "detail": "simple",
+      "deskripsi": "Butiran nukleoprotein (tidak bermembran) dari 2 subunit (besar & kecil).",
+      "fungsi": [
+        "Sintesis protein.",
+        "Ribosom bebas → protein untuk sel itu sendiri; ribosom pada RE → protein membran & protein yang disekresikan."
+      ],
+      "tahukahKamu": "\"S\" (Svedberg) bukan satuan ukuran, tetapi laju pengendapan saat disentrifugasi."
+    },
+    "lisosom": {
+      "name": "Lisosom",
+      "short": "Mencerna zat di dalam sel.",
+      "membrane": "Membran tunggal",
+      "detail": "simple",
+      "deskripsi": "Kantong bulat bermembran tunggal berisi enzim hidrolitik, dibentuk dari badan Golgi.",
+      "fungsi": [
+        "Pencernaan intrasel.",
+        "Autofagi (menghancurkan organel rusak).",
+        "Autolisis (menghancurkan sel sendiri, misal hilangnya ekor kecebong)."
+      ],
+      "tahukahKamu": "Kekurangan enzim lisosom menyebabkan penyakit Tay-Sachs."
+    },
+    "peroksisom": {
+      "name": "Peroksisom",
+      "short": "Mengubah H₂O₂ (beracun) menjadi H₂O dan O₂.",
+      "membrane": "Membran tunggal",
+      "detail": "simple",
+      "deskripsi": "Kantong bulat bermembran tunggal berisi enzim oksidatif dan katalase.",
+      "fungsi": [
+        "Mengubah H₂O₂ (beracun) menjadi H₂O dan O₂."
+      ],
+      "tahukahKamu": "Banyak di sel hati dan ginjal."
+    },
+    "sentriol": {
+      "name": "Sentriol",
+      "short": "Membentuk benang spindel saat sel membelah.",
+      "membrane": "Tidak bermembran",
+      "detail": "simple",
+      "deskripsi": "Sepasang tabung dari 9 triplet mikrotubulus, saling tegak lurus, berada dalam sentrosom. Hanya di sel hewan.",
+      "fungsi": [
+        "Membentuk benang spindel saat pembelahan sel."
+      ]
+    },
+    "vakuola": {
+      "name": "Vakuola",
+      "short": "Menyimpan cairan sel dan menjaga tekanan turgor.",
+      "membrane": "Membran tunggal (tonoplas)",
+      "detail": "simple",
+      "deskripsi": "Rongga berisi cairan sel, dibungkus membran tunggal (tonoplas). Pada tumbuhan besar dan permanen.",
+      "fungsi": [
+        "Menjaga tekanan turgor.",
+        "Menyimpan zat makanan, pigmen, dan sisa metabolisme."
+      ],
+      "tahukahKamu": "Hewan bersel satu punya vakuola makanan dan vakuola kontraktil (pengatur tekanan osmotik)."
+    },
+    "dinding-sel": {
+      "name": "Dinding sel",
+      "short": "Lapisan kaku dari selulosa yang membuat bentuk sel tetap.",
+      "membrane": "Di luar membran sel",
+      "detail": "simple",
+      "deskripsi": "Lapisan kaku di luar membran sel tumbuhan dari selulosa, hemiselulosa, pektin (dan lignin pada sel tua). Bagian: lamela tengah (perekat antarsel), dinding primer, dinding sekunder; plasmodesmata menghubungkan sitoplasma sel tetangga.",
+      "fungsi": [
+        "Memberi bentuk tetap.",
+        "Melindungi.",
+        "Menahan tekanan turgor."
+      ]
+    }
+  }
+}

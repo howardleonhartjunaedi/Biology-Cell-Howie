@@ -7,17 +7,68 @@
     <meta name="description" content="Jelajahi sel hewan dan sel tumbuhan beserta organel dan fungsinya." />
     <meta property="og:title" content="Lab Sel — SEL" />
     <meta property="og:description" content="Jelajahi sel hewan dan sel tumbuhan beserta organel dan fungsinya." />
+    <meta name="theme-color" content="#0E1116" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <script src="/view-transition.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Montserrat:wght@400;500;600;800&display=swap" rel="stylesheet" />
   </head>
-  <body data-page="sel">
-    <main id="main">
-      <span class="eyebrow">SEL · LAB</span>
-      <h1 class="display">Lab Sel</h1>
-      <p class="tagline">Gerakkan kursor untuk melihat sisi lain</p>
+  <body data-page="sel" class="lab-page">
+    <main id="main" class="lab">
+      <section class="lab-view" id="layar-sel" aria-labelledby="cell-title">
+        <header class="lab-header">
+          <span class="eyebrow">SEL · LAB</span>
+          <h1 class="display lab-title" id="cell-title">SEL HEWAN</h1>
+          <p class="tagline lab-hint">Gerakkan kursor untuk melihat sisi lain</p>
+        </header>
+
+        <div class="lab-stage" id="lab-stage">
+          <div class="lab-loader" id="lab-loader" role="status">
+            <span class="lab-loader__line"></span>
+            <span class="lab-loader__text">Menyiapkan lab…</span>
+          </div>
+          <button class="round-button lab-arrow lab-arrow--prev" type="button" id="cell-prev" aria-label="Sel sebelumnya">‹</button>
+          <button class="round-button lab-arrow lab-arrow--next" type="button" id="cell-next" aria-label="Sel berikutnya">›</button>
+          <div class="cell-switch" role="group" aria-label="Pilih sel">
+            <button class="cell-switch__item" type="button" data-cell="hewan" aria-pressed="true">Hewan</button>
+            <button class="cell-switch__item" type="button" data-cell="tumbuhan" aria-pressed="false">Tumbuhan</button>
+          </div>
+          <p class="note lab-illustration">Ilustrasi, bukan skala sebenarnya.</p>
+        </div>
+
+        <aside class="organelle-list" aria-labelledby="organelle-list-title">
+          <details class="organelle-list__box" open>
+            <summary class="organelle-list__summary" id="organelle-list-title">Daftar organel</summary>
+            <ul class="organelle-list__items" id="organelle-items"></ul>
+          </details>
+        </aside>
+      </section>
+
+      <section class="detail-view" id="layar-detail" aria-labelledby="detail-title" hidden>
+        <div class="detail-top">
+          <button class="pill-button" type="button" id="detail-back">← Kembali ke sel</button>
+          <nav class="breadcrumb" aria-label="Posisi">
+            <ol id="detail-breadcrumb"></ol>
+          </nav>
+        </div>
+        <div class="detail-pins" id="detail-pins"></div>
+        <article class="detail-panel" id="detail-panel">
+          <span class="eyebrow" id="detail-eyebrow"></span>
+          <h2 class="detail-panel__title" id="detail-title"></h2>
+          <p class="detail-panel__meta" id="detail-meta"></p>
+          <h3 class="detail-panel__label">DESKRIPSI</h3>
+          <p id="detail-desc"></p>
+          <h3 class="detail-panel__label">FUNGSI</h3>
+          <ul class="detail-panel__list" id="detail-func"></ul>
+          <div class="detail-panel__parts" id="detail-parts"></div>
+          <aside class="fact" id="detail-fact" hidden></aside>
+        </article>
+        <div class="detail-nav">
+          <button class="pill-button" type="button" id="detail-prev"></button>
+          <button class="pill-button" type="button" id="detail-next"></button>
+        </div>
+      </section>
     </main>
     <script type="module" src="/src/pages/sel/main.js"></script>
   </body>
