@@ -216,3 +216,19 @@
     grid-row: 3;
   }
 }
+
+.lab-view[hidden] {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .lab-illustration {
+    position: static;
+    margin-top: var(--s-2);
+    text-align: center;
+  }
+
+  .cell-switch {
+    bottom: var(--s-1);
+  }
+}

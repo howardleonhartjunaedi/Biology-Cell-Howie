@@ -46,7 +46,7 @@ function lineIndexes(words) {
 }
 
 function reveal(element) {
-  if (element.querySelector('a, button')) return;
+  if (element.querySelector('a, button') || !element.textContent.trim()) return;
   const accessible = document.createElement('span');
   accessible.className = 'visually-hidden';
   accessible.textContent = element.textContent;

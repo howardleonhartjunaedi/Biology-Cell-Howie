@@ -328,3 +328,14 @@
   text-underline-offset: 0.2em;
   cursor: pointer;
 }
+
+@media (max-width: 560px) {
+  .nav {
+    gap: var(--s-1);
+  }
+
+  .toggle {
+    padding: 0 var(--s-1);
+    gap: var(--s-1);
+  }
+}

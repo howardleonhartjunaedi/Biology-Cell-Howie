@@ -195,3 +195,7 @@
     grid-template-rows: auto auto auto;
   }
 }
+
+.detail-panel__title:focus {
+  outline: none;
+}

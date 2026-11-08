@@ -101,3 +101,17 @@ Catatan harian untuk laporan (BAB IV Kendala, BAB VI Evaluasi).
 
 **Kendala dan solusi**
 - Adegan 3D tertinggal satu section di uji headless (1,5 FPS). Penyebab sebenarnya: penghalusan kamera memakai waktu frame yang dibatasi, jadi di laptop lambat kamera ikut lambat. Solusi: dirigen memakai waktu asli.
+
+## Senin, 9 November 2026 — Lab Sel (Fase 3)
+**Yang dikerjakan**
+- Materi 3D Beranda diperbaiki (lingkungan pantulan, material fisik, geometri halus).
+- Lab Sel lengkap: daftar organel dan panel detail (bisa tanpa 3D), ruang lab 3D dengan lampu sorot dan pedestal kaca,
+  sel hewan dan tumbuhan terpotong (cutaway), sorot + kartu info saat kursor menunjuk, miring mengikuti kursor, geser sel,
+  kamera terbang ke organel, layar detail dengan pin bernomor untuk 5 organel lengkap, tautan langsung `sel.html#organel`.
+- Acuan: deskripsi CLAUDE.md §6.2 (belum ada desain Figma yang disetujui).
+
+**Kendala dan solusi**
+- Layar sel dan layar detail tampil bersamaan karena `display: grid` mengalahkan atribut `hidden`. Solusi: aturan `.lab-view[hidden]`.
+- RE pada sel tumbuhan menembus dinding sel. Solusi: diperkecil dan digeser.
+- Di ponsel, tombol menu terpotong dan sel terlalu besar. Solusi: jarak tombol diperkecil, kamera mundur otomatis di layar sempit.
+- Peringatan GSAP "target not found" dari judul yang isinya berubah. Solusi: judul dinamis diberi `data-no-reveal`.

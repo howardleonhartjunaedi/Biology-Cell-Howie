@@ -442,3 +442,66 @@ Setelah lewat, kelas dilepas dan nav kembali berlatar gelap. Dipanggil saat guli
 - `src/core/ambient-sound.js` — suara air dibuat langsung oleh browser (noise + filter low-pass yang naik-turun), tanpa file audio. Default mati.
 - `src/core/debug.js` — panel lil-gui hanya saat `npm run dev` dan alamat berakhiran `?debug`. Tidak ikut ke website online.
 - `src/pages/landing/conductor.js` — penghalusan memakai waktu asli (`rawDt`) supaya di laptop lambat adegan tidak tertinggal dari teks.
+
+---
+
+# LAB SEL (sel.html) — Fase 3
+
+Gambaran besar: halaman ini punya **dua layar** di HTML: layar sel (`#layar-sel`) dan layar detail (`#layar-detail`).
+Isi teks selalu ada di HTML, jadi halaman bisa dipakai penuh tanpa 3D (Mode Tenang). Kalau 3D aktif, `lab-viewer.js` menggambar sel di belakangnya.
+
+```
+main.js ──► organelle-ui.js   (daftar organel + panel detail dari organel.json)
+        └─► lab-viewer.js ──► lab-room.js, cell-models.js, detail-models.js, highlight.js, detail-pins.js, core/info-card.js
+```
+
+## src/data/organel.json
+**Tugas file ini:** Semua isi Lab Sel dari KONTEN-MATERI §3: daftar organel per sel, nama, keterangan singkat, membran, deskripsi, fungsi, bagian bernomor, dan "Tahukah kamu?".
+- `detail: "full"` = punya bagian bernomor (nukleus, mitokondria, kloroplas, badan Golgi, RE). `"simple"` = hanya deskripsi dan fungsi.
+- `re-kasar` dan `re-halus` menunjuk ke `re` (`detailOf`), jadi keduanya membuka layar detail Retikulum Endoplasma dengan bagian yang sesuai terpilih.
+- Deskripsi bagian yang tidak ada di KONTEN (misalnya sisi cis/trans Golgi) **sengaja dikosongkan** (aturan emas 4).
+
+## src/pages/sel/main.js
+**Tugas file ini:** Mengatur halaman: sel mana yang tampil, membuka/menutup layar detail, tombol ‹ ›, tombol panah keyboard, dan alamat `#nama-organel`.
+**Cara kerja:**
+1. `setCell('hewan' | 'tumbuhan')` mengganti judul, tombol Hewan/Tumbuhan, dan daftar organel.
+2. `openOrganelle(id)` — kalau ada 3D, kamera terbang dulu ke organel (`viewer.flyTo`), lalu layar sel disembunyikan dan layar detail ditampilkan. Alamat berubah menjadi `sel.html#mitokondria`.
+3. Kalau halaman dibuka dengan `#mitokondria` (misalnya dari tombol "Pelajari lagi" di kuis), detail itu langsung terbuka.
+4. 3D dimuat belakangan dengan `import('./lab-viewer.js')`, jadi teks sudah tampil walau 3D belum siap. Di Mode Tenang, 3D tidak dimuat sama sekali.
+**Kemungkinan pertanyaan guru & jawabannya:**
+- T: Kenapa ada `history.replaceState`? J: Mengubah alamat tanpa memuat ulang halaman, supaya tautan bisa dibagikan langsung ke organel tertentu.
+
+## src/pages/sel/organelle-ui.js
+**Tugas file ini:** Menggambar daftar organel (tombol) dan mengisi panel detail (judul, DESKRIPSI, FUNGSI, chip bagian, breadcrumb).
+- `showDetail` — kalau sebuah bagian dipilih, label atas menjadi `BAGIAN 3 DARI 4` dan breadcrumb `Sel Hewan › Mitokondria › Krista`.
+- `neighbours` — mencari organel sebelum dan sesudah untuk tombol `‹ Nukleus` dan `RE kasar ›`.
+
+## src/pages/sel/cell-models.js
+**Tugas file ini:** Membuat sel hewan dan sel tumbuhan dari bentuk dasar three.js.
+- Setiap bagian diberi label `userData.organelle` (misalnya `'mitokondria'`). Label inilah yang dibaca saat kursor menyentuh organel.
+- **Potongan (cutaway):** membran, sitoplasma, dinding sel, dan selubung nukleus memakai `clippingPlanes` — bidang potong yang membuang setengah bagian depan, jadi isi sel terlihat seperti gambar buku.
+- Ribosom memakai `InstancedMesh` (satu bentuk, digambar 140 kali sekaligus).
+- `organelleMeshes(cell)` membuat peta `id → daftar mesh` supaya satu organel bisa disorot semua bagiannya.
+
+## src/pages/sel/lab-room.js
+Ruang lab: latar gelap, grid tipis di lantai, pedestal kaca dengan cincin bercahaya, lampu sorot (`SpotLight`) dan kerucut cahaya, debu melayang.
+`setLight(0…1)` dipakai untuk efek "lampu menyala" saat halaman dibuka.
+
+## src/pages/sel/lab-viewer.js
+**Tugas file ini:** Mengendalikan semua 3D di Lab Sel.
+**Bagian penting:**
+- **Memilih organel (raycasting):** garis lurus "ditembakkan" dari kamera melewati posisi kursor (`raycaster.setFromCamera`). Benda pertama yang kena adalah yang ditunjuk. Selubung (membran, sitoplasma, dinding) diberi prioritas paling rendah, supaya organel di dalamnya tetap bisa dipilih.
+- **Sorot:** organel yang ditunjuk bercahaya, yang lain diredupkan ke 55% (`highlight.js`). Kartu info dengan pin dan garis muncul di dekatnya (`core/info-card.js`).
+- **Miring mengikuti kursor:** sel berputar maksimal ±25° kiri-kanan dan ±15° atas-bawah, mengejar posisi kursor dengan halus.
+- **Geser sel:** tombol ‹ ›, panah keyboard, atau geser jari (lebih dari 60 px). Sel lama meluncur keluar, sel baru meluncur masuk (GSAP).
+- **Terbang ke organel:** kamera bergerak ±1 detik ke depan organel, lalu layar detail tampil.
+- **Posisi tengah:** `setViewOffset` menggeser pusat gambar 3D ke tengah kolom kiri (bukan tengah layar), jadi sel tidak tertutup daftar organel.
+- **Layar sempit:** kamera mundur otomatis (`NARROW_ASPECT`) supaya sel muat di ponsel.
+
+## src/pages/sel/detail-models.js
+Model besar untuk layar detail. Lima organel lengkap dibuat khusus dengan bagian-bagiannya: nukleus (selubung, pori, nukleoplasma, nukleolus, kromatin), mitokondria (membran luar, membran dalam, krista, matriks), kloroplas (membran, tilakoid, grana, stroma), badan Golgi (sisterna, sisi cis, sisi trans, vesikel), RE (kasar dengan ribosom, halus, lumen).
+Setiap bagian punya **titik jangkar** (`anchor`) tempat pin bernomor ditempel. Organel sederhana memakai salinan bentuk dari sel.
+
+## src/pages/sel/detail-pins.js
+Pin bernomor (tombol HTML) yang mengikuti titik jangkar 3D setiap frame: titik 3D diubah ke koordinat layar dengan `project(camera)`. Klik pin → panel kanan menampilkan bagian itu.
+**T: Kenapa pin pakai tombol HTML, bukan digambar di 3D?** J: Supaya bisa diklik dengan keyboard, dibaca pembaca layar, dan tetap tajam.
