@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import fragmentShader from './shaders/title.frag.glsl?raw';
+import { settings } from '../../core/settings.js';
 
 const MAX_RIPPLES = 16;
 const DROP_EVERY_PX = 40;
@@ -109,7 +110,7 @@ export function createTitleRipple(title, tagline) {
     uniforms.uDpr.value = renderer.getPixelRatio();
     uniforms.uLens.value = Math.min(speed / SPEED_FOR_MAX, 1) * MAX_LENS_PX;
     uniforms.uScroll.value = scrollY - heroProgress * 120;
-    uniforms.uStrength.value = 1 + heroProgress * 3;
+    uniforms.uStrength.value = (1 + heroProgress * 3) * settings.rippleScale;
     uniforms.uOpacity.value = 1 - heroProgress;
   }
 

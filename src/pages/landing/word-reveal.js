@@ -1,6 +1,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { isCalmMode } from '../../core/calm-mode.js';
+import { EASE } from '../../core/motion.js';
 
 const START_OPACITY = 0.3;
 const SCROLL_START = 'top 75%';
@@ -41,7 +42,7 @@ export function setupWordReveal() {
       { opacity: START_OPACITY },
       {
         opacity: 1,
-        ease: 'power3.out',
+        ease: EASE.out,
         stagger: 0.1,
         scrollTrigger: { trigger: element, start: SCROLL_START, end: SCROLL_END, scrub: 1 },
       }

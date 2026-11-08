@@ -10,6 +10,14 @@ import { disposeScene } from './scenes/shared.js';
 const MAX_DT = 1 / 30;
 const HERO_SECTIONS = ['permukaan', 'menyelam'];
 
+function reportAssets() {
+  const manager = THREE.DefaultLoadingManager;
+  manager.onProgress = (url, loaded, total) => {
+    window.dispatchEvent(new CustomEvent('sel:assets-progress', { detail: { ratio: total ? loaded / total : 0 } }));
+  };
+  manager.onLoad = () => window.dispatchEvent(new Event('sel:assets-ready'));
+}
+
 export function createStage() {
   const canvas = document.createElement('canvas');
   canvas.className = 'stage-canvas';
@@ -24,8 +32,11 @@ export function createStage() {
   } catch {
     canvas.remove();
     veil.remove();
+    window.dispatchEvent(new Event('sel:assets-ready'));
     return null;
   }
+
+  reportAssets();
 
   const quality = createQualityMonitor(startTier(), (tier) => applyTier(renderer, tier));
   const conductor = createConductor();

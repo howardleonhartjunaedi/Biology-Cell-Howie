@@ -24,7 +24,7 @@ body {
   background: var(--c-lab);
   color: var(--c-text);
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: var(--fs-body);
   line-height: 1.6;
   display: flex;
   flex-direction: column;
@@ -40,7 +40,7 @@ main {
   width: 100%;
   max-width: var(--page-max);
   margin: 0 auto;
-  padding: calc(var(--nav-height) + 48px) var(--gutter) 64px;
+  padding: calc(var(--nav-height) + var(--s-6)) var(--gutter) var(--s-8);
 }
 
 h1,
@@ -65,21 +65,21 @@ p {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-size: var(--fs-h1);
 }
 
 .tagline {
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 500;
-  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  font-size: var(--fs-h2);
   color: var(--c-aqua);
   margin: 0 0 1.5em;
 }
 
 .eyebrow {
   display: block;
-  font-size: 12px;
+  font-size: var(--fs-caption);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.15em;
@@ -124,4 +124,38 @@ canvas {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+.line-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.line-mask__word {
+  display: inline-block;
+}
+
+html {
+  color-scheme: dark;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a,
+button,
+summary,
+[role='button'] {
+  touch-action: manipulation;
+}
+
+@media (pointer: fine) {
+  html {
+    overscroll-behavior: none;
+  }
+}
+
+[id] {
+  scroll-margin-top: var(--nav-height);
 }

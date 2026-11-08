@@ -1,5 +1,6 @@
 import pages from '../data/pages.json';
 import { isCalmMode, setCalmMode } from './calm-mode.js';
+import { createSoundToggle } from './ambient-sound.js';
 
 function createLink(page, currentId) {
   const item = document.createElement('li');
@@ -56,7 +57,7 @@ export function renderNav(currentId) {
   list.className = 'nav__links';
   pages.forEach((page) => list.append(createLink(page, currentId)));
 
-  nav.append(logo, createMenuButton(nav), list, createCalmToggle());
+  nav.append(logo, createMenuButton(nav), list, createSoundToggle(), createCalmToggle());
 
   const skipLink = document.createElement('a');
   skipLink.className = 'skip-link';

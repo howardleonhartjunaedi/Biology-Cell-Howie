@@ -1,0 +1,51 @@
+.preloading body > *:not(.preloader) {
+  visibility: hidden;
+}
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding: var(--s-6) var(--gutter);
+  background: var(--c-lab);
+  clip-path: inset(0% 0% 0% 0%);
+}
+
+.preloader__word {
+  align-self: end;
+  display: flex;
+  gap: 0.25em;
+  margin: 0;
+  font-weight: 800;
+  font-size: var(--fs-display);
+  line-height: 0.9;
+  color: var(--c-cream);
+}
+
+.preloader__mask {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.preloader__letter {
+  display: inline-block;
+}
+
+.preloader__count {
+  justify-self: end;
+  margin: 0;
+  font-size: var(--fs-caption);
+  letter-spacing: 0.15em;
+  color: var(--c-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.preloader__number {
+  font-size: var(--fs-h1);
+  font-weight: 800;
+  letter-spacing: 0;
+  color: var(--c-cream);
+}
+

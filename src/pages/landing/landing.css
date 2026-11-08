@@ -61,8 +61,8 @@
 .term-list dt,
 .scale-steps li {
   transition-property: color;
-  transition-duration: 300ms;
-  transition-timing-function: var(--ease-ui);
+  transition-duration: var(--dur-base);
+  transition-timing-function: var(--ease-out);
 }
 
 .webgl-on .term-list dt.is-active {
@@ -89,14 +89,13 @@
   display: flex;
   align-items: center;
   background: var(--scene-bg);
-  scroll-margin-top: 0;
 }
 
 .scene__wrap {
   width: 100%;
   max-width: var(--page-max);
   margin: 0 auto;
-  padding: calc(var(--nav-height) + 48px) var(--gutter) 80px;
+  padding: calc(var(--nav-height) + var(--s-6)) var(--gutter) var(--s-12);
 }
 
 .scene--surface {
@@ -104,7 +103,7 @@
 }
 
 .poetic--large {
-  font-size: clamp(1.9rem, 4.6vw, 3.4rem);
+  font-size: var(--fs-h1);
   line-height: 1.2;
   color: var(--c-cream);
 }
@@ -138,16 +137,16 @@
 }
 
 .scene__wrap--end .poetic {
-  margin-bottom: 8px;
+  margin-bottom: var(--s-1);
 }
 
 .scene__wrap--end .button {
-  margin-top: 24px;
+  margin-top: var(--s-3);
 }
 
 .scene--dark .button {
-  font-size: 17px;
-  padding: 16px 28px;
+  font-size: var(--fs-body);
+  padding: var(--s-2) var(--s-4);
 }
 
 .scene .poetic {
