@@ -16,8 +16,6 @@ function drawText(canvas, title, tagline, dpr) {
   ctx.scale(dpr, dpr);
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.shadowColor = 'rgba(3, 40, 48, 0.55)';
-  ctx.shadowBlur = 24;
 
   [title, tagline].forEach((element) => {
     const style = getComputedStyle(element);
@@ -98,6 +96,7 @@ export function createTitleRipple(title, tagline) {
 
   function redraw(pixelRatio) {
     drawText(canvas, title, tagline, pixelRatio);
+    texture.dispose();
     texture.needsUpdate = true;
     uniforms.uTextSize.value.set(window.innerWidth, window.innerHeight);
     uniforms.uViewport.value.set(window.innerWidth, window.innerHeight);

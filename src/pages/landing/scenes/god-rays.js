@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { seededRandom } from './shared.js';
 
-function rayTexture() {
+export function rayTexture() {
   const canvas = document.createElement('canvas');
   canvas.width = 64;
   canvas.height = 256;

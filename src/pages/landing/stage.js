@@ -32,13 +32,14 @@ export function createStage() {
   const title = createTitleRipple(document.getElementById('judul-sel'), document.querySelector('.hero-tagline'));
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const scenes = new Map();
-  const clock = new THREE.Clock();
+  const timer = new THREE.Timer();
+  timer.connect(document);
   let time = 0;
   let running = true;
   let frameId = 0;
 
   function getScene(name) {
-    if (!scenes.has(name)) scenes.set(name, sceneFactories[name]({ tier: quality.tier }));
+    if (!scenes.has(name)) scenes.set(name, sceneFactories[name]({ tier: quality.tier, renderer }));
     return scenes.get(name);
   }
 
@@ -55,7 +56,8 @@ export function createStage() {
   function frame() {
     if (!running) return;
     frameId = requestAnimationFrame(frame);
-    const dt = Math.min(clock.getDelta(), MAX_DT);
+    timer.update();
+    const dt = Math.min(timer.getDelta(), MAX_DT);
     time += reduceMotion ? 0 : dt;
     quality.tick(dt);
 
@@ -82,7 +84,7 @@ export function createStage() {
     if (next === running) return;
     running = next;
     if (running) {
-      clock.getDelta();
+      timer.reset();
       quality.reset();
       frame();
     } else {
@@ -99,7 +101,11 @@ export function createStage() {
     layoutObserver.disconnect();
     window.removeEventListener('resize', resize);
     document.removeEventListener('visibilitychange', onVisibility);
-    scenes.forEach(({ scene }) => disposeScene(scene));
+    scenes.forEach((item) => {
+      item.dispose?.();
+      disposeScene(item.scene);
+    });
+    timer.dispose();
     title.dispose();
     renderer.dispose();
     canvas.remove();

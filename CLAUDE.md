@@ -224,6 +224,32 @@ Landing = water palette (deep/lagoon/aqua/forest). Pages 2–6 = **dark lab** (l
 - Scroll: Lenis (lerp ~0.1) + GSAP ScrollTrigger `scrub: 1` for scroll-linked 3D.
 - `prefers-reduced-motion: reduce` → disable scroll scrubbing & camera flights (jump-cut instead), keep content.
 
+### 4.5 Aturan anti-vibecode (dari Howard, 8 Nov 2026 — wajib di semua halaman)
+**DILARANG:**
+- Drop shadow / glow pada teks.
+- Gradien ungu/biru generik.
+- Glassmorphism.
+- Emoji sebagai ikon.
+- Card dengan border-radius besar untuk semua konten.
+- Semua elemen rata tengah.
+- Gambar vektor/clipart buatan kode untuk pemandangan.
+- Angka spasi acak.
+- Lebih dari 1 animasi "wow" per layar.
+- Teks generik ("Selamat datang di...", "Jelajahi dunia menakjubkan...").
+
+**WAJIB:**
+- Grid 12 kolom + skala spasi 8px (8/16/24/32/48/64/96/128) sebagai token.
+- Type scale tetap (display/h1/h2/body/caption) sebagai token.
+- Layout asimetris & editorial.
+- Aset nyata (HDRI, foto, model 3D berlisensi).
+- Satu set motion token (durasi & easing).
+- Semua state (hover/focus/active/disabled/loading/empty/error).
+- Cek di 1440px, 1024px, 390px.
+
+**Proses setiap layar baru:** bangun HANYA berdasarkan desain yang sudah disetujui Howard (Figma/Claude Design).
+Setelah membangun: screenshot Playwright, bandingkan dengan desain, daftar perbedaan, perbaiki sampai cocok.
+Pakai skill ui-ux-pro-max untuk review akhir setiap layar.
+
 ---
 
 ## 5. Global features

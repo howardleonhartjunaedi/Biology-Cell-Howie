@@ -142,11 +142,55 @@
   },
   {
     "kategori": "model3d",
-    "judul": "Adegan 3D Beranda (air, pulau, ikan, karang, lamun, sel hewan, sel tumbuhan, lumpur)",
+    "judul": "Adegan 3D Beranda (ikan, karang, lamun, sel hewan, sel tumbuhan, lumpur)",
     "pembuat": "Kelompok 4 XI-A5 (dibuat dengan kode Three.js)",
     "lisensi": "Karya sendiri",
     "url": "",
     "catatan": "Semua bentuk dibuat dari kode, tidak memakai model unduhan. Sel adalah ilustrasi, bukan skala sebenarnya.",
+    "dipakaiDi": [
+      "index.html"
+    ]
+  },
+  {
+    "kategori": "media",
+    "judul": "Qwantani Morning (Pure Sky) — HDRI langit pagi",
+    "pembuat": "Jarod Guest (Poly Haven)",
+    "lisensi": "CC0",
+    "url": "https://polyhaven.com/a/qwantani_morning_puresky",
+    "catatan": "Versi 1k, dipakai sebagai langit dan pencahayaan lingkungan adegan 1.",
+    "dipakaiDi": [
+      "index.html"
+    ]
+  },
+  {
+    "kategori": "media",
+    "judul": "A body of water surrounded by trees and rocks (Waisilip, Raja Ampat)",
+    "pembuat": "Simon Spring (Unsplash)",
+    "lisensi": "Unsplash License",
+    "url": "https://unsplash.com/photos/a-body-of-water-surrounded-by-trees-and-rocks-x3F81F-1ih8",
+    "catatan": "Dipotong, langit dihapus dengan shader, diberi kabut biru (dimodifikasi). Lapisan pulau dekat dan jauh.",
+    "dipakaiDi": [
+      "index.html"
+    ]
+  },
+  {
+    "kategori": "media",
+    "judul": "A group of rocks sitting on top of a body of water (Raja Ampat)",
+    "pembuat": "Simon Spring (Unsplash)",
+    "lisensi": "Unsplash License",
+    "url": "https://unsplash.com/photos/a-group-of-rocks-sitting-on-top-of-a-body-of-water-xg1GQCErGhs",
+    "catatan": "Dipotong, langit dihapus dengan shader, diberi kabut biru (dimodifikasi). Lapisan pulau tengah.",
+    "dipakaiDi": [
+      "index.html"
+    ]
+  },
+  {
+    "kategori": "media",
+    "judul": "waternormals.jpg (tekstur normal air)",
+    "pembuat": "three.js examples",
+    "lisensi": "MIT",
+    "url": "https://github.com/mrdoob/three.js/blob/r170/examples/textures/waternormals.jpg",
+    "catatan": "Dipakai oleh Water.js untuk riak permukaan air.",
     "dipakaiDi": [
       "index.html"
     ]

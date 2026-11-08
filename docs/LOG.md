@@ -71,3 +71,23 @@ Catatan harian untuk laporan (BAB IV Kendala, BAB VI Evaluasi).
 **Langkah berikutnya**
 - Uji di laptop sekolah / proyektor. PC sendiri: 139–144 FPS.
 - Lanjut ke halaman Lab Sel.
+
+## Minggu, 8 November 2026 (lanjutan) — Redesign adegan 1 Beranda
+**Yang dikerjakan**
+- Howard menilai hero terlihat murah (bukit vektor datar, air polos, judul berbayangan, nav teal solid). Redesign hanya adegan 1.
+- Langit HDRI CC0 dari Poly Haven, air `Water.js` dengan pantulan, tiga lapis pulau dari foto Unsplash dengan kabut biru dan parallax.
+- Judul tanpa bayangan, rata kiri di grid 12 kolom; indikator gulir garis; "Lewati intro" di kanan bawah; nav transparan di atas hero.
+- Vignette dan film grain halus dengan CSS.
+- Screenshot sebelum/sesudah di `docs/laporan/screenshots/fase2-landing-hero-*.png` (1440, 1024, 390).
+
+**Kendala dan solusi**
+- HDRI pertama ("Spruit Sunrise") ternyata berisi pepohonan Afrika Selatan di cakrawala, jadi terlihat di belakang pulau. Solusi: pakai HDRI "pure sky" (langit saja).
+- HDRI kedua ("Kloofendal 28d Misty") terlalu putih berkabut; judul krem tidak terbaca dan air jadi abu-abu. Solusi: "Qwantani Morning" (langit biru pagi) dan kamera diputar menyamping dari matahari.
+- Sisa awan abu-abu ikut terlihat setelah langit foto dihapus. Solusi: aturan hapus ditambah (awan lebih gelap dan putih kebiruan ikut dihapus).
+- Pulau terlalu besar dan menutupi judul. Solusi: lapis dikecilkan dan dijauhkan.
+- Rumus cakrawala salah dua kali lipat (cakrawala di 40%). Solusi: diperbaiki ke 45%.
+- Nav kadang tetap gelap saat diuji karena IntersectionObserver salah membaca saat ukuran jendela uji berubah. Solusi: cukup cek posisi gulir.
+- Peringatan WebGL saat ukuran layar berubah. Solusi: tekstur judul dibuang sebelum digambar ulang.
+
+**Catatan aturan baru (§4.5 anti-vibecode)**
+- Adegan 3–8 masih memakai bentuk buatan kode (ikan, karang, lamun, sel). Perlu keputusan Howard apakah diganti aset nyata.

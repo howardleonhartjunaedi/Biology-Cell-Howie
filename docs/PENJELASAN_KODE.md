@@ -366,3 +366,66 @@ Dasar lumpur bergelombang (titik-titik bidang digeser acak), butiran sedimen mel
 ## Catatan performa (diukur 8 Nov di PC Howard, 1440×900)
 139–144 FPS di semua adegan. **Belum diuji di laptop sekolah**; kalau berat, `quality.js` menurunkan resolusi lalu Mode Tenang.
 Ukuran JavaScript setelah build: 717 KB (198 KB setelah dikompres), sebagian besar adalah library three.js.
+
+---
+
+# REDESIGN ADEGAN 1 BERANDA (8 Nov, permintaan Howard)
+
+Tujuan: adegan pertama terlihat seperti laguna Raja Ampat sungguhan di pagi hari, bukan gambar vektor.
+Bukit vektor buatan kode (`forest-layers.js`) dan air buatan sendiri di atas permukaan **dihapus** dan diganti aset nyata.
+
+## src/pages/landing/scenes/sky.js
+**Tugas file ini:** Memuat langit HDRI dan mencari posisi matahari di dalamnya.
+**Dipakai oleh:** `surface.js`
+**Cara kerja (langkah demi langkah):**
+1. `HDRLoader` memuat file `.hdr` (foto langit 360° dengan cahaya yang sangat terang tersimpan apa adanya).
+2. `findSun()` memeriksa setiap piksel di setengah atas gambar dan mencari yang paling terang. Itu matahari.
+3. Posisi piksel (u, v) diubah menjadi arah 3D dengan rumus bola: sudut kiri-kanan `phi` dan sudut naik `elevation`.
+4. `PMREMGenerator` membuat versi kabur dari langit untuk pencahayaan (environment), sehingga benda memantulkan langit.
+5. `scene.background` = langit, `scene.environment` = cahaya dari langit.
+**Kemungkinan pertanyaan guru & jawabannya:**
+- T: Apa itu HDRI? J: Foto panorama 360° yang menyimpan kecerahan asli. Matahari benar-benar jauh lebih terang dari awan, jadi pantulan di air terlihat nyata.
+- T: Kenapa matahari dicari otomatis? J: Supaya kilau di air (`sunDirection`) selalu cocok dengan posisi matahari di langit, walau file HDRI diganti.
+
+## src/pages/landing/scenes/surface.js (bagian di atas air)
+**Yang berubah:**
+- **Air:** memakai `Water.js` bawaan three.js. Air ini menggambar ulang pemandangan dari bawah (seperti cermin) ke tekstur kecil
+  (`REFLECTION_SIZE`: 512/384/256 px sesuai tingkat kualitas), lalu menggoyangkan pantulan itu dengan `waternormals.jpg` yang bergerak.
+  Hasilnya: pantulan langit dan pulau, warna turquoise di dekat kamera, kilau matahari.
+- **Kamera rendah:** tinggi 1,3 unit. `basePitch` menunduk sedikit supaya cakrawala berada di ±45% tinggi layar:
+  `-Math.atan(0.05 * 2 * tan(FOV/2))` (5% di atas tengah layar).
+- **Arah kamera:** `yaw` dihitung dari posisi matahari lalu digeser `SUN_SIDE_ANGLE` (1,35 radian ≈ 77°) supaya matahari ada di samping,
+  bukan di depan. Kalau menghadap matahari, langit jadi putih menyilaukan dan judul tidak terbaca.
+- **Bawah air:** tetap memakai shader air lama (`water.vert/frag.glsl`), hanya terlihat dari bawah (`BackSide`).
+- **Partikel halus** di atas air dan **sinar matahari** lembut (`createSunShafts`, opasitas 5%).
+
+## src/pages/landing/scenes/island-layers.js + shaders/island.frag.glsl
+**Tugas file ini:** Tiga lapis pulau dari foto Unsplash (Simon Spring), dipasang pada jarak berbeda: 92, 125, dan 180 unit.
+**Cara kerja (langkah demi langkah):**
+1. Setiap lapis memakai **potongan** foto (`crop`: kiri, atas, kanan, bawah dalam 0–1), hanya bagian pulau. Air di foto dibuang karena kita punya air 3D sendiri.
+2. Shader menghapus langit dari foto (`skyAmount`): piksel yang **biru** (biru jauh lebih besar dari merah), **awan** (terang dan tidak berwarna),
+   atau **putih kebiruan** dibuat transparan. Pulau hijau dan batu karst abu-abu gelap tetap terlihat.
+3. **Aerial perspective:** lapis yang jauh dicampur dengan warna kabut biru (`uHaze` 0,6 / 0,3 / 0,1). Di dunia nyata, gunung jauh juga terlihat lebih biru dan pudar.
+4. Tepi kiri-kanan setiap lapis memudar halus (`smoothstep`) supaya tidak terlihat potongan lurus.
+5. **Parallax:** `update(pointer, scroll)` menggeser lapis dekat lebih banyak daripada lapis jauh (`depth` 1 / 0,45 / 0,15) saat kursor bergerak dan saat digulir.
+**Kemungkinan pertanyaan guru & jawabannya:**
+- T: Kenapa langit tidak dihapus di Photoshop? J: Dengan shader, foto asli tidak diubah dan aturan hapusnya bisa disetel angka. Tidak perlu program tambahan.
+- T: Apa itu parallax? J: Benda dekat terlihat bergerak lebih cepat daripada benda jauh saat kita bergeser. Ini memberi rasa kedalaman.
+
+## src/pages/landing/hero.css
+**Tugas file ini:** Tata letak adegan 1.
+- Judul `clamp(96px, 16vw, 220px)`, jarak huruf 0,25em, **rata kiri** mulai kolom ke-2 dari grid 12 kolom (aturan §4.5: tidak semua rata tengah).
+- Tidak ada bayangan teks (aturan §4.5). Efek riak tetap dari `title-ripple.js`.
+- **Indikator gulir:** garis tipis 1 px dengan titik terang yang turun berulang (`@keyframes scroll-cue`). Di Mode Tenang animasinya berhenti.
+  Teks "Gulir untuk menyelam" tetap ada sebagai `aria-label` untuk pembaca layar.
+- **Lewati intro** kecil di kanan bawah.
+- **Vignette** (gelap tipis di pinggir) dan **film grain** (bintik halus, opasitas 6%) dibuat dengan CSS, bukan WebGL, jadi tidak membebani kartu grafis.
+- **Nav transparan** selama di atas hero: kelas `nav-over-hero` di `<body>`.
+
+## src/pages/landing/main.js — `updateNavOverHero()`
+Kalau posisi gulir masih kurang dari 65% tinggi hero, `<body>` diberi kelas `nav-over-hero` (nav transparan, menu disembunyikan ke tombol "Menu").
+Setelah lewat, kelas dilepas dan nav kembali berlatar gelap. Dipanggil saat gulir dan saat ukuran layar berubah.
+
+## Perbaikan kecil
+- `stage.js`: `THREE.Clock` sudah usang di three.js versi ini, diganti `THREE.Timer` (juga otomatis berhenti saat tab disembunyikan).
+- `title-ripple.js`: bayangan teks dihapus; tekstur dibuang (`dispose`) sebelum digambar ulang supaya tidak ada peringatan WebGL saat ukuran layar berubah.
