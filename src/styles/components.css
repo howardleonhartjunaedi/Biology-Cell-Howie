@@ -259,3 +259,18 @@
   background: var(--c-coral);
   border-color: var(--c-coral);
 }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  z-index: 70;
+  transform: translateX(-50%);
+  max-width: min(90vw, 480px);
+  padding: 12px 18px;
+  border-radius: var(--radius);
+  background: var(--c-lab-2);
+  border: 1px solid var(--c-line);
+  color: var(--c-text);
+  font-size: 14px;
+}

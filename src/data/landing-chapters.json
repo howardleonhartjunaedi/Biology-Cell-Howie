@@ -1,0 +1,11 @@
+[
+  { "section": "permukaan", "scene": "surface", "from": 0, "to": 1, "sceneStart": 0, "sceneEnd": 0.35 },
+  { "section": "menyelam", "scene": "surface", "from": 0, "to": 1, "sceneStart": 0.35, "sceneEnd": 1, "veilOut": "#04252D" },
+  { "section": "terumbu", "scene": "reef", "from": 0, "to": 1, "sceneStart": 0, "sceneEnd": 0.6, "veilIn": "#04252D", "veilOut": "#042B35" },
+  { "section": "sel-hewan", "scene": "animalCell", "from": 0, "to": 1, "sceneStart": 0, "sceneEnd": 1, "veilIn": "#042B35", "veilOut": "#04252D" },
+  { "section": "karang", "scene": "reef", "from": 0, "to": 1, "sceneStart": 0.6, "sceneEnd": 1, "veilIn": "#04252D", "veilOut": "#0A2A24" },
+  { "section": "sel-tumbuhan", "scene": "seagrass", "from": 0, "to": 0.45, "sceneStart": 0, "sceneEnd": 1, "veilIn": "#0A2A24", "veilOut": "#0A2A24" },
+  { "section": "sel-tumbuhan", "scene": "plantCell", "from": 0.45, "to": 1, "sceneStart": 0, "sceneEnd": 1, "veilIn": "#0A2A24", "veilOut": "#17191A" },
+  { "section": "ringkasan", "scene": "mud", "from": 0, "to": 1, "sceneStart": 0, "sceneEnd": 0.7, "veilIn": "#17191A" },
+  { "section": "gelap", "scene": "mud", "from": 0, "to": 1, "sceneStart": 0.7, "sceneEnd": 1, "veilOut": "#000000" }
+]

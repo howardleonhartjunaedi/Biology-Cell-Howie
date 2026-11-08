@@ -1,15 +1,154 @@
 [
-  { "kategori": "materi", "judul": "Slide BAB 1 SEL — Biologi XI, TP 25/26", "pembuat": "Guru Biologi Kolese Kanisius", "lisensi": "Materi kelas", "url": "", "catatan": "", "dipakaiDi": ["semua"] },
-  { "kategori": "materi", "judul": "Slide SEL Update 2 — Biologi XI", "pembuat": "Guru Biologi Kolese Kanisius", "lisensi": "Materi kelas", "url": "", "catatan": "", "dipakaiDi": ["semua"] },
-  { "kategori": "materi", "judul": "Rangkuman Biologi Sel", "pembuat": "Kelompok 4 XI-A5", "lisensi": "Karya kelompok", "url": "", "catatan": "", "dipakaiDi": ["semua"] },
-  { "kategori": "materi", "judul": "Rancangan Website Sel Kelompok 4 (Pertemuan 2)", "pembuat": "Kelompok 4 XI-A5", "lisensi": "Karya kelompok", "url": "", "catatan": "", "dipakaiDi": ["semua"] },
-  { "kategori": "materi", "judul": "Cell Size and Scale", "pembuat": "Genetic Science Learning Center, University of Utah", "lisensi": "Rujukan", "url": "https://learn.genetics.utah.edu/content/cells/scale/", "catatan": "", "dipakaiDi": ["index.html"] },
-  { "kategori": "font", "judul": "Montserrat", "pembuat": "Julieta Ulanovsky dkk. (Google Fonts)", "lisensi": "SIL Open Font License 1.1", "url": "https://fonts.google.com/specimen/Montserrat", "catatan": "", "dipakaiDi": ["semua"] },
-  { "kategori": "font", "judul": "Cormorant Garamond", "pembuat": "Christian Thalmann (Google Fonts)", "lisensi": "SIL Open Font License 1.1", "url": "https://fonts.google.com/specimen/Cormorant+Garamond", "catatan": "", "dipakaiDi": ["semua"] },
-  { "kategori": "library", "judul": "Vite", "pembuat": "Evan You & kontributor Vite", "lisensi": "MIT", "url": "https://vite.dev", "catatan": "Alat build", "dipakaiDi": ["semua"] },
-  { "kategori": "library", "judul": "three.js", "pembuat": "mrdoob & kontributor three.js", "lisensi": "MIT", "url": "https://threejs.org", "catatan": "", "dipakaiDi": [] },
-  { "kategori": "library", "judul": "GSAP + ScrollTrigger", "pembuat": "GreenSock (Webflow)", "lisensi": "GSAP Standard License (gratis)", "url": "https://gsap.com", "catatan": "", "dipakaiDi": [] },
-  { "kategori": "library", "judul": "Lenis", "pembuat": "darkroom.engineering", "lisensi": "MIT", "url": "https://lenis.darkroom.engineering", "catatan": "", "dipakaiDi": [] },
-  { "kategori": "library", "judul": "glTF-Transform", "pembuat": "Don McCurdy", "lisensi": "MIT", "url": "https://gltf-transform.dev", "catatan": "Alat kompres model, tidak dikirim ke browser", "dipakaiDi": [] },
-  { "kategori": "ai", "judul": "Claude (Anthropic)", "pembuat": "Anthropic", "lisensi": "-", "url": "https://claude.ai", "catatan": "Website ini dibuat dengan bantuan Claude (Anthropic) sebagai asisten pemrograman. Seluruh materi telah diperiksa oleh kelompok berdasarkan slide guru dan sumber yang dicantumkan.", "dipakaiDi": ["semua"] }
+  {
+    "kategori": "materi",
+    "judul": "Slide BAB 1 SEL — Biologi XI, TP 25/26",
+    "pembuat": "Guru Biologi Kolese Kanisius",
+    "lisensi": "Materi kelas",
+    "url": "",
+    "catatan": "",
+    "dipakaiDi": [
+      "semua"
+    ]
+  },
+  {
+    "kategori": "materi",
+    "judul": "Slide SEL Update 2 — Biologi XI",
+    "pembuat": "Guru Biologi Kolese Kanisius",
+    "lisensi": "Materi kelas",
+    "url": "",
+    "catatan": "",
+    "dipakaiDi": [
+      "semua"
+    ]
+  },
+  {
+    "kategori": "materi",
+    "judul": "Rangkuman Biologi Sel",
+    "pembuat": "Kelompok 4 XI-A5",
+    "lisensi": "Karya kelompok",
+    "url": "",
+    "catatan": "",
+    "dipakaiDi": [
+      "semua"
+    ]
+  },
+  {
+    "kategori": "materi",
+    "judul": "Rancangan Website Sel Kelompok 4 (Pertemuan 2)",
+    "pembuat": "Kelompok 4 XI-A5",
+    "lisensi": "Karya kelompok",
+    "url": "",
+    "catatan": "",
+    "dipakaiDi": [
+      "semua"
+    ]
+  },
+  {
+    "kategori": "materi",
+    "judul": "Cell Size and Scale",
+    "pembuat": "Genetic Science Learning Center, University of Utah",
+    "lisensi": "Rujukan",
+    "url": "https://learn.genetics.utah.edu/content/cells/scale/",
+    "catatan": "",
+    "dipakaiDi": [
+      "index.html"
+    ]
+  },
+  {
+    "kategori": "font",
+    "judul": "Montserrat",
+    "pembuat": "Julieta Ulanovsky dkk. (Google Fonts)",
+    "lisensi": "SIL Open Font License 1.1",
+    "url": "https://fonts.google.com/specimen/Montserrat",
+    "catatan": "",
+    "dipakaiDi": [
+      "semua"
+    ]
+  },
+  {
+    "kategori": "font",
+    "judul": "Cormorant Garamond",
+    "pembuat": "Christian Thalmann (Google Fonts)",
+    "lisensi": "SIL Open Font License 1.1",
+    "url": "https://fonts.google.com/specimen/Cormorant+Garamond",
+    "catatan": "",
+    "dipakaiDi": [
+      "semua"
+    ]
+  },
+  {
+    "kategori": "library",
+    "judul": "Vite",
+    "pembuat": "Evan You & kontributor Vite",
+    "lisensi": "MIT",
+    "url": "https://vite.dev",
+    "catatan": "Alat build",
+    "dipakaiDi": [
+      "semua"
+    ]
+  },
+  {
+    "kategori": "library",
+    "judul": "three.js",
+    "pembuat": "mrdoob & kontributor three.js",
+    "lisensi": "MIT",
+    "url": "https://threejs.org",
+    "catatan": "",
+    "dipakaiDi": [
+      "index.html"
+    ]
+  },
+  {
+    "kategori": "library",
+    "judul": "GSAP + ScrollTrigger",
+    "pembuat": "GreenSock (Webflow)",
+    "lisensi": "GSAP Standard License (gratis)",
+    "url": "https://gsap.com",
+    "catatan": "",
+    "dipakaiDi": [
+      "index.html"
+    ]
+  },
+  {
+    "kategori": "library",
+    "judul": "Lenis",
+    "pembuat": "darkroom.engineering",
+    "lisensi": "MIT",
+    "url": "https://lenis.darkroom.engineering",
+    "catatan": "",
+    "dipakaiDi": [
+      "index.html"
+    ]
+  },
+  {
+    "kategori": "library",
+    "judul": "glTF-Transform",
+    "pembuat": "Don McCurdy",
+    "lisensi": "MIT",
+    "url": "https://gltf-transform.dev",
+    "catatan": "Alat kompres model, tidak dikirim ke browser",
+    "dipakaiDi": []
+  },
+  {
+    "kategori": "ai",
+    "judul": "Claude (Anthropic)",
+    "pembuat": "Anthropic",
+    "lisensi": "-",
+    "url": "https://claude.ai",
+    "catatan": "Website ini dibuat dengan bantuan Claude (Anthropic) sebagai asisten pemrograman. Seluruh materi telah diperiksa oleh kelompok berdasarkan slide guru dan sumber yang dicantumkan.",
+    "dipakaiDi": [
+      "semua"
+    ]
+  },
+  {
+    "kategori": "model3d",
+    "judul": "Adegan 3D Beranda (air, pulau, ikan, karang, lamun, sel hewan, sel tumbuhan, lumpur)",
+    "pembuat": "Kelompok 4 XI-A5 (dibuat dengan kode Three.js)",
+    "lisensi": "Karya sendiri",
+    "url": "",
+    "catatan": "Semua bentuk dibuat dari kode, tidak memakai model unduhan. Sel adalah ilustrasi, bukan skala sebenarnya.",
+    "dipakaiDi": [
+      "index.html"
+    ]
+  }
 ]

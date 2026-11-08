@@ -1,0 +1,128 @@
+import * as THREE from 'three';
+import fragmentShader from './shaders/title.frag.glsl?raw';
+
+const MAX_RIPPLES = 16;
+const DROP_EVERY_PX = 40;
+const MIN_AMPLITUDE = 1.5;
+const MAX_AMPLITUDE = 3.5;
+const CLICK_AMPLITUDE = 5;
+const MAX_LENS_PX = 6;
+const SPEED_FOR_MAX = 900;
+
+function drawText(canvas, title, tagline, dpr) {
+  canvas.width = window.innerWidth * dpr;
+  canvas.height = window.innerHeight * dpr;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.shadowColor = 'rgba(3, 40, 48, 0.55)';
+  ctx.shadowBlur = 24;
+
+  [title, tagline].forEach((element) => {
+    const style = getComputedStyle(element);
+    const rect = element.getBoundingClientRect();
+    ctx.font = `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+    ctx.letterSpacing = style.letterSpacing === 'normal' ? '0px' : style.letterSpacing;
+    ctx.fillStyle = style.getPropertyValue('--webgl-color') || '#FFF4D6';
+    const shift = parseFloat(ctx.letterSpacing) / 2 || 0;
+    ctx.fillText(element.textContent, rect.left + rect.width / 2 + shift, rect.top + window.scrollY + rect.height / 2);
+  });
+}
+
+export function createTitleRipple(title, tagline) {
+  const canvas = document.createElement('canvas');
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.generateMipmaps = false;
+  texture.minFilter = THREE.LinearFilter;
+
+  const ripples = Array.from({ length: MAX_RIPPLES }, () => new THREE.Vector4(0, 0, -10, 0));
+  const uniforms = {
+    uText: { value: texture },
+    uTextSize: { value: new THREE.Vector2(1, 1) },
+    uViewport: { value: new THREE.Vector2(1, 1) },
+    uDpr: { value: 1 },
+    uScroll: { value: 0 },
+    uTime: { value: 0 },
+    uMouse: { value: new THREE.Vector2(-999, -999) },
+    uLens: { value: 0 },
+    uStrength: { value: 1 },
+    uOpacity: { value: 1 },
+    uRipples: { value: ripples },
+  };
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  const material = new THREE.ShaderMaterial({
+    uniforms,
+    fragmentShader,
+    vertexShader: 'void main() { gl_Position = vec4(position.xy, 0.0, 1.0); }',
+    transparent: true,
+    depthTest: false,
+    depthWrite: false,
+  });
+  scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material));
+
+  let nextRipple = 0;
+  let lastDrop = null;
+  let lastMove = null;
+  let speed = 0;
+  let time = 0;
+
+  function addRipple(x, y, amplitude) {
+    ripples[nextRipple].set(x, y, time, amplitude);
+    nextRipple = (nextRipple + 1) % MAX_RIPPLES;
+  }
+
+  function onPointerMove(event) {
+    const now = performance.now();
+    if (lastMove) {
+      const moved = Math.hypot(event.clientX - lastMove.x, event.clientY - lastMove.y);
+      const seconds = Math.max((now - lastMove.t) / 1000, 0.001);
+      speed = speed * 0.7 + (moved / seconds) * 0.3;
+    }
+    lastMove = { x: event.clientX, y: event.clientY, t: now };
+    uniforms.uMouse.value.set(event.clientX, event.clientY);
+
+    if (!lastDrop || Math.hypot(event.clientX - lastDrop.x, event.clientY - lastDrop.y) > DROP_EVERY_PX) {
+      const strength = Math.min(speed / SPEED_FOR_MAX, 1);
+      addRipple(event.clientX, event.clientY, MIN_AMPLITUDE + (MAX_AMPLITUDE - MIN_AMPLITUDE) * strength);
+      lastDrop = { x: event.clientX, y: event.clientY };
+    }
+  }
+
+  function onPointerDown(event) {
+    addRipple(event.clientX, event.clientY, CLICK_AMPLITUDE);
+  }
+
+  function redraw(pixelRatio) {
+    drawText(canvas, title, tagline, pixelRatio);
+    texture.needsUpdate = true;
+    uniforms.uTextSize.value.set(window.innerWidth, window.innerHeight);
+    uniforms.uViewport.value.set(window.innerWidth, window.innerHeight);
+  }
+
+  function update(dt, scrollY, heroProgress, renderer) {
+    time += dt;
+    speed *= Math.exp(-4 * dt);
+    uniforms.uTime.value = time;
+    uniforms.uDpr.value = renderer.getPixelRatio();
+    uniforms.uLens.value = Math.min(speed / SPEED_FOR_MAX, 1) * MAX_LENS_PX;
+    uniforms.uScroll.value = scrollY - heroProgress * 120;
+    uniforms.uStrength.value = 1 + heroProgress * 3;
+    uniforms.uOpacity.value = 1 - heroProgress;
+  }
+
+  window.addEventListener('pointermove', onPointerMove, { passive: true });
+  window.addEventListener('pointerdown', onPointerDown, { passive: true });
+
+  function dispose() {
+    window.removeEventListener('pointermove', onPointerMove);
+    window.removeEventListener('pointerdown', onPointerDown);
+    texture.dispose();
+    material.dispose();
+  }
+
+  return { scene, camera, update, redraw, dispose };
+}

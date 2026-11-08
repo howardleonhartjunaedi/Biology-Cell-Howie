@@ -224,3 +224,145 @@ Kode modul biasa (`src/...`) dijalankan terlambat untuk menangkapnya. Skrip bias
 3. Di Mode Tenang, kata tetap dibungkus tetapi tidak dianimasikan, jadi semua langsung terang.
 **Kemungkinan pertanyaan guru & jawabannya:**
 - T: Apa arti `scrub: 1`? J: Animasi tidak berjalan sendiri, melainkan "ditarik" oleh gulir. Angka 1 artinya animasi menyusul posisi gulir dalam ±1 detik supaya halus.
+
+---
+
+# BERANDA 3D (Fase 2)
+
+Gambaran besar: di belakang teks Beranda ada **satu kanvas WebGL** yang menempel di layar (`position: fixed`).
+Saat halaman digulir, kode membaca posisi gulir, menentukan adegan mana yang sedang aktif, lalu menggambar adegan itu.
+Semua objek 3D (air, pulau, ikan, karang, lamun, sel) **dibuat sendiri dengan kode Three.js**, tidak ada model yang diunduh.
+
+```
+main.js -> stage.js -+-> conductor.js   (posisi gulir -> adegan + progres)
+                     +-> scenes/index.js -> surface / reef / animal-cell / seagrass / plant-cell / mud
+                     +-> title-ripple.js (efek riak judul SEL)
+                     +-> dom-sync.js     (menyorot teks yang sesuai dengan 3D)
+                     +-> core/renderer.js + core/quality.js
+```
+
+## src/core/renderer.js
+**Tugas file ini:** Membuat **satu** `WebGLRenderer` dengan pengaturan hemat.
+**Dipakai oleh:** `src/pages/landing/stage.js`
+**Bagian penting:**
+- `PIXEL_RATIO_BY_TIER` — jumlah piksel yang digambar: tinggi 1,5×, sedang 1×, rendah 0,75×. Makin kecil, makin ringan.
+- `antialias: tier === 'high'` — penghalus tepi hanya untuk laptop kuat.
+- `ACESFilmicToneMapping` — mengatur terang-gelap agar warna terlihat seperti film, tidak "terbakar" putih.
+- `autoClear = false` — kita menggambar dua lapis (adegan, lalu judul) di atas satu sama lain, jadi pembersihan layar diatur manual.
+**Kemungkinan pertanyaan guru & jawabannya:**
+- T: Kenapa hanya satu renderer? J: Setiap renderer memakai memori kartu grafis. Satu renderer dipakai bergantian oleh semua adegan.
+
+## src/core/quality.js
+**Tugas file ini:** Mengukur FPS (gambar per detik) dan menurunkan kualitas otomatis kalau laptop berat.
+**Cara kerja (langkah demi langkah):**
+1. `startTier()` menebak awal: layar kecil atau prosesor ≤ 4 inti → "medium", selain itu "high".
+2. `tick(dt)` menghitung jumlah frame setiap 2 detik.
+3. FPS < 40 → turun satu tingkat (high → medium → low) dengan mengecilkan resolusi.
+4. Sudah di "low" dan FPS < 20 → Mode Tenang dinyalakan, lalu muncul pesan kecil (`showToast`).
+**Kemungkinan pertanyaan guru & jawabannya:**
+- T: Apa itu FPS? J: Frames per second. 60 FPS = gambar diganti 60 kali per detik, terasa mulus. Di bawah 30 mulai patah-patah.
+
+## src/data/landing-chapters.json
+**Tugas file ini:** "Naskah" Beranda. Tiap baris berkata: section HTML mana → adegan 3D apa → bagian mana dari adegan itu.
+- `from`/`to` — bagian section (0 = atas, 1 = bawah). Section `sel-tumbuhan` dibagi dua: 0–0,45 lamun, 0,45–1 sel tumbuhan.
+- `sceneStart`/`sceneEnd` — progres adegan. Contoh: adegan `surface` dipakai di dua section: permukaan (0–0,35) lalu menyelam (0,35–1).
+- `veilIn`/`veilOut` — warna "tirai" yang menutup layar sebentar saat berganti adegan, supaya pergantian tidak terlihat meloncat.
+**Kemungkinan pertanyaan guru & jawabannya:**
+- T: Kenapa disimpan di JSON? J: Supaya urutan cerita bisa diubah tanpa mengubah kode.
+
+## src/pages/landing/conductor.js
+**Tugas file ini:** "Dirigen". Mengubah posisi gulir menjadi: section aktif, adegan aktif, progres adegan, dan tirai.
+**Cara kerja (langkah demi langkah):**
+1. `measureSections()` mencatat posisi atas dan tinggi setiap section.
+2. Titik fokus = tengah layar (`scrollY + tinggi layar / 2`). Section aktif = section terakhir yang bagian atasnya sudah melewati titik fokus.
+3. `sectionT` = sudah berapa persen section itu dilewati (0–1).
+4. Baris JSON yang cocok dicari, lalu `sceneProgress` dihitung dengan `lerp`.
+5. `update()` memakai `smoothY` yang mengejar posisi gulir sebenarnya sedikit demi sedikit (`1 - Math.exp(-5 * dt)`), supaya kamera bergerak halus.
+6. `exact()` memakai posisi gulir asli (tanpa penghalusan) untuk menyorot teks, supaya teks selalu tepat.
+**Kemungkinan pertanyaan guru & jawabannya:**
+- T: Apa itu lerp? J: `lerp(a, b, t)` = titik di antara a dan b. t = 0 hasilnya a, t = 1 hasilnya b, t = 0,5 tepat di tengah.
+
+## src/pages/landing/stage.js
+**Tugas file ini:** "Panggung". Membuat kanvas, renderer, tirai, lalu menjalankan putaran gambar (render loop).
+**Dipakai oleh:** `src/pages/landing/main.js`
+**Cara kerja setiap frame (`frame()`):**
+1. `dt` = waktu sejak frame sebelumnya, dibatasi maksimal 1/30 detik supaya animasi tidak melompat setelah jeda.
+2. Monitor kualitas diberi `dt`.
+3. Dirigen memberi tahu adegan aktif dan progresnya. Adegan dibuat **hanya saat pertama dibutuhkan** (`getScene`) lalu disimpan.
+4. Adegan aktif di-`update` lalu digambar. Hanya adegan aktif yang digambar.
+5. Kalau sedang di section permukaan/menyelam, judul SEL digambar di atasnya.
+6. Opasitas dan warna tirai diatur. `syncDom` menyorot teks yang sesuai.
+**Bagian penting:**
+- `visibilitychange` — kalau tab disembunyikan, loop berhenti (hemat baterai). Saat kembali, jalan lagi.
+- `ResizeObserver` — kalau tinggi isi halaman berubah (font selesai dimuat, layar diputar), posisi section diukur ulang.
+- `dispose()` — saat Mode Tenang dinyalakan atau halaman ditinggalkan, semua geometri, material, dan tekstur dibuang dari memori.
+- `try { createRenderer } catch` — kalau browser tidak mendukung WebGL, panggung tidak dibuat dan halaman tetap tampil sebagai teks.
+
+## src/pages/landing/dom-sync.js
+**Tugas file ini:** Menyamakan teks dengan 3D. Saat mitokondria menyala di 3D, kata "Mitokondria" di daftar juga berwarna koral.
+- `activePart(progress, jumlah)` — rumus yang **sama** dipakai oleh adegan 3D dan teks, jadi keduanya tidak mungkin berbeda.
+- Tangga skala 30 cm → 1 cm → 1 mm → 20 µm ikut menyala satu per satu saat section terumbu digulir.
+
+## src/pages/landing/title-ripple.js + shaders/title.frag.glsl
+**Tugas file ini:** Efek riak air pada judul **SEL** (CLAUDE.md §6.1.1).
+**Cara kerja (langkah demi langkah):**
+1. `drawText` menggambar "SEL" dan tagline ke kanvas 2D biasa, tepat di posisi `<h1>` asli (diukur dengan `getBoundingClientRect`). Kanvas itu menjadi tekstur.
+2. Tekstur ditempel di satu persegi yang menutupi seluruh layar (`PlaneGeometry(2, 2)`).
+3. Shader (program kecil di kartu grafis) menentukan, untuk setiap piksel, **dari titik mana di tekstur warna diambil**. Kalau diambil dari tempat yang sedikit bergeser, teks terlihat membengkok seperti di bawah air.
+4. **Lensa kursor:** piksel dalam radius 90 px dari kursor digeser menjauh, kekuatannya mengecil halus dengan kurva cosinus, maksimal 6 px, makin kuat kalau kursor bergerak cepat.
+5. **Riak:** setiap kursor bergerak 40 px, satu titik riak disimpan (`addRipple`: posisi x, y, waktu mulai, kekuatan). Riak berupa cincin yang melebar 120 px/detik, lebar pita 24 px, dan memudar dalam 1,5 detik. Klik = riak besar 5 px.
+6. Maksimal 16 riak disimpan bergiliran (`nextRipple = (nextRipple + 1) % 16`).
+7. Saat digulir ke adegan 2, `heroProgress` naik: riak makin kuat, judul tenggelam (`uScroll`) dan memudar (`uOpacity`).
+**Bagian penting:**
+- Baris shader `exp(-(ring * ring) / (2.0 * RING_WIDTH * RING_WIDTH))` — kurva lonceng (Gauss): kuat tepat di cincin, cepat melemah di luar cincin.
+- Baris shader `sin(ring * 0.25)` — bentuk gelombang naik-turun di dalam cincin.
+- Saat diam, semua geseran = 0, jadi teks 100% tajam.
+**Kemungkinan pertanyaan guru & jawabannya:**
+- T: Kenapa tidak pakai CSS saja? J: CSS tidak bisa membengkokkan setiap piksel huruf seperti pantulan air. Shader bisa, dan berjalan di kartu grafis jadi tetap ringan.
+- T: Kenapa ada `<h1>` asli juga? J: Untuk mesin pencari, pembaca layar, dan Mode Tenang. Di mode 3D warnanya dibuat transparan.
+
+## src/pages/landing/scenes/shared.js
+**Tugas file ini:** Alat bantu bersama untuk semua adegan.
+- `lerp`, `clamp01` (batasi 0–1), `smooth` (percepatan halus di awal dan akhir), `rangeT` (ubah rentang progres menjadi 0–1).
+- `seededRandom` — angka acak yang selalu sama setiap dimuat, jadi tampilan konsisten.
+- `createDriftParticles` — butiran melayang berbentuk bulat.
+- `addSway` — menambah gerak bergoyang ke material: makin tinggi bagian objek, makin besar goyangannya.
+- `disposeScene` — buang semua memori adegan.
+
+## scenes/surface.js + shaders/water.vert.glsl + water.frag.glsl (adegan 1–2)
+- **Air:** bidang 200×200 dengan banyak titik. Vertex shader menaikkan-turunkan setiap titik dengan jumlah tiga gelombang sinus (`waveHeight`), lalu menghitung arah permukaan (normal) untuk pantulan.
+- **Fragment shader:** warna dicampur antara pirus terang dan biru dalam berdasarkan sudut pandang (efek Fresnel). Kilau matahari (`glint`) hanya di kejauhan. Dari bawah air (`gl_FrontFacing` salah) permukaan terlihat terang seperti jendela cahaya.
+- **Pulau hutan:** `forest-layers.js` menggambar siluet pulau di kanvas 2D lalu dipasang sebagai lapisan datar berjarak berbeda, dengan kabut di antaranya (2.5D).
+- **Menyelam:** kamera turun dari y = 2,4 ke bawah permukaan. Saat `camera.position.y < 0`, warna latar dan kabut berganti ke biru bawah laut, gelembung dan sinar cahaya (`god-rays.js`) dinyalakan.
+
+## scenes/god-rays.js
+Sinar cahaya bawah air: beberapa bidang tipis bertekstur gradasi putih→transparan, dicampur dengan `AdditiveBlending` (warnanya ditambahkan, jadi terlihat bercahaya). Opasitasnya naik-turun pelan.
+
+## scenes/reef.js + fish-school.js + coral-garden.js (adegan 3 dan 5)
+- **Ikan:** satu `InstancedMesh` — satu bentuk ikan digambar puluhan kali dalam **satu** perintah gambar (hemat). Badan = bola yang dipipihkan, ekor = kerucut.
+- Setiap frame, posisi tiap ikan dihitung di lingkaran, dan arah hadapnya mengikuti arah renang.
+- **Ekor bergoyang:** `addSwimWiggle` menyisipkan rumus ke shader bawaan: bagian ekor (`tailWeight`) digeser ke samping dengan gelombang sinus.
+- **Kamera:** mengikuti satu ikan pemimpin dan makin mendekat (seperti zoom ke kulit ikan, lalu masuk ke sel hewan).
+- **Karang (progres 0,6–1):** kamera berpindah ke taman karang: cabang (silinder) bergoyang dan gundukan bertekstur kasar.
+
+## scenes/animal-cell.js + cell-parts.js (adegan 4)
+- **Membran:** bola transparan yang bergoyang seperti jeli (`addWobble` menggeser permukaan dengan perkalian tiga sinus).
+- **Organel:** nukleus + nukleolus, 5 mitokondria (kapsul), RE dan badan Golgi (busur bertumpuk), lisosom (bola kecil), sentriol (dua tabung tegak lurus).
+- **Menyala bergiliran:** `createHighlighter` — organel aktif warnanya penuh dan bercahaya (`emissiveIntensity`), yang lain diredupkan ke 55%. Urutannya sama dengan daftar teks.
+- Di layar lebar, sel digeser ke kanan (`subjectShift`) supaya tidak menutupi teks.
+- Label di halaman: "Ilustrasi, bukan skala sebenarnya."
+
+## scenes/seagrass.js + shaders/caustics.frag.glsl (adegan 6, bagian 1)
+- **Lamun:** ribuan helai tipis dalam satu `InstancedMesh`, bergoyang dengan `addSway`.
+- **Kaustik:** pola cahaya bergelombang di pasir. Shader mengulang rumus sinus/kosinus tiga kali untuk membuat garis-garis terang yang bergerak.
+
+## scenes/plant-cell.js (adegan 6, bagian 2)
+Kotak membulat (`RoundedBoxGeometry`) sebagai dinding sel, membran di dalamnya, vakuola besar di tengah, nukleus terdorong ke pinggir, 16 kloroplas di tepi.
+Yang menyala bergiliran: dinding sel → kloroplas → vakuola, sama dengan urutan daftar teks.
+
+## scenes/mud.js (adegan 7–8)
+Dasar lumpur bergelombang (titik-titik bidang digeser acak), butiran sedimen melayang. Di progres 0,7–1, latar, kabut, dan cahaya memudar ke hitam.
+
+## Catatan performa (diukur 8 Nov di PC Howard, 1440×900)
+139–144 FPS di semua adegan. **Belum diuji di laptop sekolah**; kalau berat, `quality.js` menurunkan resolusi lalu Mode Tenang.
+Ukuran JavaScript setelah build: 717 KB (198 KB setelah dikompres), sebagian besar adalah library three.js.

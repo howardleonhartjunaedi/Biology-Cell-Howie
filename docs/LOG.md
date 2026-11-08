@@ -50,3 +50,24 @@ Catatan harian untuk laporan (BAB IV Kendala, BAB VI Evaluasi).
 - Kata "bakteri" terpisah ke baris sendiri di kotak fakta karena aturan CSS lama. Solusi: aturan itu dihapus.
 - Skill landing-page-design melarang huruf miring dan meminta struktur halaman jualan (FAQ, harga). Tidak dipakai karena
   Beranda adalah perjalanan belajar, bukan halaman jualan, dan rancangan sudah disetujui.
+
+## Minggu, 8 November 2026 (lanjutan) — Beranda 3D lengkap (adegan 1–8)
+**Yang dikerjakan**
+- Satu kanvas WebGL di belakang teks, dikendalikan posisi gulir lewat "dirigen" (`conductor.js`) dan naskah `landing-chapters.json`.
+- Adegan 1–2: laguna dengan shader air, pulau hutan 2.5D, efek riak judul SEL, menyelam menembus permukaan, sinar cahaya, gelembung.
+- Adegan 3 dan 5: kawanan ikan (instancing) yang diikuti kamera, taman karang bergoyang.
+- Adegan 4: sel hewan ilustrasi; organel menyala bergiliran sinkron dengan daftar teks.
+- Adegan 6: padang lamun dengan pola kaustik, lalu sel tumbuhan (dinding sel, kloroplas, vakuola menyala bergiliran).
+- Adegan 7–8: lumpur dengan sedimen, lalu memudar ke hitam sebelum tombol "Lanjut: Lab Sel".
+- Pengatur kualitas otomatis, Mode Tenang mematikan 3D, render berhenti saat tab disembunyikan.
+
+**Kendala dan solusi**
+- Ekor ikan terbalik (terlihat seperti mata panah). Solusi: kerucut ekor diputar ke arah sebaliknya.
+- Butiran terlihat kotak saat dekat kamera. Solusi: tekstur titik bulat.
+- Fungsi butiran menimpa posisi tinggi yang diatur adegan (gelembung loncat ke permukaan). Solusi: simpan tinggi dasar dulu.
+- Setelah muat ulang, adegan salah (ikan muncul di section lamun) karena posisi section diukur sebelum tata letak berubah. Solusi: `ResizeObserver` mengukur ulang.
+- Kamera menembus padang lamun dan teks sulit dibaca di atas pasir terang. Solusi: lamun digeser ke kanan, pasir digelapkan, scrim gelap di sisi kiri teks.
+
+**Langkah berikutnya**
+- Uji di laptop sekolah / proyektor. PC sendiri: 139–144 FPS.
+- Lanjut ke halaman Lab Sel.

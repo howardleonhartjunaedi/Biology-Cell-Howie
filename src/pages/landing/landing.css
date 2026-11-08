@@ -1,7 +1,97 @@
 .landing main.dive {
+  position: relative;
+  z-index: 2;
   max-width: none;
   padding: 0;
 }
+
+.landing .footer-next {
+  position: relative;
+  z-index: 2;
+}
+
+.stage-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+}
+
+.stage-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.webgl-on .scene {
+  background: transparent;
+}
+
+.webgl-on .scene:not(.scene--surface) .scene__wrap > * {
+  max-width: 560px;
+}
+
+.webgl-on .scene:not(.scene--surface):not(.scene--dark) {
+  background: linear-gradient(90deg, rgb(3 22 28 / 0.72) 0%, rgb(3 22 28 / 0.45) 38%, rgb(3 22 28 / 0) 62%);
+}
+
+@media (max-width: 900px) {
+  .webgl-on .scene:not(.scene--surface):not(.scene--dark) {
+    background: rgb(3 22 28 / 0.6);
+  }
+}
+
+.webgl-on .scene:not(.scene--surface):not(.scene--dark) .scene__wrap {
+  text-shadow: 0 1px 12px rgb(2 16 20 / 0.85);
+}
+
+.webgl-on .scene--mud .table-wrap,
+.webgl-on .fact {
+  background: rgb(6 20 24 / 0.72);
+  border-radius: var(--radius);
+}
+
+.webgl-on .scene--mud .table-wrap {
+  max-width: 640px;
+}
+
+.webgl-on .hero-title,
+.webgl-on .hero-tagline {
+  color: transparent;
+}
+
+.webgl-on .hero-hint,
+.webgl-on .skip-intro {
+  color: var(--c-cream);
+  text-shadow: 0 1px 10px rgb(3 40 48 / 0.8);
+}
+
+.hero-tagline {
+  --webgl-color: #B8F1EC;
+}
+
+.term-list dt,
+.scale-steps li {
+  transition-property: color;
+  transition-duration: 300ms;
+  transition-timing-function: var(--ease-ui);
+}
+
+.webgl-on .term-list dt.is-active {
+  color: var(--c-coral);
+}
+
+.webgl-on .scale-steps li {
+  color: color-mix(in srgb, var(--c-cream) 45%, transparent);
+}
+
+.webgl-on .scale-steps li.is-active {
+  color: var(--c-cream);
+}
+
 
 .landing .footer-next {
   background: #000;
