@@ -34,8 +34,12 @@
   max-width: 560px;
 }
 
+.webgl-on .scene .scale-steps {
+  max-width: none;
+}
+
 .webgl-on .scene:not(.scene--surface):not(.scene--dark) {
-  background: linear-gradient(90deg, rgb(3 22 28 / 0.72) 0%, rgb(3 22 28 / 0.45) 38%, rgb(3 22 28 / 0) 62%);
+  background: linear-gradient(90deg, rgb(3 22 28 / 0.86) 0%, rgb(3 22 28 / 0.62) 40%, rgb(3 22 28 / 0) 64%);
 }
 
 @media (max-width: 900px) {
@@ -44,9 +48,6 @@
   }
 }
 
-.webgl-on .scene:not(.scene--surface):not(.scene--dark) .scene__wrap {
-  text-shadow: 0 1px 12px rgb(2 16 20 / 0.85);
-}
 
 .webgl-on .scene--mud .table-wrap,
 .webgl-on .fact {

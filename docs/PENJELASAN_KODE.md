@@ -429,3 +429,16 @@ Setelah lewat, kelas dilepas dan nav kembali berlatar gelap. Dipanggil saat guli
 ## Perbaikan kecil
 - `stage.js`: `THREE.Clock` sudah usang di three.js versi ini, diganti `THREE.Timer` (juga otomatis berhenti saat tab disembunyikan).
 - `title-ripple.js`: bayangan teks dihapus; tekstur dibuang (`dispose`) sebelum digambar ulang supaya tidak ada peringatan WebGL saat ukuran layar berubah.
+
+---
+
+# POLISH PASS (8 Nov)
+- `src/styles/tokens.css` — semua angka spasi (`--s-1`…`--s-16` = 8…128 px), ukuran huruf (`--fs-display/h1/h2/body/caption`), dan gerak (`--dur-*`, `--ease-*`) disimpan di satu tempat.
+- `src/core/motion.js` — membaca token gerak dari CSS lalu membuat easing GSAP yang sama (`CustomEase`), jadi animasi CSS dan GSAP terasa sama.
+- `src/core/preloader.js` — layar pembuka sekali per sesi: angka 0→100% mengikuti aset yang benar-benar dimuat (sinyal `sel:assets-progress` / `sel:assets-ready` dari `stage.js`), lalu huruf SEL naik dari balik mask dan layar tersapu ke atas.
+- `src/core/text-reveal.js` — judul dan paragraf muncul per baris dari balik mask. Pembaca layar membaca salinan utuh (`visually-hidden`), potongan kata disembunyikan (`aria-hidden`).
+- `src/core/cursor.js` — lingkaran kecil yang membesar dengan tulisan "Lihat" di atas tombol/tautan. Mati di layar sentuh dan reduced-motion.
+- `src/core/magnetic.js` — tombol sedikit "tertarik" ke kursor dan mengecil saat ditekan.
+- `src/core/ambient-sound.js` — suara air dibuat langsung oleh browser (noise + filter low-pass yang naik-turun), tanpa file audio. Default mati.
+- `src/core/debug.js` — panel lil-gui hanya saat `npm run dev` dan alamat berakhiran `?debug`. Tidak ikut ke website online.
+- `src/pages/landing/conductor.js` — penghalusan memakai waktu asli (`rawDt`) supaya di laptop lambat adegan tidak tertinggal dari teks.

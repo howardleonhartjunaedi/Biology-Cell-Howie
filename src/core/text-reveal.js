@@ -46,7 +46,15 @@ function lineIndexes(words) {
 }
 
 function reveal(element) {
-  const words = wrapWords(element);
+  if (element.querySelector('a, button')) return;
+  const accessible = document.createElement('span');
+  accessible.className = 'visually-hidden';
+  accessible.textContent = element.textContent;
+  const visual = document.createElement('span');
+  visual.setAttribute('aria-hidden', 'true');
+  visual.append(...element.childNodes);
+  element.append(accessible, visual);
+  const words = wrapWords(visual);
   const lines = lineIndexes(words);
   gsap.set(words, { yPercent: 110 });
   gsap.to(words, {

@@ -8,6 +8,7 @@ const WATER = new THREE.Color('#0A4F5E');
 const FLOOR_Y = -6;
 const CORAL_CENTER = new THREE.Vector3(34, FLOOR_Y, 0);
 const CORAL_START = 0.6;
+const VIEW_SHIFT = 0.2;
 
 export function createReefScene({ tier }) {
   const scene = new THREE.Scene();
@@ -73,6 +74,10 @@ export function createReefScene({ tier }) {
     coralTarget.set(CORAL_CENTER.x + coralT * 4, FLOOR_Y + 1, 0);
     lookTarget.lerpVectors(leader, coralTarget, coralT);
     camera.lookAt(lookTarget);
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    if (width > 900) camera.setViewOffset(width, height, -width * VIEW_SHIFT, 0, width, height);
+    else camera.clearViewOffset();
   }
 
   return { scene, camera, update };

@@ -91,3 +91,13 @@ Catatan harian untuk laporan (BAB IV Kendala, BAB VI Evaluasi).
 
 **Catatan aturan baru (§4.5 anti-vibecode)**
 - Adegan 3–8 masih memakai bentuk buatan kode (ikan, karang, lamun, sel). Perlu keputusan Howard apakah diganti aset nyata.
+
+## Minggu, 8 November 2026 (lanjutan) — Polish pass dan perbaikan tampilan
+**Yang dikerjakan**
+- Token spasi 8 px, type scale, dan motion token dipakai di semua CSS dan GSAP.
+- Preloader (penghitung + huruf SEL keluar dari mask), text reveal per baris, kursor kustom, tombol magnetik, grain + vignette, suara air (Web Audio, default mati), panel lil-gui di `?debug`.
+- Perbaikan dari skill web-design-guidelines: `color-scheme`, `theme-color`, `touch-action`, `scroll-margin-top`, animasi berhenti saat reduced-motion.
+- Perbaikan "tampilan asal-asalan": bayangan teks dihapus (diganti scrim lebih gelap), ikan tidak lagi menutupi kolom teks, ikan lebih halus, text reveal ramah pembaca layar.
+
+**Kendala dan solusi**
+- Adegan 3D tertinggal satu section di uji headless (1,5 FPS). Penyebab sebenarnya: penghalusan kamera memakai waktu frame yang dibatasi, jadi di laptop lambat kamera ikut lambat. Solusi: dirigen memakai waktu asli.

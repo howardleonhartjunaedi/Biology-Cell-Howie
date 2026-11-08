@@ -68,11 +68,12 @@ export function createStage() {
     if (!running) return;
     frameId = requestAnimationFrame(frame);
     timer.update();
-    const dt = Math.min(timer.getDelta(), MAX_DT);
+    const rawDt = Math.min(timer.getDelta(), 0.5);
+    const dt = Math.min(rawDt, MAX_DT);
     time += reduceMotion ? 0 : dt;
     quality.tick(dt);
 
-    const state = conductor.update(dt, reduceMotion);
+    const state = conductor.update(rawDt, reduceMotion);
     const active = getScene(state.scene);
     active.update(dt, state.sceneProgress, time);
 

@@ -6,11 +6,11 @@ const SCHOOL_RADIUS = 9;
 const SWIM_SPEED = 0.12;
 
 function fishGeometry() {
-  const body = new THREE.SphereGeometry(0.5, 16, 10);
+  const body = new THREE.SphereGeometry(0.5, 32, 20);
   body.scale(1, 0.42, 0.22);
-  const tail = new THREE.ConeGeometry(0.22, 0.4, 4);
+  const tail = new THREE.ConeGeometry(0.26, 0.42, 12);
   tail.rotateZ(-Math.PI / 2);
-  tail.scale(1, 1, 0.3);
+  tail.scale(1, 1, 0.12);
   tail.translate(-0.62, 0, 0);
   return mergeGeometries([body.toNonIndexed(), tail.toNonIndexed()]);
 }
