@@ -23,3 +23,17 @@ Catatan harian untuk laporan (BAB IV Kendala, BAB VI Evaluasi).
 - Mengunduh dan memeriksa model 3D kandidat, lalu menulis keputusan di `docs/ASSETS.md`.
 - Membuat repositori GitHub dan deploy pertama ke Vercel.
 - Fase 1: mengisi semua halaman dengan teks materi asli.
+
+## Minggu, 8 November 2026 (lanjutan) — Aturan desain dari skill
+**Yang dikerjakan**
+- Membaca skill desain yang dipasang Howard (design-taste-frontend, ui-ux-pro-max, impeccable, no-ai-design-slop,
+  make-interfaces-feel-better, frontend-design) dan merangkumnya di `docs/DESIGN.md`.
+- Mengaudit kerangka yang sudah dibuat terhadap aturan itu dan memperbaikinya: kontras warna abu-abu, ukuran area klik 44 px,
+  tautan "Langsung ke isi", transisi yang spesifik, tombol tekan, perataan teks, warna seleksi dan scrollbar.
+
+**Kendala dan solusi**
+- Warna abu-abu bawaan desain ternyata gagal uji kontras (2,7–4,3 : 1). Solusi: warna baru yang diukur 5,2–6,2 : 1.
+- Muncul error "Transition was skipped" di console setiap pindah halaman. Solusi: skrip kecil di `<head>` yang menangkap
+  lompatan transisi (`public/view-transition.js`). Dicek di versi build: tidak ada error baru.
+- Beberapa aturan skill bertentangan dengan rancangan yang sudah disetujui (eyebrow, panah di tombol). Dicatat di
+  `docs/DESIGN.md` bagian 4 untuk diputuskan Howard.

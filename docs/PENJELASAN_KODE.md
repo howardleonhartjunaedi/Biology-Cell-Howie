@@ -144,3 +144,36 @@ Nanti tiap halaman menambahkan kodenya sendiri di sini (adegan 3D, kuis, dan lai
 (memperkecil data bentuk) dan tekstur WebP maksimal 1024 piksel.
 **Kemungkinan pertanyaan guru & jawabannya:**
 - T: Kenapa model perlu dikompres? J: Model sel hewan aslinya 70 MB. Itu terlalu lama dimuat di Wi-Fi sekolah. Targetnya di bawah 8 MB per model.
+
+---
+
+## Perbaikan desain (8 Nov, setelah membaca skill desain — lihat `docs/DESIGN.md`)
+**Yang diubah dan alasannya:**
+- `--c-muted` diganti dari `#6B7A86` ke `#7F8E9A`. Warna lama hanya punya kontras 3,9–4,3 : 1 (di bawah syarat 4,5 : 1),
+  jadi teks abu-abu kecil sulit dibaca di proyektor. Di Beranda (latar biru) dipakai `--c-muted-water` `#8FC3C4`
+  karena abu-abu di atas biru tua hanya 2,7 : 1.
+- `--tap-min: 44px` — semua tautan menu, logo, tombol Mode Tenang, dan tautan "Sebelumnya" dibuat minimal 44 px tingginya
+  supaya mudah diklik/disentuh.
+- `transition-property` ditulis satu per satu (bukan `transition: all`), supaya browser hanya menganimasikan yang perlu.
+- `:active { transform: scale(0.97) }` — tombol terasa "ditekan" saat diklik.
+- `text-wrap: balance` pada judul (baris judul sama panjang), `text-wrap: pretty` pada paragraf (tidak ada satu kata tersisa
+  sendirian di baris terakhir), `max-width: 68ch` agar baris paragraf tidak terlalu panjang dibaca.
+- `::selection`, `caret-color`, `scrollbar-color`, `accent-color` — bagian bawaan browser ikut memakai warna website.
+- Kelas `.card` dihapus karena belum dipakai (aturan anti-slop: jangan membuat kartu tanpa isi yang membutuhkannya).
+
+## Tautan "Langsung ke isi" (di `src/core/nav.js`)
+**Tugas:** Tautan tersembunyi yang muncul saat pengguna menekan Tab pertama kali. Kalau diklik, langsung lompat ke `<main id="main">`.
+**Kenapa:** Pengguna keyboard tidak perlu menekan Tab melewati 8 tombol menu di setiap halaman.
+**CSS:** `.skip-link` digeser ke atas layar (`translateY(-200%)`) dan baru turun saat `:focus-visible`.
+
+## public/view-transition.js
+**Tugas file ini:** Mencegah pesan error "Transition was skipped" di console saat pindah halaman.
+**Cara kerja:**
+1. Browser modern membuat animasi perpindahan halaman (View Transitions). Kadang animasi itu dilewati, misalnya saat
+   halaman dimuat ulang cepat. Browser lalu menganggapnya error yang "tidak ditangkap".
+2. File ini mendengarkan event `pageswap` (halaman lama) dan `pagereveal` (halaman baru), lalu memasang `.catch()` kosong
+   pada janji (promise) transisi, sehingga lompatan transisi tidak lagi tercatat sebagai error.
+**Kenapa di folder `public/` dan dimuat di `<head>`:** `pagereveal` terjadi sebelum halaman pertama kali digambar.
+Kode modul biasa (`src/...`) dijalankan terlambat untuk menangkapnya. Skrip biasa di `<head>` dijalankan lebih dulu.
+**Kemungkinan pertanyaan guru & jawabannya:**
+- T: Apa itu promise? J: Janji bahwa suatu proses akan selesai nanti, entah berhasil atau gagal. `.catch()` menangani kalau gagal.

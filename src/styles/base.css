@@ -6,6 +6,16 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scrollbar-color: var(--c-line) var(--c-lab);
+  accent-color: var(--c-coral);
+  caret-color: var(--c-coral);
+}
+
+::selection {
+  background: var(--c-lagoon);
+  color: var(--c-lab);
 }
 
 body {
@@ -21,6 +31,7 @@ body {
 }
 
 body.theme-water {
+  --c-muted: var(--c-muted-water);
   background: var(--c-deep);
 }
 
@@ -38,6 +49,16 @@ h3 {
   color: var(--c-cream);
   line-height: 1.2;
   margin: 0 0 0.5em;
+  text-wrap: balance;
+}
+
+p,
+li {
+  text-wrap: pretty;
+}
+
+p {
+  max-width: 68ch;
 }
 
 .display {
@@ -68,6 +89,7 @@ h3 {
 
 a {
   color: var(--c-lagoon);
+  text-underline-offset: 0.2em;
 }
 
 img,

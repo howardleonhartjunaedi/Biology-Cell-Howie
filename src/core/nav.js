@@ -57,5 +57,11 @@ export function renderNav(currentId) {
   pages.forEach((page) => list.append(createLink(page, currentId)));
 
   nav.append(logo, createMenuButton(nav), list, createCalmToggle());
-  document.body.prepend(nav);
+
+  const skipLink = document.createElement('a');
+  skipLink.className = 'skip-link';
+  skipLink.href = '#main';
+  skipLink.textContent = 'Langsung ke isi';
+
+  document.body.prepend(skipLink, nav);
 }
