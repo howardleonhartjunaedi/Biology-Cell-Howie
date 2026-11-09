@@ -159,3 +159,13 @@ summary,
 [id] {
   scroll-margin-top: var(--nav-height);
 }
+
+/* Pesan jika JavaScript mati (halaman tidak kosong tanpa penjelasan) */
+.noscript {
+  max-width: 60ch;
+  margin: calc(var(--nav-height) + var(--s-4)) auto 0;
+  padding: var(--s-3);
+  border: 1px solid var(--c-warn);
+  border-radius: var(--radius);
+  color: var(--c-cream);
+}

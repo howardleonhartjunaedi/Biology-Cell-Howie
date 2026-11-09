@@ -183,3 +183,12 @@ Catatan harian untuk laporan (BAB IV Kendala, BAB VI Evaluasi).
 - Spasi antara angka dan satuan (10–100 µm, 30 menit, 25 soal) diganti spasi tak terputus agar tidak terpisah di dua baris.
 - Mode Kuis tersimpan di alamat (`kuis.html?mode=ujian`) dan sel Lab Osmosis juga (`lab-osmosis.html?sel=tumbuhan`), jadi bisa dibuka langsung saat presentasi.
 - Kotak nomor soal di Mode Ujian diberi efek hover; logo "SEL" diberi `translate="no"` agar tidak diterjemahkan otomatis.
+
+## Selasa, 10 November 2026 — Audit standar kualitas (skill build-awwwards-quality-sites)
+**Sudah memenuhi sebelumnya:** satu mesin scroll halus (Lenis, terhubung ke ScrollTrigger), GSAP sebagai sistem gerak, judul muncul per kata dengan salinan utuh untuk pembaca layar, preloader + intro hero, Three.js hanya bila mendukung cerita, DPR dibatasi, render berhenti saat tab tersembunyi/di luar layar, semua media tercatat di kredit, tidak ada testimoni/logo palsu.
+**Yang diperbaiki:**
+- Halaman dalam (Lab Sel, Gerbang Sel, Lab Osmosis, Kuis, Rangkuman) kini punya intro: eyebrow → judul → tagline naik bergantian, lalu kartu/panel muncul saat masuk layar (`src/core/page-intro.js`). Gerak dikurangi / Mode Tenang → langsung tampil.
+- Lenis kini juga mati bila pengguna mengatur `prefers-reduced-motion`.
+- Jika kartu grafis kehilangan konteks WebGL, situs otomatis pindah ke Mode Tenang dengan pesan, bukan layar hitam.
+- Setiap halaman punya pesan `<noscript>` bila JavaScript mati.
+**Diuji:** semua halaman dalam di-scroll sampai bawah, tidak ada blok yang tertinggal tersembunyi; mode gerak dikurangi menampilkan semua isi seketika; tidak ada error console.

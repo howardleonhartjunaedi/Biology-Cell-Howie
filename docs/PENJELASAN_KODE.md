@@ -680,3 +680,19 @@ Lamun latar depan (`foreground`) lebih tinggi dan lebih gelap, ditaruh di jalur 
 - **Alamat mencerminkan tampilan:** `history.replaceState` mengganti `?mode=ujian` (Kuis) dan `?sel=tumbuhan` (Lab Osmosis) tanpa memuat ulang halaman. Saat halaman dibuka, `URLSearchParams` membaca nilai itu dan langsung menampilkan mode/sel yang sesuai.
 - **Tipografi:** spasi tak terputus (U+00A0) di antara angka dan satuan, dan tanda kutip melengkung di file JSON materi.
 - **`logo.translate = false`** menghasilkan atribut `translate="no"`: fitur terjemahan browser tidak akan mengubah nama "SEL".
+
+---
+
+# INTRO HALAMAN DAN CADANGAN (pembaruan)
+
+## src/core/page-intro.js
+- `introHeader()`: anak-anak kepala halaman (eyebrow, judul, tagline, tombol mode) dianimasikan `gsap.from({ y: 24, opacity: 0 })` dengan `stagger` 0,08 detik. `clearProps` menghapus gaya sisa setelah selesai.
+- `revealBlocks()`: kartu dan panel (`BLOCKS`) disembunyikan lalu dimunculkan dengan `ScrollTrigger.batch` saat bagian atasnya mencapai 92% tinggi layar, sekali saja (`once: true`). Elemen yang sedang `hidden` dilewati supaya tidak terjebak tak terlihat.
+- Pengaman: setelah 2,5 detik, blok di layar yang masih transparan dipaksa tampil.
+- Tidak berjalan di Beranda (sudah punya koreografi sendiri), saat gerak dikurangi, atau di Mode Tenang.
+
+## src/core/renderer.js — `webglcontextlost`
+Jika GPU kehilangan konteks (driver error, memori penuh), `event.preventDefault()` lalu Mode Tenang dinyalakan dan muncul pesan. Halaman 3D yang mendengarkan `calmmodechange` akan membuang renderer-nya, dan semua isi tetap bisa dipakai.
+
+## src/core/smooth-scroll.js
+Lenis tidak dijalankan jika `prefers-reduced-motion: reduce`.

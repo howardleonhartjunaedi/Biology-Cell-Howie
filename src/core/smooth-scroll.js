@@ -31,7 +31,9 @@ function stop() {
 }
 
 export function setupSmoothScroll() {
-  if (!isCalmMode()) start();
-  window.addEventListener('calmmodechange', (event) => (event.detail.on ? stop() : start()));
+  // Scroll halus dilewati jika pengguna meminta gerak dikurangi (prefers-reduced-motion).
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!isCalmMode() && !reduce) start();
+  window.addEventListener('calmmodechange', (event) => (event.detail.on || reduce ? stop() : start()));
   window.addEventListener('load', () => ScrollTrigger.refresh());
 }
