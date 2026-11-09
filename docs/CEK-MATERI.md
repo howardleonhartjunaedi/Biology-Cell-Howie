@@ -14,3 +14,5 @@ yang ada di `KONTEN-MATERI.md` dan soal terkait berstatus `perlu-cek`.
 | 7 | Hasil sel bawang pada NaCl 0,5% dan 1% — cocokkan dengan data praktikum kelas | Belum ada data | | Terbuka |
 | 8 | Ejaan nama ketua: "Junaedi" atau "Juneadi"? | File Pertemuan 2 | | Terbuka |
 | 9 | Nama guru Biologi dan guru Web Development untuk halaman Rangkuman | — | | Terbuka |
+| 10 | Soal kuis `mem-10`: apakah pompa Na⁺/K⁺ boleh disebut contoh **antiport** (2 zat, arah berlawanan)? Disimpulkan dari definisi, tidak tertulis langsung di slide. | Kesimpulan kelompok | | Terbuka |
+| 11 | Seluruh 68 soal di `src/data/soal.json` masih berstatus `perlu-cek` — mohon diperiksa sebelum dipakai untuk penilaian. | — | | Terbuka |

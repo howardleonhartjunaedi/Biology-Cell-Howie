@@ -126,3 +126,18 @@ Catatan harian untuk laporan (BAB IV Kendala, BAB VI Evaluasi).
 - Kamera terlalu dekat sehingga membran memenuhi layar. Solusi: kamera dijauhkan.
 - Tombol kontrol tidak bergaya karena gaya `.pill-button` hanya ada di file Lab Sel. Solusi: dipindah ke `components.css`.
 - Atribut `hidden` kalah oleh `display: flex` (kontrol dan tautan kartu). Solusi: aturan `[hidden]` khusus.
+
+## Selasa, 10 November 2026 — Lab Osmosis, Kuis, Rangkuman (Fase 5, 6, dan halaman 6)
+**Yang dikerjakan**
+- Lab Osmosis: mikroskop bundar (Canvas 2D) untuk sel darah merah dan sel epidermis bawang merah, tombol Hipotonik/Isotonik/Hipertonik,
+  animasi tetesan + riak, panah biru arah air, meter Volume sel dan Tekanan turgor, panel Hasil Pengamatan (arah air, mengapa, contoh nyata),
+  tabel 6 keadaan, kotak "Ingat!", dan 3 soal "Tebak keadaan sel ini". Video pra-render diganti animasi langsung (pilihan cadangan di CLAUDE.md §6.4).
+- Kuis: bank 68 soal (sel 17, organel 19, membran 17, osmosis 15), Mode Latihan (topik, jumlah, umpan balik langsung, "Pelajari lagi",
+  ulangi soal yang salah) dan Mode Ujian (25 soal dengan pembagian 4/8/7/6, timer 30 menit kuning/merah, navigator, ragu-ragu,
+  konfirmasi sebelum kumpul, kumpul otomatis saat waktu habis, laporan per topik, pembahasan, riwayat di perangkat, unduh kartu nilai PNG).
+- Rangkuman: 5 kartu ringkasan, kredit otomatis dari `credits.json`, tabel anggota dan identitas, kalimat penutup.
+
+**Kendala dan solusi**
+- Laporan "Unduh Report Card" di rencana memakai library `html-to-image`, padahal library baru harus izin dulu. Solusi: kartu nilai digambar sendiri di `<canvas>` lalu disimpan sebagai PNG.
+- Tombol pilihan dua sisi (Sel Hewan | Sel Tumbuhan) dibutuhkan juga di Kuis. Solusi: gayanya `.segmented` dipindah ke `components.css`.
+- Nama guru belum diketahui. Solusi: baris guru disembunyikan otomatis selama isinya kosong di `rangkuman.json`.

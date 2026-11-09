@@ -17,10 +17,76 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Montserrat:wght@400;500;600;800&display=swap" rel="stylesheet" />
   </head>
   <body data-page="osmosis">
-    <main id="main">
-      <span class="eyebrow">SEL · LAB OSMOSIS</span>
-      <h1 class="display">Lab Osmosis</h1>
-      <p class="tagline">Teteskan larutan, lalu amati apa yang terjadi pada sel.</p>
+    <main id="main" class="osmo">
+      <header class="osmo-header">
+        <span class="eyebrow">SEL · LAB OSMOSIS</span>
+        <h1 class="display" data-no-reveal>Lab Osmosis</h1>
+        <p class="tagline">Teteskan larutan, lalu amati apa yang terjadi pada sel.</p>
+      </header>
+
+      <section class="osmo-lab" aria-label="Simulasi mikroskop">
+        <figure class="scope">
+          <div class="scope__lens">
+            <canvas class="scope__canvas" id="scope-canvas" role="img" aria-label="Pandangan mikroskop"></canvas>
+          </div>
+          <figcaption class="scope__label" id="scope-label">SEL DARAH MERAH · 400×</figcaption>
+          <p class="note scope__note">Ilustrasi animasi, bukan foto mikroskop.</p>
+        </figure>
+
+        <div class="osmo-controls">
+          <div class="segmented" role="radiogroup" aria-label="Pilih sel" id="cell-switch"></div>
+
+          <p class="osmo-step">Pilih larutan untuk diteteskan:</p>
+          <div class="solutions" id="solutions"></div>
+
+          <div class="meters">
+            <div class="meter-row">
+              <span class="meter-row__label">Volume sel</span>
+              <span class="meter"><span class="meter__fill meter__fill--volume" id="meter-volume"></span></span>
+              <span class="meter-row__value" id="value-volume">100%</span>
+            </div>
+            <div class="meter-row" id="row-turgor" hidden>
+              <span class="meter-row__label">Tekanan turgor</span>
+              <span class="meter"><span class="meter__fill meter__fill--turgor" id="meter-turgor"></span></span>
+              <span class="meter-row__value" id="value-turgor">50%</span>
+            </div>
+            <p class="note">Angka meter hanya perbandingan untuk animasi, bukan hasil pengukuran.</p>
+          </div>
+        </div>
+
+        <article class="result" id="result" aria-live="polite">
+          <span class="eyebrow">Hasil pengamatan</span>
+          <h2 class="result__name" id="result-name" data-no-reveal>Belum ada larutan</h2>
+          <dl class="result__grid" id="result-grid" hidden>
+            <div><dt>Arah air</dt><dd id="result-arah"></dd></div>
+            <div><dt>Mengapa</dt><dd id="result-mengapa"></dd></div>
+            <div><dt>Contoh nyata</dt><dd id="result-contoh"></dd></div>
+          </dl>
+          <p id="result-empty">Klik salah satu larutan. Setetes larutan akan jatuh ke kaca preparat, lalu perhatikan bentuk sel dan arah panah biru (arah air).</p>
+        </article>
+      </section>
+
+      <section class="section" aria-labelledby="judul-enam">
+        <h2 class="section__title" id="judul-enam">Enam keadaan sel</h2>
+        <div class="table-wrap">
+          <table class="table osmo-table">
+            <thead>
+              <tr><th scope="col">Larutan</th><th scope="col">Sel hewan (sel darah merah)</th><th scope="col">Sel tumbuhan (epidermis bawang merah)</th></tr>
+            </thead>
+            <tbody id="state-table"></tbody>
+          </table>
+        </div>
+        <aside class="remember">
+          <p class="remember__title">Ingat!</p>
+          <p id="remember-text"></p>
+        </aside>
+      </section>
+
+      <section class="section" aria-labelledby="judul-tebak">
+        <h2 class="section__title" id="judul-tebak">Tebak keadaan sel ini</h2>
+        <p class="section__lead">Lihat gambar mikroskop, lalu pilih nama keadaannya.</p>
+        <ol class="guess-list" id="guess-list"></ol>
+      </section>
     </main>
     <script type="module" src="/src/pages/osmosis/main.js"></script>
   </body>

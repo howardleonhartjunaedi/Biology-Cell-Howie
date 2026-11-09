@@ -5,9 +5,9 @@
     <meta name="color-scheme" content="dark" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rangkuman — SEL</title>
-    <meta name="description" content="Rangkuman materi sel, sumber dan kredit, serta anggota Kelompok 4 XI-A5." />
+    <meta name="description" content="Ringkasan materi sel, organel, membran, dan osmosis, beserta sumber, kredit, dan anggota Kelompok 4 XI-A5." />
     <meta property="og:title" content="Rangkuman — SEL" />
-    <meta property="og:description" content="Rangkuman materi sel, sumber dan kredit, serta anggota Kelompok 4 XI-A5." />
+    <meta property="og:description" content="Ringkasan materi sel, organel, membran, dan osmosis, beserta sumber dan kredit." />
     <meta name="theme-color" content="#0E1116" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <script src="/view-transition.js"></script>
@@ -17,10 +17,39 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Montserrat:wght@400;500;600;800&display=swap" rel="stylesheet" />
   </head>
   <body data-page="rangkuman">
-    <main id="main">
-      <span class="eyebrow">SEL · RANGKUMAN</span>
-      <h1 class="display">Rangkuman</h1>
-      <p class="tagline">Kecil, tapi menyusun segalanya.</p>
+    <main id="main" class="summary">
+      <header class="summary-header">
+        <span class="eyebrow">SEL · RANGKUMAN</span>
+        <h1 class="display" data-no-reveal>Rangkuman</h1>
+        <p class="tagline">Semua yang sudah kita selami, dalam satu halaman.</p>
+      </header>
+
+      <section aria-labelledby="judul-rangkuman">
+        <h2 class="visually-hidden" id="judul-rangkuman">Rangkuman materi</h2>
+        <div class="summary-grid" id="summary-cards"></div>
+      </section>
+
+      <section class="section" aria-labelledby="judul-kredit">
+        <h2 class="section__title" id="judul-kredit">Sumber &amp; Kredit</h2>
+        <div class="credits" id="credits"></div>
+      </section>
+
+      <section class="section" aria-labelledby="judul-anggota">
+        <h2 class="section__title" id="judul-anggota">Anggota Kelompok 4 · XI-A5</h2>
+        <div class="team">
+          <div class="table-wrap">
+            <table class="table team__table">
+              <thead><tr><th scope="col">No. absen</th><th scope="col">Nama</th></tr></thead>
+              <tbody id="members"></tbody>
+            </table>
+          </div>
+          <dl class="term-list team__identity" id="identity"></dl>
+        </div>
+      </section>
+
+      <section class="closing" aria-label="Penutup">
+        <p class="closing__line">Kecil, tapi menyusun segalanya.</p>
+      </section>
     </main>
     <script type="module" src="/src/pages/rangkuman/main.js"></script>
   </body>

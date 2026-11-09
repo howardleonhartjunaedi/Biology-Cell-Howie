@@ -95,7 +95,9 @@
     "url": "https://threejs.org",
     "catatan": "",
     "dipakaiDi": [
-      "index.html"
+      "index.html",
+      "sel.html",
+      "gerbang-sel.html"
     ]
   },
   {
@@ -106,7 +108,7 @@
     "url": "https://gsap.com",
     "catatan": "",
     "dipakaiDi": [
-      "index.html"
+      "semua"
     ]
   },
   {
@@ -193,6 +195,29 @@
     "catatan": "Dipakai oleh Water.js untuk riak permukaan air.",
     "dipakaiDi": [
       "index.html"
+    ]
+  },
+  {
+    "kategori": "model3d",
+    "judul": "Model 3D Lab Sel dan Gerbang Sel (sel hewan, sel tumbuhan, organel, membran plasma, ion Na⁺/K⁺)",
+    "pembuat": "Kelompok 4 XI-A5 (dibuat dengan kode Three.js)",
+    "lisensi": "Karya sendiri",
+    "url": "",
+    "catatan": "Semua bentuk dibuat dari kode, tidak memakai model unduhan. Ilustrasi, bukan skala sebenarnya.",
+    "dipakaiDi": [
+      "sel.html",
+      "gerbang-sel.html"
+    ]
+  },
+  {
+    "kategori": "media",
+    "judul": "Animasi mikroskop Lab Osmosis (sel darah merah dan sel bawang merah)",
+    "pembuat": "Kelompok 4 XI-A5 (digambar dengan kode Canvas 2D)",
+    "lisensi": "Karya sendiri",
+    "url": "",
+    "catatan": "Ilustrasi animasi, bukan foto mikroskop.",
+    "dipakaiDi": [
+      "lab-osmosis.html"
     ]
   }
 ]

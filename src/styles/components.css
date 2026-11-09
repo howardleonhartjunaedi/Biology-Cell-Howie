@@ -363,3 +363,37 @@
 .pill-button:empty {
   visibility: hidden;
 }
+
+/* Saklar dua pilihan (Sel Hewan | Sel Tumbuhan, Mode Latihan | Mode Ujian) */
+.segmented {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  padding: 4px;
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-pill);
+}
+
+.segmented__item {
+  min-height: var(--tap-min);
+  padding: 0 var(--s-2);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--c-text);
+  font: 600 var(--fs-caption) var(--font-sans);
+  white-space: nowrap;
+  cursor: pointer;
+  transition-property: background-color, color;
+  transition-duration: var(--dur-fast);
+  transition-timing-function: var(--ease-out);
+}
+
+.segmented__item[aria-checked='true'] {
+  background: var(--c-cream);
+  color: var(--c-lab);
+}
+
+.segmented__item:not([aria-checked='true']):hover {
+  color: var(--c-cream);
+}

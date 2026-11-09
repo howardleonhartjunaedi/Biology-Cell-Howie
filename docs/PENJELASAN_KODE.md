@@ -546,3 +546,69 @@ langkah 1 Na⁺ naik ke pompa · langkah 2 ATP datang, fosfat menempel, pompa be
 ## src/pages/gerbang/membrane-viewer.js
 Renderer, cahaya lab, kamera, kartu info saat kursor menunjuk bagian membran, pergantian mode, Jeda/Kecepatan.
 Mode Struktur memisahkan dua lapisan sedikit (exploded view). Kanvas berhenti menggambar saat bagian 3D digulir keluar layar (`IntersectionObserver`).
+
+---
+
+# LAB OSMOSIS (lab-osmosis.html) — Fase 5
+
+## src/data/osmosis.json
+Semua teks dari KONTEN-MATERI §5: nama sel, tiga larutan, enam keadaan (nama, arah air, mengapa, contoh nyata), kotak "Ingat!", dan 3 soal tebakan.
+`water` (`in`/`out`/`both`) menentukan arah panah biru di mikroskop.
+
+## src/pages/osmosis/microscope.js
+**Tugas file ini:** menggambar pandangan mikroskop dengan Canvas 2D (bukan WebGL, jadi ringan dan tetap jalan di Mode Tenang).
+- Semua gambar memakai "dunia" 600 × 600, lalu `setTransform` memperbesar sesuai ukuran canvas dan `devicePixelRatio` (tajam di layar retina).
+- `seeded()` membuat angka acak yang selalu sama, jadi susunan sel tidak berubah setiap halaman dibuka.
+- `cellMetrics(sel, larutan, p)` = "otak" perubahan sel. `p` adalah progres 0→1.
+  Sel darah merah: hipotonik → volume naik 30% lalu `burst` (pecah), hipertonik → volume turun dan `crenation` (gerigi) naik.
+  Sel bawang: `fill` = seberapa penuh protoplas mengisi dinding sel, `turgor` = tekanan turgor.
+- Gerigi krenasi dibuat dengan jari-jari yang naik-turun mengikuti `sin(11·sudut)`.
+- Plasmolisis: protoplas (ungu, warna antosianin bawang merah) mengecil dan sudutnya makin bulat, warnanya makin pekat.
+- Urutan animasi setelah klik: tetes jatuh (0,55 detik) → riak → sel berubah selama 3,2 detik (`easeInOut`).
+- `prefers-reduced-motion`: animasi dilewati, langsung keadaan akhir.
+**T: Kenapa tidak memakai video seperti rencana awal?** J: CLAUDE.md §6.4 mengizinkan animasi langsung sebagai cadangan. Hasilnya lebih ringan (tanpa file video) dan bisa diatur dari kode.
+
+## src/pages/osmosis/main.js
+Membuat tombol sel dan larutan dari JSON, menghubungkan tombol ke mikroskop, memperbarui meter setiap frame,
+dan menampilkan Hasil Pengamatan saat animasi sudah 85% selesai. Gambar soal "Tebak" memakai `renderStill()` (keadaan akhir tanpa animasi).
+
+---
+
+# KUIS (kuis.html) — Fase 6
+
+## src/data/soal.json
+68 soal pilihan ganda (4 opsi) yang dibuat hanya dari KONTEN-MATERI §2–§5. Setiap soal punya `topik`, `konsep`, `penjelasan`, `halaman` (tautan "Pelajari lagi"), dan `status: "perlu-cek"` sampai disetujui.
+
+## src/pages/kuis/quiz-core.js
+Alat bersama: nama topik, pembagian ujian `EXAM_SPLIT` (4/8/7/6), batas predikat `GRADE_LIMITS` (A ≥ 85, B ≥ 70, C ≥ 55, D), acak Fisher–Yates.
+`prepare()` mengacak urutan opsi lalu menghitung ulang posisi jawaban benar (`order.indexOf(jawaban)`).
+**T: Kenapa Fisher–Yates, bukan `sort(() => Math.random() - 0.5)`?** J: Cara `sort` tidak adil (urutan tertentu lebih sering muncul). Fisher–Yates memberi peluang sama untuk setiap urutan.
+
+## src/pages/kuis/practice.js
+Mode Latihan: pilih topik dan jumlah → jawab → tombol langsung hijau/merah + penjelasan + "Pelajari lagi". Soal yang salah disimpan, jadi "Ulangi soal yang salah" hanya memutar soal itu.
+
+## src/pages/kuis/exam.js
+Mode Ujian:
+- Timer memakai jam asli (`Date.now()` dibandingkan `endsAt`), bukan menghitung mundur dengan `setInterval`, supaya tetap tepat walau tab sempat tidak aktif.
+- Kuning saat ≤ 10:00, merah saat ≤ 5:00, kumpul otomatis di 0:00.
+- Navigator 1–25: biru = dijawab, kuning = ragu-ragu, abu = kosong. Tidak ada umpan balik sampai dikumpulkan.
+- `<dialog>` konfirmasi menyebut jumlah soal kosong dan ragu-ragu.
+- Riwayat 5 ujian terakhir disimpan di `localStorage` (`sel:kuis-riwayat`) dengan `try/catch` (jika penyimpanan diblokir, kuis tetap jalan).
+- `beforeunload` memperingatkan jika halaman ditutup saat ujian berjalan.
+
+## src/pages/kuis/report.js
+Laporan: skor, nilai 0–100, predikat, waktu, benar/salah/kosong, bar per topik (HTML/CSS biasa), Kelebihan (≥ 80%),
+Perlu dipelajari lagi (< 60%, dengan konsep yang terlewat dan tautan halaman), pembahasan lengkap.
+"Unduh Report Card" menggambar kartu 1080 × 1350 di `<canvas>` lalu `toBlob()` → file PNG. Tidak perlu library tambahan.
+
+---
+
+# RANGKUMAN (rangkuman.html)
+
+## src/data/rangkuman.json
+5 kartu ringkasan (KONTEN §7), urutan kelompok kredit, anggota, dan identitas (KONTEN §8).
+
+## src/pages/rangkuman/main.js
+Membuat kartu, tabel, kredit, dan anggota dari JSON. Kredit diambil langsung dari `credits.json`, jadi setiap aset baru otomatis muncul.
+Baris identitas yang kosong (nama guru) tidak ditampilkan.
+Tata letak kartu asimetris di grid 12 kolom: 7+5, 12, 5+7.
