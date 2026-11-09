@@ -153,3 +153,16 @@ Catatan harian untuk laporan (BAB IV Kendala, BAB VI Evaluasi).
 **Kendala dan solusi**
 - Protein tenggelam di antara kepala fosfolipid sehingga hampir tidak terlihat. Solusi: protein diperbesar 1,2–1,4× dan fosfolipid di sekitarnya diberi ruang lebih lebar.
 - Pompa yang lebih besar menutupi ion Na⁺/K⁺ yang menempel. Solusi: pompa dibuat tembus pandang selama mode Pompa.
+
+## Selasa, 10 November 2026 — Rasa ruang 3D di Beranda
+**Yang dikerjakan**
+- File baru `scenes/depth.js`: partikel tiga lapis (jauh, tengah, dekat/bokeh) yang selalu mengelilingi kamera, sel-sel tetangga di kejauhan + satu sel latar depan, dan jaringan sel tumbuhan di belakang sel lamun.
+- Sel hewan dan sel tumbuhan: kamera kini mengitari sel (orbit) sambil naik/turun, bukan hanya mundur. Sel tetap di tengah dunia, posisinya di layar diatur dengan `setViewOffset`.
+- Padang lamun: lamun latar depan yang lebih tinggi dilewati kamera; daun lamun meruncing dan melengkung.
+- Lumpur: kerikil di sepanjang jalur kamera dan cahaya rendah dari samping. Terumbu, penyelaman, dan lumpur memakai partikel tiga lapis.
+- Screenshot: `docs/laporan/screenshots/fase7-beranda-ruang-*`.
+
+**Kendala dan solusi**
+- Sel latar depan terlalu besar dan menutupi sel utama. Solusi: diperkecil dan digeser ke tepi kanan.
+- Jaringan sel tumbuhan terlalu terang sehingga bersaing dengan sel utama dan teks. Solusi: dibuat lebih jauh, lebih gelap, lebih transparan.
+- Adegan lumpur hampir hitam sehingga kerikil tidak terlihat. Solusi: lantai sedikit lebih terang + cahaya samping.

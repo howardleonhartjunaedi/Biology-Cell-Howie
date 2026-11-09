@@ -638,3 +638,26 @@ Selama mode Pompa, material pompa dibuat tembus pandang (`opacity 0.55`, `depthW
 - **Lisosom:** kantong tembus pandang berisi butiran enzim. **Peroksisom:** kantong dengan inti kristal (oktahedron).
 - **Sentriol:** `centrioleGeometry()` menyusun 9 kelompok × 3 mikrotubulus melingkar (9 triplet, KONTEN §3.2); sepasang, saling tegak lurus.
 - **Kloroplas:** membran tembus pandang dengan 3 grana (tumpukan cakram tilakoid) di dalamnya.
+
+---
+
+# RASA RUANG 3D DI BERANDA (pembaruan)
+
+## src/pages/landing/scenes/depth.js
+**Tugas file ini:** memberi petunjuk kedalaman. Mata menilai jarak dari tiga hal: **paralaks** (benda dekat bergeser lebih cepat), **oklusi** (benda dekat menutupi benda jauh), dan **perspektif udara** (benda jauh memudar oleh kabut).
+- `createDepthDust()`: tiga lapis partikel. Lapis jauh kecil dan banyak, lapis dekat besar, buram, dan jarang (seperti bokeh kamera).
+  Di shader, `mod(p - uCamera + uBox/2, uBox) - uBox/2` membuat kotak partikel "membungkus" kamera: partikel yang tertinggal di belakang muncul lagi di depan, jadi berapa pun jauhnya kamera bergerak, selalu ada partikel di sekitarnya. Semua dihitung di GPU, tanpa beban JavaScript per partikel.
+  Ukuran titik `uSize * 300 / jarak` → makin dekat makin besar. Partikel memudar di tepi kotak (tidak "muncul tiba-tiba") dan terlalu dekat dengan kamera.
+- `createNeighborCells()`: 5–9 sel sederhana tersebar 13–29 satuan dari sel utama (memudar oleh kabut) + satu sel latar depan yang ikut kamera di tepi kanan dan naik seiring scroll.
+- `createTissueWall()`: tiga lapis deretan sel kotak (pola batu bata) di belakang sel tumbuhan, makin jauh makin pudar. Ini juga sesuai materi: sel tumbuhan tersusun rapat dalam jaringan.
+
+## scenes/animal-cell.js dan plant-cell.js
+- Kamera mengorbit: `camera.position = (sin(orbit)·jarak, tinggi, cos(orbit)·jarak)` dengan `orbit` berubah dari kiri ke kanan seiring scroll. Karena kamera berputar mengelilingi sel, latar belakang bergeser berlawanan arah → paralaks.
+- `applySubjectOffset()` memakai `camera.setViewOffset` untuk menampilkan sel di kanan layar (kolom teks di kiri) tanpa memindahkan sel dari titik (0,0,0). Di layar ≤ 900 px offset dimatikan.
+**T: Kenapa tidak cukup memindahkan sel ke kanan seperti sebelumnya?** J: Kalau sel dipindah, orbit kamera tidak lagi mengelilingi sel. Dengan view offset, geometri adegan tetap benar dan hanya "bingkai" kamera yang digeser.
+
+## scenes/seagrass.js
+Lamun latar depan (`foreground`) lebih tinggi dan lebih gelap, ditaruh di jalur kamera sehingga kamera melewatinya. Daun dibuat meruncing (lebar dikali `1 - y·0.75`) dan melengkung (`z = y²·0.12`).
+
+## scenes/mud.js
+`createPebbles()` menaruh kerikil (InstancedMesh) di sepanjang jalur kamera; cahaya `grazing` dari samping rendah memunculkan relief dan bayangan.

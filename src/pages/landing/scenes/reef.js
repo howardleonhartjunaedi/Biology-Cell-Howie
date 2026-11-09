@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { createFishSchool } from './fish-school.js';
 import { createCoralGarden } from './coral-garden.js';
 import { createGodRays } from './god-rays.js';
+import { createDepthDust } from './depth.js';
 import { labEnvironment } from '../../../core/materials.js';
 import { createDriftParticles, lerp, makeCamera, rangeT, smooth } from './shared.js';
 
@@ -45,6 +46,9 @@ export function createReefScene({ tier, renderer }) {
   particles.points.position.x = 16;
   scene.add(particles.points);
 
+  const dust = createDepthDust({ tier, color: '#BFEDE8' });
+  scene.add(dust.group);
+
   scene.environment = labEnvironment(renderer);
   scene.environmentIntensity = 0.35;
   scene.add(new THREE.HemisphereLight('#BFF3EE', '#3A3226', 1.1));
@@ -79,6 +83,7 @@ export function createReefScene({ tier, renderer }) {
     camera.lookAt(lookTarget);
     const width = window.innerWidth;
     const height = window.innerHeight;
+    dust.update(time, camera);
     if (width > 900) camera.setViewOffset(width, height, -width * VIEW_SHIFT, 0, width, height);
     else camera.clearViewOffset();
   }

@@ -2,13 +2,21 @@ import * as THREE from 'three';
 import { activePart } from '../dom-sync.js';
 import { addWobble, capsule, createHighlighter, membraneMaterial, meshesOf, partMaterial, stackedArcs } from './cell-parts.js';
 import { useLabLighting } from '../../../core/materials.js';
-import { createDriftParticles, lerp, makeCamera, rangeT, smooth } from './shared.js';
+import { lerp, makeCamera, rangeT, smooth } from './shared.js';
+import { createDepthDust, createNeighborCells } from './depth.js';
 
 const WATER = new THREE.Color('#06303A');
 const PART_COUNT = 6;
 
-export function subjectShift() {
-  return window.innerWidth > 900 ? 2.6 : 0;
+const SUBJECT_SHIFT = 0.2;
+
+// Menggeser "jendela" kamera supaya sel tampil di kanan (kolom teks di kiri), tanpa memindahkan sel.
+// Dengan begitu kamera bisa mengitari sel yang tetap di titik (0,0,0).
+export function applySubjectOffset(camera) {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  if (width > 900) camera.setViewOffset(width, height, -width * SUBJECT_SHIFT, 0, width, height);
+  else camera.clearViewOffset();
 }
 
 function buildCell(uniforms) {
@@ -81,28 +89,30 @@ export function createAnimalCellScene({ tier, renderer }) {
   scene.add(cell);
   const highlighter = createHighlighter(groups);
 
-  const particles = createDriftParticles({
-    count: tier === 'high' ? 500 : 250,
-    spread: new THREE.Vector3(30, 20, 30),
-    color: '#9FE3E0',
-    size: 0.04,
-    opacity: 0.4,
-  });
-  scene.add(particles.points);
+  const dust = createDepthDust({ tier, color: '#9FE3E0' });
+  scene.add(dust.group);
+  const neighbors = createNeighborCells({ count: tier === 'low' ? 5 : 9 });
+  scene.add(neighbors.group);
 
   useLabLighting(scene, renderer, { intensity: 0.7 });
 
   function update(dt, progress, time) {
     uniforms.uTime.value = time;
-    particles.update(time);
 
+    // Kamera tidak hanya mundur, tetapi mengitari sel (orbit) sambil sedikit naik:
+    // sel tetangga di belakang bergeser berlawanan arah → paralaks → terasa ruang 3D.
     const arrive = smooth(rangeT(progress, 0, 0.18));
-    cell.position.x = subjectShift();
-    cell.rotation.y = time * 0.12 + progress * 1.5;
-    cell.rotation.x = Math.sin(time * 0.2) * 0.12;
-    camera.position.set(0, lerp(0.6, 0.3, arrive), lerp(4, 11, arrive));
-    camera.lookAt(subjectShift() * 0.55, 0, 0);
+    const orbit = lerp(-0.55, 0.65, smooth(progress));
+    const distance = lerp(4, 11, arrive) - smooth(rangeT(progress, 0.6, 1)) * 2;
+    cell.position.set(0, 0, 0);
+    cell.rotation.y = time * 0.06 + progress * 0.8;
+    cell.rotation.x = Math.sin(time * 0.2) * 0.1;
+    camera.position.set(Math.sin(orbit) * distance, lerp(0.6, 1.6, smooth(progress)), Math.cos(orbit) * distance);
+    camera.lookAt(0, 0, 0);
+    applySubjectOffset(camera);
 
+    dust.update(time, camera);
+    neighbors.update(time, camera, progress);
     highlighter.update(dt, activePart(progress, PART_COUNT));
   }
 

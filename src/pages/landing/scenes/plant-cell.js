@@ -1,10 +1,11 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { activePart } from '../dom-sync.js';
-import { subjectShift } from './animal-cell.js';
+import { applySubjectOffset } from './animal-cell.js';
 import { createHighlighter, membraneMaterial, meshesOf, partMaterial } from './cell-parts.js';
 import { useLabLighting } from '../../../core/materials.js';
-import { createDriftParticles, lerp, makeCamera, rangeT, seededRandom, smooth } from './shared.js';
+import { lerp, makeCamera, rangeT, seededRandom, smooth } from './shared.js';
+import { createDepthDust, createTissueWall } from './depth.js';
 
 const WATER = new THREE.Color('#0A2A24');
 const PART_COUNT = 3;
@@ -67,25 +68,27 @@ export function createPlantCellScene({ tier, renderer }) {
   scene.add(cell);
   const highlighter = createHighlighter(groups);
 
-  const particles = createDriftParticles({
-    count: tier === 'high' ? 400 : 200,
-    spread: new THREE.Vector3(30, 20, 30),
-    color: '#CFEFC4',
-    size: 0.04,
-    opacity: 0.35,
-  });
-  scene.add(particles.points);
+  const dust = createDepthDust({ tier, color: '#CFEFC4' });
+  scene.add(dust.group);
+  // Sel lamun hidup berdampingan dalam jaringan: dinding sel lain di belakang memberi skala dan kedalaman.
+  const tissue = createTissueWall();
+  scene.add(tissue.group);
 
   useLabLighting(scene, renderer, { intensity: 0.7, rim: '#4CC38A' });
 
   function update(dt, progress, time) {
-    particles.update(time);
+    // Kamera turun dari atas-kiri lalu mengitari ke kanan; jaringan di belakang bergeser pelan (paralaks).
     const arrive = smooth(rangeT(progress, 0, 0.18));
-    cell.position.x = subjectShift();
-    cell.rotation.y = -0.6 + time * 0.08 + progress * 1.2;
-    cell.rotation.x = 0.35 + Math.sin(time * 0.2) * 0.08;
-    camera.position.set(0, 0.4, lerp(4, 12, arrive));
-    camera.lookAt(subjectShift() * 0.55, 0, 0);
+    const glide = smooth(progress);
+    const orbit = lerp(-0.45, 0.5, glide);
+    const distance = lerp(4, 12, arrive) - smooth(rangeT(progress, 0.6, 1)) * 2;
+    cell.position.set(0, 0, 0);
+    cell.rotation.y = -0.5 + time * 0.04 + progress * 0.5;
+    cell.rotation.x = 0.25 + Math.sin(time * 0.2) * 0.06;
+    camera.position.set(Math.sin(orbit) * distance, lerp(2.6, 0.6, glide), Math.cos(orbit) * distance);
+    camera.lookAt(0, 0, 0);
+    applySubjectOffset(camera);
+    dust.update(time, camera);
     highlighter.update(dt, activePart(progress, PART_COUNT));
   }
 

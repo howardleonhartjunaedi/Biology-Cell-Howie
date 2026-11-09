@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import fragmentShader from '../shaders/caustics.frag.glsl?raw';
 import { labEnvironment } from '../../../core/materials.js';
 import { createGodRays } from './god-rays.js';
+import { createDepthDust } from './depth.js';
 import { addSway, createDriftParticles, lerp, makeCamera, seededRandom, smooth } from './shared.js';
 
 const WATER = new THREE.Color('#0D4A45');
@@ -19,24 +20,31 @@ void main() {
 }`;
 
 function bladeGeometry() {
-  const geometry = new THREE.PlaneGeometry(0.06, 1, 1, 6);
+  const geometry = new THREE.PlaneGeometry(0.06, 1, 1, 8);
   geometry.translate(0, 0.5, 0);
+  // Daun lamun meruncing ke ujung dan sedikit melengkung, bukan pita lurus.
+  const pos = geometry.attributes.position;
+  for (let i = 0; i < pos.count; i += 1) {
+    const y = pos.getY(i);
+    pos.setX(i, pos.getX(i) * (1 - y * 0.75));
+    pos.setZ(i, y * y * 0.12);
+  }
+  geometry.computeVertexNormals();
   return geometry;
 }
 
-function createMeadow(count) {
+function createMeadow(count, area = MEADOW, { seed = 57, height = [0.9, 2.2], width = 1, shades = ['#2E7D4F', '#3F9A5E', '#24603F', '#4FA86A'] } = {}) {
   const material = new THREE.MeshStandardMaterial({ color: '#2E7D4F', roughness: 0.45, side: THREE.DoubleSide });
   const sway = addSway(material, { strength: 0.35, speed: 1.4 });
   const mesh = new THREE.InstancedMesh(bladeGeometry(), material, count);
-  const random = seededRandom(57);
+  const random = seededRandom(seed);
   const matrix = new THREE.Matrix4();
   const quaternion = new THREE.Quaternion();
-  const shades = ['#2E7D4F', '#3F9A5E', '#24603F', '#4FA86A'];
 
   for (let i = 0; i < count; i += 1) {
-    const position = new THREE.Vector3(MEADOW.minX + random() * (MEADOW.maxX - MEADOW.minX), 0, MEADOW.minZ + random() * (MEADOW.maxZ - MEADOW.minZ));
+    const position = new THREE.Vector3(area.minX + random() * (area.maxX - area.minX), 0, area.minZ + random() * (area.maxZ - area.minZ));
     quaternion.setFromEuler(new THREE.Euler((random() - 0.5) * 0.3, random() * Math.PI, (random() - 0.5) * 0.3));
-    matrix.compose(position, quaternion, new THREE.Vector3(1, 0.9 + random() * 1.3, 1));
+    matrix.compose(position, quaternion, new THREE.Vector3(width, height[0] + random() * (height[1] - height[0]), 1));
     mesh.setMatrixAt(i, matrix);
     mesh.setColorAt(i, new THREE.Color(shades[i % shades.length]));
   }
@@ -65,6 +73,17 @@ export function createSeagrassScene({ tier, renderer }) {
 
   const meadow = createMeadow(tier === 'high' ? 2400 : 1200);
   scene.add(meadow.mesh);
+  // Lamun latar depan: lebih tinggi, lebih gelap (membelakangi cahaya), dan dilewati kamera.
+  // Inilah yang membuat kamera terasa "berada di dalam" padang lamun, bukan melihat dari luar.
+  const foreground = createMeadow(tier === 'low' ? 70 : 130, { minX: 1, maxX: 10, minZ: 2.5, maxZ: 8 }, {
+    seed: 91,
+    height: [1.6, 3],
+    width: 2.2,
+    shades: ['#24603F', '#2A6B47', '#1F5236'],
+  });
+  scene.add(foreground.mesh);
+  const dust = createDepthDust({ tier, color: '#D7F5D9' });
+  scene.add(dust.group);
 
   const rays = createGodRays({ count: tier === 'high' ? 9 : 5, top: 10, length: 14, spread: 30, strength: 0.14 });
   scene.add(rays.group);
@@ -89,12 +108,14 @@ export function createSeagrassScene({ tier, renderer }) {
   function update(dt, progress, time) {
     sandUniforms.uTime.value = time;
     meadow.sway.uTime.value = time;
+    foreground.sway.uTime.value = time;
     rays.update(time);
     particles.update(time);
 
     const glide = smooth(progress);
-    camera.position.set(lerp(-6, 4, glide), lerp(4, 2.6, glide), lerp(9, 4.5, glide));
+    camera.position.set(lerp(-6, 4, glide), lerp(4, 2.2, glide), lerp(9, 4.5, glide));
     camera.lookAt(lerp(6, 9, glide), lerp(0.6, 1, glide), lerp(-5, -3, glide));
+    dust.update(time, camera);
   }
 
   return { scene, camera, update };

@@ -3,6 +3,7 @@ import { Water } from 'three/examples/jsm/objects/Water.js';
 import vertexShader from '../shaders/water.vert.glsl?raw';
 import fragmentShader from '../shaders/water.frag.glsl?raw';
 import { createIslandLayers } from './island-layers.js';
+import { createDepthDust } from './depth.js';
 import { createGodRays, rayTexture } from './god-rays.js';
 import { loadSky } from './sky.js';
 import { createDriftParticles, lerp, makeCamera, rangeT, smooth } from './shared.js';
@@ -93,6 +94,10 @@ export function createSurfaceScene({ tier, renderer }) {
   const rays = createGodRays({ count: tier === 'high' ? 10 : 6, top: -0.2, length: 16, spread: 30 });
   world.add(rays.group);
 
+  // Setelah menembus air, partikel tiga lapis membuat penyelaman terasa bergerak MASUK ke dalam ruang.
+  const dust = createDepthDust({ tier, color: '#CFF6F2' });
+  scene.add(dust.group);
+
   scene.add(new THREE.HemisphereLight('#E8FFFB', '#0B5A6A', 0.6));
 
   let yaw = 0;
@@ -138,6 +143,8 @@ export function createSurfaceScene({ tier, renderer }) {
     shafts.visible = !under;
     spray.points.visible = !under;
     bubbles.points.visible = under;
+    dust.group.visible = under;
+    if (under) dust.update(time, camera);
     rays.group.visible = under;
     scene.fog.color.copy(under ? UNDERWATER : HAZE);
     scene.fog.density = under ? BELOW_FOG : ABOVE_FOG;
