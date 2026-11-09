@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { partMaterial, stackedArcs } from '../landing/scenes/cell-parts.js';
 import { seededRandom } from '../landing/scenes/shared.js';
 
@@ -41,16 +42,152 @@ function place(group, mesh, [x, y, z], rotation = [0, 0, 0]) {
   return mesh;
 }
 
+// Nukleus terpotong: membran inti dua lapis, pori nukleus, nukleoplasma, kromatin, dan nukleolus.
 function nucleus(position, scale = 1) {
   const group = new THREE.Group();
-  const envelope = new THREE.Mesh(new THREE.SphereGeometry(1, 48, 32), partMaterial('#3D7FC4', { clippingPlanes: [CUT_PLANE], side: THREE.DoubleSide }));
-  const nucleolus = new THREE.Mesh(new THREE.SphereGeometry(0.36, 32, 20), partMaterial('#1E3F66'));
-  nucleolus.position.set(0.15, 0.1, 0.1);
-  group.add(envelope, nucleolus);
+  const cut = { clippingPlanes: [CUT_PLANE], side: THREE.DoubleSide };
+  const outer = new THREE.Mesh(new THREE.SphereGeometry(1, 64, 48), partMaterial('#3D7FC4', cut));
+  const inner = new THREE.Mesh(new THREE.SphereGeometry(0.93, 64, 48), partMaterial('#5A9BDB', cut));
+  const plasm = new THREE.Mesh(new THREE.SphereGeometry(0.9, 48, 32), partMaterial('#21466F', { ...cut, transparent: true, opacity: 0.55, depthWrite: false }));
+
+  const random = seededRandom(5);
+  const poreCount = 46;
+  const pores = new THREE.InstancedMesh(new THREE.TorusGeometry(0.06, 0.022, 8, 18), partMaterial('#B8F1EC', cut), poreCount);
+  const matrix = new THREE.Matrix4();
+  const up = new THREE.Vector3(0, 1, 0);
+  for (let i = 0; i < poreCount; i += 1) {
+    const dir = new THREE.Vector3(random() - 0.5, random() - 0.5, -random() * 0.9 - 0.1).normalize();
+    matrix.lookAt(new THREE.Vector3(), dir, up).setPosition(dir.multiplyScalar(1.005));
+    pores.setMatrixAt(i, matrix);
+  }
+
+  const points = [];
+  // Kromatin = benang tipis yang kusut, jadi titik jalurnya diacak di dalam nukleus.
+  const point = new THREE.Vector3(0, 0, -0.3);
+  for (let i = 0; i < 90; i += 1) {
+    point.add(new THREE.Vector3(random() - 0.5, random() - 0.5, random() - 0.5).multiplyScalar(0.32));
+    if (point.length() > 0.72) point.multiplyScalar(0.6);
+    point.z = Math.min(point.z, 0.05);
+    points.push(point.clone());
+  }
+  const chromatin = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points), 540, 0.012, 5), partMaterial('#E0B060', { roughness: 0.6 }));
+
+  const nucleolus = new THREE.Mesh(new THREE.IcosahedronGeometry(0.32, 4), partMaterial('#1E3F66', { roughness: 0.7 }));
+  nucleolus.position.set(0.18, 0.1, -0.15);
+  group.add(outer, inner, plasm, pores, chromatin, nucleolus);
   group.position.copy(position);
   group.scale.setScalar(scale);
   return group;
 }
+
+// Mitokondria: membran luar tembus pandang, di dalamnya krista (lipatan membran dalam) terlihat.
+const MITO = {
+  outer: new THREE.CapsuleGeometry(0.2, 0.55, 12, 28),
+  matrix: new THREE.CapsuleGeometry(0.16, 0.5, 10, 24),
+  cristae: (() => {
+    const folds = [];
+    for (let i = 0; i < 6; i += 1) {
+      const fold = new THREE.CapsuleGeometry(0.025, 0.16, 4, 10);
+      fold.rotateX(Math.PI / 2);
+      fold.scale(1, 1, 2.2);
+      fold.translate(0, -0.3 + i * 0.12, i % 2 ? 0.05 : -0.05);
+      folds.push(fold);
+    }
+    return mergeGeometries(folds);
+  })(),
+};
+
+function mitochondrion(materials) {
+  const group = new THREE.Group();
+  group.add(new THREE.Mesh(MITO.outer, materials.outer), new THREE.Mesh(MITO.matrix, materials.matrix), new THREE.Mesh(MITO.cristae, materials.cristae));
+  group.scale.set(1, 1, 0.85);
+  return group;
+}
+
+// Lisosom: kantong bermembran berisi butiran enzim hidrolitik.
+function lysosome(materials, random) {
+  const group = new THREE.Group();
+  group.add(new THREE.Mesh(new THREE.SphereGeometry(0.2, 32, 20), materials.shell));
+  for (let i = 0; i < 7; i += 1) {
+    const grain = new THREE.Mesh(new THREE.IcosahedronGeometry(0.035, 1), materials.grain);
+    grain.position.set((random() - 0.5) * 0.2, (random() - 0.5) * 0.2, (random() - 0.5) * 0.2);
+    group.add(grain);
+  }
+  return group;
+}
+
+// Peroksisom: kantong bermembran dengan inti kristal (enzim katalase).
+function peroxisome(materials) {
+  const group = new THREE.Group();
+  const core = new THREE.Mesh(new THREE.OctahedronGeometry(0.08), materials.core);
+  core.scale.set(1, 1.3, 1);
+  group.add(new THREE.Mesh(new THREE.SphereGeometry(0.17, 32, 20), materials.shell), core);
+  return group;
+}
+
+// Sentriol: tabung dari 9 triplet mikrotubulus (sesuai KONTEN §3.2), sepasang dan saling tegak lurus.
+function centrioleGeometry() {
+  const tubes = [];
+  for (let i = 0; i < 9; i += 1) {
+    const angle = (i / 9) * Math.PI * 2;
+    for (let j = 0; j < 3; j += 1) {
+      const tubule = new THREE.CylinderGeometry(0.022, 0.022, 0.42, 8);
+      const r = 0.1 + j * 0.035;
+      const a = angle + j * 0.22;
+      tubule.translate(Math.cos(a) * r, 0, Math.sin(a) * r);
+      tubes.push(tubule);
+    }
+  }
+  return mergeGeometries(tubes);
+}
+
+// Ribosom: dua subunit (besar dan kecil).
+function ribosomeGeometry() {
+  const large = new THREE.SphereGeometry(0.045, 10, 8);
+  const small = new THREE.SphereGeometry(0.032, 8, 6);
+  small.translate(0.035, 0.03, 0);
+  return mergeGeometries([large, small]);
+}
+
+// Ribosom yang menempel di permukaan RE kasar (yang membuatnya "kasar").
+function studRibosomes(arcs, random) {
+  const geometry = ribosomeGeometry();
+  geometry.scale(0.7, 0.7, 0.7);
+  const material = partMaterial('#E8D7A8');
+  arcs.children.forEach((tube) => {
+    const pos = tube.geometry.attributes.position;
+    const normal = tube.geometry.attributes.normal;
+    const count = 60;
+    const dots = new THREE.InstancedMesh(geometry, material, count);
+    const matrix = new THREE.Matrix4();
+    const p = new THREE.Vector3();
+    const n = new THREE.Vector3();
+    for (let i = 0; i < count; i += 1) {
+      const index = Math.floor(random() * pos.count);
+      p.fromBufferAttribute(pos, index);
+      n.fromBufferAttribute(normal, index);
+      p.addScaledVector(n, 0.03);
+      matrix.makeTranslation(p.x, p.y, p.z);
+      dots.setMatrixAt(i, matrix);
+    }
+    tube.add(dots);
+  });
+}
+
+// Kloroplas: membran luar tembus pandang dengan tumpukan tilakoid (grana) di dalam.
+const CHLORO = (() => {
+  const outer = new THREE.SphereGeometry(0.28, 32, 20);
+  outer.scale(1.6, 0.8, 1);
+  const discs = [];
+  [-0.24, 0, 0.24].forEach((x) => {
+    for (let i = 0; i < 4; i += 1) {
+      const disc = new THREE.CylinderGeometry(0.075, 0.075, 0.025, 16);
+      disc.translate(x, -0.06 + i * 0.04, 0);
+      discs.push(disc);
+    }
+  });
+  return { outer, grana: mergeGeometries(discs) };
+})();
 
 function scatter(random, count, radius, make) {
   const group = new THREE.Group();
@@ -66,11 +203,12 @@ function scatter(random, count, radius, make) {
 }
 
 function ribosomes(random, count, radius) {
-  const mesh = new THREE.InstancedMesh(new THREE.SphereGeometry(0.045, 8, 6), partMaterial('#E8D7A8'), count);
+  const mesh = new THREE.InstancedMesh(ribosomeGeometry(), partMaterial('#E8D7A8'), count);
   const matrix = new THREE.Matrix4();
+  const euler = new THREE.Euler();
   for (let i = 0; i < count; i += 1) {
     const point = new THREE.Vector3(random() - 0.5, random() - 0.5, random() - 0.5).normalize().multiplyScalar(radius * (0.3 + random() * 0.65));
-    matrix.makeTranslation(point.x, point.y, point.z);
+    matrix.makeRotationFromEuler(euler.set(random() * 6, random() * 6, random() * 6)).setPosition(point);
     mesh.setMatrixAt(i, matrix);
   }
   return mesh;
@@ -79,10 +217,15 @@ function ribosomes(random, count, radius) {
 function sharedOrganelles(cell, random, { radius, nucleusAt }) {
   addTagged(cell, nucleus(nucleusAt), 'nukleus');
 
-  const mitoMaterial = partMaterial('#FF7A59');
-  addTagged(cell, scatter(random, 5, radius, () => new THREE.Mesh(new THREE.CapsuleGeometry(0.2, 0.55, 10, 24), mitoMaterial)), 'mitokondria');
+  const mitoMaterials = {
+    outer: partMaterial('#FF7A59', { transparent: true, opacity: 0.5, depthWrite: false }),
+    matrix: partMaterial('#C9503C'),
+    cristae: partMaterial('#FFC2A8'),
+  };
+  addTagged(cell, scatter(random, 6, radius, () => mitochondrion(mitoMaterials)), 'mitokondria');
 
   const rough = stackedArcs({ count: 4, radius: 1.55, tube: 0.085, arc: Math.PI * 1.1, gap: 0.16, color: '#4CC38A' });
+  studRibosomes(rough, random);
   rough.position.copy(nucleusAt);
   rough.rotation.set(0.3, 0.3, 2.4);
   tag(rough, 're-kasar');
@@ -95,11 +238,21 @@ function sharedOrganelles(cell, random, { radius, nucleusAt }) {
   addTagged(cell, ribosomes(random, 140, radius), 'ribosom');
 
   const golgi = stackedArcs({ count: 5, radius: 0.55, tube: 0.1, arc: Math.PI * 0.9, gap: 0.16, color: '#F2B544' });
+  // Vesikel yang lepas dari ujung sisterna (sisi trans).
+  const vesicleMaterial = partMaterial('#FFF4D6');
+  [[0.72, -0.12, 0.7], [0.62, -0.3, 0.45], [-0.62, 0.42, 0.75], [0.78, 0.12, 0.2]].forEach(([x, y, z], i) => {
+    const vesicle = new THREE.Mesh(new THREE.SphereGeometry(0.06 + (i % 2) * 0.02, 20, 14), vesicleMaterial);
+    vesicle.position.set(x, y, z);
+    golgi.add(vesicle);
+  });
   place(cell, golgi, [1.4, -1.1, -0.2], [0.6, -0.5, 0.9]);
   tag(golgi, 'golgi');
 
-  const peroxisomeMaterial = partMaterial('#D8B4A0');
-  addTagged(cell, scatter(random, 3, radius, () => new THREE.Mesh(new THREE.SphereGeometry(0.17, 24, 16), peroxisomeMaterial)), 'peroksisom');
+  const peroxisomeMaterials = {
+    shell: partMaterial('#D8B4A0', { transparent: true, opacity: 0.55, depthWrite: false }),
+    core: partMaterial('#8C5A3C', { roughness: 0.25 }),
+  };
+  addTagged(cell, scatter(random, 3, radius, () => peroxisome(peroxisomeMaterials)), 'peroksisom');
 }
 
 export function buildAnimalCell() {
@@ -115,11 +268,14 @@ export function buildAnimalCell() {
 
   sharedOrganelles(cell, random, { radius: 2.4, nucleusAt: new THREE.Vector3(-0.3, 0.2, -0.3) });
 
-  const lysoMaterial = partMaterial('#E5534B');
-  addTagged(cell, scatter(random, 4, 2.4, () => new THREE.Mesh(new THREE.SphereGeometry(0.2, 24, 16), lysoMaterial)), 'lisosom');
+  const lysoMaterials = {
+    shell: partMaterial('#E5534B', { transparent: true, opacity: 0.6, depthWrite: false }),
+    grain: partMaterial('#7A1E1E'),
+  };
+  addTagged(cell, scatter(random, 4, 2.4, () => lysosome(lysoMaterials, random)), 'lisosom');
 
   const centrioles = new THREE.Group();
-  const tube = new THREE.CylinderGeometry(0.09, 0.09, 0.45, 18);
+  const tube = centrioleGeometry();
   const centrioleMaterial = partMaterial('#E8F4F2');
   const a = new THREE.Mesh(tube, centrioleMaterial);
   const b = new THREE.Mesh(tube, centrioleMaterial);
@@ -155,14 +311,14 @@ export function buildPlantCell() {
     byId(id).position.x += 0.7;
   });
 
-  const chloroGeometry = new THREE.SphereGeometry(0.28, 32, 20);
-  chloroGeometry.scale(1.6, 0.8, 1);
-  const chloroMaterial = partMaterial('#3FA55A');
+  const chloroMaterial = partMaterial('#3FA55A', { transparent: true, opacity: 0.6, depthWrite: false });
+  const granaMaterial = partMaterial('#1F6B3A');
   const chloroplasts = new THREE.Group();
   for (let i = 0; i < 14; i += 1) {
-    const chloro = new THREE.Mesh(chloroGeometry, chloroMaterial);
+    const chloro = new THREE.Mesh(CHLORO.outer, chloroMaterial);
+    chloro.add(new THREE.Mesh(CHLORO.grana, granaMaterial));
     const top = i % 2 === 0;
-    chloro.position.set((random() - 0.5) * 5.4, top ? 1.75 : -1.75, (random() - 0.5) * 2.6);
+    chloro.position.set((random() - 0.5) * 4.8, top ? 1.6 : -1.6, (random() - 0.5) * 2.4);
     chloro.rotation.set(random(), random() * 3, random());
     chloroplasts.add(chloro);
   }

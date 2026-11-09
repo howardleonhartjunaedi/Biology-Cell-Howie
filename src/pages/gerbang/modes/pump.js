@@ -32,6 +32,8 @@ export function createPump({ pump }, state) {
 
   const glow = pump.material;
   const baseEmissive = glow.emissiveIntensity;
+  // Pompa dibuat tembus pandang selama mode ini, supaya ion yang menempel di dalamnya tetap terlihat.
+  Object.assign(glow, { transparent: true, opacity: 0.55, depthWrite: false });
 
   function place(meshes, slots, paths, t) {
     meshes.forEach((mesh, i) => {
@@ -78,6 +80,7 @@ export function createPump({ pump }, state) {
 
   function dispose() {
     glow.emissiveIntensity = baseEmissive;
+    Object.assign(glow, { transparent: false, opacity: 1, depthWrite: true });
     pump.scale.set(1, 1, 1);
     pump.rotation.z = 0;
   }

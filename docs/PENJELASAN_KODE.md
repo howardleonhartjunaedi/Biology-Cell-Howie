@@ -612,3 +612,29 @@ Perlu dipelajari lagi (< 60%, dengan konsep yang terlewat dan tautan halaman), p
 Membuat kartu, tabel, kredit, dan anggota dari JSON. Kredit diambil langsung dari `credits.json`, jadi setiap aset baru otomatis muncul.
 Baris identitas yang kosong (nama guru) tidak ditampilkan.
 Tata letak kartu asimetris di grid 12 kolom: 7+5, 12, 5+7.
+
+---
+
+# DETAIL 3D — Gerbang Sel dan Lab Sel (pembaruan)
+
+## src/pages/gerbang/membrane-model.js (dibuat ulang)
+- `tailGeometry()`: dua ekor asam lemak + "leher" gliserol. Ekor kedua dibuat dari dua potongan dengan sudut 0,42 rad, meniru tekukan ikatan rangkap pada asam lemak tak jenuh.
+- `lipidLayer()`: setiap fosfolipid diberi geseran, tinggi, dan putaran acak kecil (`seeded()` supaya selalu sama), warna kepala lewat `setColorAt` (InstancedMesh boleh punya warna per salinan). Hasilnya terlihat "cair" sesuai model mozaik fluida.
+- `lumpy()`: menggeser setiap titik permukaan protein memakai gabungan gelombang `sin`, lalu `computeVertexNormals()` agar cahaya mengikuti benjolan. Protein jadi terlihat globular, bukan kapsul licin.
+- Protein disusun dari beberapa `subunit()` (kapsul tegak) dan `blob()` (bola gepeng) yang digabung dengan `mergeGeometries` menjadi **satu mesh**. Karena tetap satu mesh dengan satu material, kode animasi lama (`pump.scale`, `pump.material`, `carrier.scale`) tetap bekerja.
+  Saluran = 5 subunit melingkar dengan lubang di tengah; pembawa = 2 lobus dengan celah; pompa = badan di membran + domain bawah tempat ATP menempel.
+- `PROTEIN_SCALE` membuat protein menonjol di atas dan bawah lapisan kepala, seperti gambar di buku.
+- `carbChain()`: oligosakarida bercabang, manik gula dihubungkan batang tipis yang diputar dengan `quaternion.setFromUnitVectors`.
+
+## src/pages/gerbang/modes/pump.js
+Selama mode Pompa, material pompa dibuat tembus pandang (`opacity 0.55`, `depthWrite false`) supaya ion yang menempel di dalam pompa tetap terlihat; dikembalikan saat ganti mode.
+
+## src/pages/sel/cell-models.js (organel lebih detail)
+- **Nukleus:** membran luar + membran dalam (karioteka dua lapis), nukleoplasma tembus pandang, 46 pori nukleus (`InstancedMesh` torus yang dihadapkan keluar dengan `matrix.lookAt`), kromatin = `TubeGeometry` mengikuti jalur acak (random walk) di dalam nukleus, nukleolus.
+- **Mitokondria:** membran luar tembus pandang, matriks, dan 6 krista (lipatan) di dalamnya. Geometri dibuat sekali (`MITO`) lalu dipakai ulang semua mitokondria.
+- **RE kasar:** `studRibosomes()` mengambil titik acak dari permukaan tabung RE (`attributes.position` + `normal`) dan menempelkan ribosom di sana.
+- **Ribosom:** dua subunit (besar dan kecil) digabung jadi satu geometri.
+- **Badan Golgi:** ditambah vesikel di ujung sisterna.
+- **Lisosom:** kantong tembus pandang berisi butiran enzim. **Peroksisom:** kantong dengan inti kristal (oktahedron).
+- **Sentriol:** `centrioleGeometry()` menyusun 9 kelompok × 3 mikrotubulus melingkar (9 triplet, KONTEN §3.2); sepasang, saling tegak lurus.
+- **Kloroplas:** membran tembus pandang dengan 3 grana (tumpukan cakram tilakoid) di dalamnya.

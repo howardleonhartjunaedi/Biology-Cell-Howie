@@ -11,8 +11,8 @@ import { buildMembrane } from './membrane-model.js';
 import { createDiffusion, createFacilitated, createOsmosis } from './modes/passive.js';
 import { createPump } from './modes/pump.js';
 
-const CAMERA = new THREE.Vector3(1, 8.5, 24);
-const TARGET = new THREE.Vector3(1.2, -0.2, 0);
+const CAMERA = new THREE.Vector3(0.4, 9.2, 26);
+const TARGET = new THREE.Vector3(0.4, -0.3, 0);
 const EXPLODE = 0.45;
 const MAX_TILT = 0.12;
 const STEP_SECONDS = 1;

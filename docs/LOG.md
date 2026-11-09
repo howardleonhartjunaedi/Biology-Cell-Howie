@@ -141,3 +141,15 @@ Catatan harian untuk laporan (BAB IV Kendala, BAB VI Evaluasi).
 - Laporan "Unduh Report Card" di rencana memakai library `html-to-image`, padahal library baru harus izin dulu. Solusi: kartu nilai digambar sendiri di `<canvas>` lalu disimpan sebagai PNG.
 - Tombol pilihan dua sisi (Sel Hewan | Sel Tumbuhan) dibutuhkan juga di Kuis. Solusi: gayanya `.segmented` dipindah ke `components.css`.
 - Nama guru belum diketahui. Solusi: baris guru disembunyikan otomatis selama isinya kosong di `rangkuman.json`.
+
+## Selasa, 10 November 2026 — Detail 3D (Gerbang Sel dan Lab Sel)
+**Yang dikerjakan**
+- Gerbang Sel: protein dibuat ulang dari beberapa subunit dengan permukaan bergelombang (protein integral 4 subunit, saluran 5 subunit dengan pori, pembawa 2 lobus, pompa dengan domain ATP di sitoplasma), protein menonjol di atas dan bawah membran.
+  Fosfolipid: satu ekor bertekuk (asam lemak tak jenuh), tinggi dan putaran sedikit berbeda (kesan "cair"), warna kepala bervariasi. Rantai karbohidrat bercabang. Kamera dijauhkan agar membran tidak terpotong.
+- Lab Sel: nukleus dengan membran inti dua lapis, pori nukleus, kromatin kusut, nukleolus; mitokondria tembus pandang dengan krista; ribosom dua subunit dan menempel di RE kasar; vesikel badan Golgi;
+  lisosom berisi butiran enzim; peroksisom dengan inti kristal; sentriol dari 9 triplet mikrotubulus; kloroplas dengan grana.
+- Screenshot sebelum/sesudah: `docs/laporan/screenshots/fase7-*`.
+
+**Kendala dan solusi**
+- Protein tenggelam di antara kepala fosfolipid sehingga hampir tidak terlihat. Solusi: protein diperbesar 1,2–1,4× dan fosfolipid di sekitarnya diberi ruang lebih lebar.
+- Pompa yang lebih besar menutupi ion Na⁺/K⁺ yang menempel. Solusi: pompa dibuat tembus pandang selama mode Pompa.
