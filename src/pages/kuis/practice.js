@@ -85,7 +85,7 @@ export function createPractice() {
   }
 
   chipGroup($('topic-chips'), PRACTICE_TOPICS, state.topic, (id) => (state.topic = id));
-  chipGroup($('count-chips'), COUNTS.map((n) => ({ id: n, label: `${n} soal` })), state.count, (id) => (state.count = id));
+  chipGroup($('count-chips'), COUNTS.map((n) => ({ id: n, label: `${n} soal` })), state.count, (id) => (state.count = id));
   $('practice-start').addEventListener('click', () => start(practiceSet(state.topic, state.count)));
   $('practice-next').addEventListener('click', next);
   $('practice-retry').addEventListener('click', () => start(state.wrong.map(prepare)));

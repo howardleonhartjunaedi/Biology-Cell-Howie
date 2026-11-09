@@ -331,6 +331,10 @@
   cursor: pointer;
 }
 
+.nav-cell:hover {
+  border-color: var(--c-muted);
+}
+
 .nav-cell[data-status='done'] {
   border-color: var(--c-lagoon);
   background: var(--c-lagoon);

@@ -23,6 +23,12 @@ function setMode(mode) {
   document.getElementById('ujian').hidden = mode !== 'ujian';
   document.querySelectorAll('.quiz-mode .segmented__item').forEach((item) => item.setAttribute('aria-checked', String(item.dataset.mode === mode)));
   if (mode === 'ujian') exam.showStart();
+  // Mode tersimpan di alamat (kuis.html?mode=ujian), jadi bisa dibagikan atau dibuka langsung.
+  const url = new URL(window.location.href);
+  if (mode === 'ujian') url.searchParams.set('mode', 'ujian');
+  else url.searchParams.delete('mode');
+  history.replaceState(null, '', url);
 }
 
 document.querySelectorAll('.quiz-mode .segmented__item').forEach((item) => item.addEventListener('click', () => setMode(item.dataset.mode)));
+if (new URLSearchParams(window.location.search).get('mode') === 'ujian') setMode('ujian');

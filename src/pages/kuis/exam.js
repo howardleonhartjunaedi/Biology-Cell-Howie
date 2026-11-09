@@ -1,4 +1,4 @@
-// Mode Ujian: 25 soal acak, timer 30 menit, navigator nomor soal, lalu laporan nilai.
+// Mode Ujian: 25 soal acak, timer 30 menit, navigator nomor soal, lalu laporan nilai.
 import { EXAM_SECONDS, TOPICS, examSet, formatTime, renderOptions } from './quiz-core.js';
 import { buildReport } from './report.js';
 

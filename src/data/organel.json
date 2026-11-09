@@ -89,7 +89,7 @@
       "short": "Tempat respirasi sel yang menghasilkan energi (ATP).",
       "membrane": "Membran ganda",
       "detail": "full",
-      "deskripsi": "Ukuran ±0,5 µm, bentuk seperti sosis; organel semiotonom.",
+      "deskripsi": "Ukuran ±0,5 µm, bentuk seperti sosis; organel semiotonom.",
       "fungsi": [
         "Tempat respirasi sel yang menghasilkan energi (ATP)."
       ],
@@ -158,7 +158,7 @@
     },
     "golgi": {
       "name": "Badan Golgi",
-      "short": "\"Kantor pos\" sel: mengubah, mengemas, dan mengirim protein.",
+      "short": "“Kantor pos” sel: mengubah, mengemas, dan mengirim protein.",
       "membrane": "Membran tunggal",
       "detail": "full",
       "deskripsi": "Ada di sel hewan dan tumbuhan; pada tumbuhan disebut diktiosom.",
@@ -248,7 +248,7 @@
         "Menerima rangsang (reseptor).",
         "Melindungi sel."
       ],
-      "tahukahKamu": "Tebalnya hanya 5–10 nm."
+      "tahukahKamu": "Tebalnya hanya 5–10 nm."
     },
     "sitoplasma": {
       "name": "Sitoplasma",
@@ -270,7 +270,7 @@
         "Sintesis protein.",
         "Ribosom bebas → protein untuk sel itu sendiri; ribosom pada RE → protein membran & protein yang disekresikan."
       ],
-      "tahukahKamu": "\"S\" (Svedberg) bukan satuan ukuran, tetapi laju pengendapan saat disentrifugasi."
+      "tahukahKamu": "“S” (Svedberg) bukan satuan ukuran, tetapi laju pengendapan saat disentrifugasi."
     },
     "lisosom": {
       "name": "Lisosom",

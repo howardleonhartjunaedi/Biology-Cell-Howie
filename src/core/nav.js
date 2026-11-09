@@ -52,6 +52,7 @@ export function renderNav(currentId) {
   logo.className = 'nav__logo';
   logo.href = '/index.html';
   logo.textContent = 'SEL';
+  logo.translate = false;
 
   const list = document.createElement('ul');
   list.className = 'nav__links';

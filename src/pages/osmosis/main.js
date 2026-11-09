@@ -59,6 +59,11 @@ function setCell(id) {
   $('row-turgor').hidden = id !== 'tumbuhan';
   $('scope-canvas').setAttribute('aria-label', `Pandangan mikroskop: ${data.cells[id].short}, belum ditetesi larutan.`);
   showResult(null);
+  // Sel yang dipilih tersimpan di alamat (lab-osmosis.html?sel=tumbuhan).
+  const url = new URL(window.location.href);
+  if (id === 'tumbuhan') url.searchParams.set('sel', 'tumbuhan');
+  else url.searchParams.delete('sel');
+  history.replaceState(null, '', url);
 }
 
 function dropSolution(id) {
@@ -151,5 +156,5 @@ renderCellSwitch();
 renderSolutions();
 renderTable();
 renderGuesses();
-setCell('hewan');
+setCell(new URLSearchParams(window.location.search).get('sel') === 'tumbuhan' ? 'tumbuhan' : 'hewan');
 setupMagnetic(document.querySelector('.osmo-lab'));

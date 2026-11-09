@@ -673,3 +673,10 @@ Lamun latar depan (`foreground`) lebih tinggi dan lebih gelap, ditaruh di jalur 
 ## Perubahan gaya lain
 - `.nav` kini berlatar solid tanpa `backdrop-filter` (kaca buram termasuk gaya yang dilarang §4.5).
 - `.quiz-label`, `.result__grid dt`, `.organel-groups__name`, `.review__status`: tidak lagi huruf besar berjarak lebar, supaya label eyebrow tidak muncul di setiap panel.
+
+---
+
+# AUDIT WEB INTERFACE GUIDELINES (pembaruan)
+- **Alamat mencerminkan tampilan:** `history.replaceState` mengganti `?mode=ujian` (Kuis) dan `?sel=tumbuhan` (Lab Osmosis) tanpa memuat ulang halaman. Saat halaman dibuka, `URLSearchParams` membaca nilai itu dan langsung menampilkan mode/sel yang sesuai.
+- **Tipografi:** spasi tak terputus (U+00A0) di antara angka dan satuan, dan tanda kutip melengkung di file JSON materi.
+- **`logo.translate = false`** menghasilkan atribut `translate="no"`: fitur terjemahan browser tidak akan mengubah nama "SEL".

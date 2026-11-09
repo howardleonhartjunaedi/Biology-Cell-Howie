@@ -176,3 +176,10 @@ Catatan harian untuk laporan (BAB IV Kendala, BAB VI Evaluasi).
 - Skor laporan ujian tidak lagi memakai ukuran raksasa 220 px, cukup ukuran judul.
 - Tanda pisah panjang (—) di teks antarmuka diganti titik dua/koma; judul tab memakai "·". Kalimat generik "Tetap semangat." dihapus.
 - Panah → ← › ↺ tetap dipakai karena tertulis langsung di spesifikasi CLAUDE.md.
+
+## Selasa, 10 November 2026 — Audit Web Interface Guidelines (halaman baru)
+**Yang dikerjakan** (aturan terbaru dari vercel-labs/web-interface-guidelines)
+- Tanda kutip lurus "…" di teks materi diganti tanda kutip melengkung “…”.
+- Spasi antara angka dan satuan (10–100 µm, 30 menit, 25 soal) diganti spasi tak terputus agar tidak terpisah di dua baris.
+- Mode Kuis tersimpan di alamat (`kuis.html?mode=ujian`) dan sel Lab Osmosis juga (`lab-osmosis.html?sel=tumbuhan`), jadi bisa dibuka langsung saat presentasi.
+- Kotak nomor soal di Mode Ujian diberi efek hover; logo "SEL" diberi `translate="no"` agar tidak diterjemahkan otomatis.
