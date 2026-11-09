@@ -1,0 +1,231 @@
+.gate-page main.gate {
+  max-width: none;
+  padding: 0;
+}
+
+.gate-view {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 400px);
+  grid-template-rows: auto auto 1fr;
+  gap: var(--s-2) var(--s-4);
+  padding: calc(var(--nav-height) + var(--s-4)) var(--gutter) var(--s-4);
+}
+
+.gate-view > * {
+  position: relative;
+  z-index: 3;
+}
+
+.gate-header {
+  grid-column: 1 / -1;
+}
+
+.gate-intro {
+  max-width: 64ch;
+  margin: 0;
+}
+
+.gate-chips {
+  grid-column: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1);
+}
+
+.gate-chip {
+  min-height: var(--tap-min);
+  padding: 0 var(--s-2);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--c-line);
+  background: color-mix(in srgb, var(--c-lab-2) 85%, transparent);
+  color: var(--c-text);
+  font: 500 var(--fs-caption) var(--font-sans);
+  cursor: pointer;
+}
+
+.gate-chip[aria-selected='true'] {
+  border-color: var(--c-coral);
+  color: var(--c-lab);
+  background: var(--c-coral);
+}
+
+.gate-stage {
+  grid-column: 1;
+  min-height: 460px;
+}
+
+.gate-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+}
+
+.gate-side {
+  position: absolute;
+  left: 0;
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--c-muted);
+}
+
+.gate-side--out { top: var(--s-2); }
+.gate-side--in { bottom: var(--s-6); }
+
+.gate-illustration {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+}
+
+.gate-panel {
+  grid-column: 2;
+  grid-row: 2 / 4;
+  align-self: start;
+  padding: var(--s-3);
+  border-radius: var(--radius);
+  border: 1px solid var(--c-line);
+  background: color-mix(in srgb, var(--c-lab-2) 94%, transparent);
+}
+
+.gate-panel__title {
+  font-size: var(--fs-h2);
+  font-weight: 800;
+}
+
+.pump-steps {
+  margin: var(--s-2) 0 0;
+  padding-left: var(--s-3);
+}
+
+.pump-steps li {
+  color: var(--c-muted);
+  padding: var(--s-1) 0;
+  transition-property: color;
+  transition-duration: var(--dur-fast);
+}
+
+.pump-steps li.is-active {
+  color: var(--c-cream);
+  font-weight: 600;
+}
+
+.pump-counters {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s-1);
+  margin: var(--s-3) 0 0;
+}
+
+.pump-counters dt {
+  font-size: var(--fs-caption);
+  color: var(--c-muted);
+}
+
+.pump-counters dd {
+  margin: 0;
+  font-size: var(--fs-h2);
+  font-weight: 800;
+  color: var(--c-cream);
+  font-variant-numeric: tabular-nums;
+}
+
+.pump-bar {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  align-items: center;
+  gap: var(--s-2);
+  margin: var(--s-2) 0 0;
+  font-size: var(--fs-caption);
+}
+
+.meter {
+  display: block;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--c-line);
+  overflow: hidden;
+}
+
+.meter__fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  transform-origin: left;
+  transition-property: width;
+  transition-duration: var(--dur-base);
+}
+
+.meter__fill--na { background: #FF9F43; }
+.meter__fill--k { background: var(--c-bad); }
+
+.gate-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-1);
+  margin-top: var(--s-3);
+}
+
+.gate-speed {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1);
+  font-size: var(--fs-caption);
+  color: var(--c-muted);
+}
+
+.gate-more {
+  position: relative;
+  z-index: 3;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+  background: var(--c-lab);
+}
+
+.gate-other {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--s-3);
+  margin-top: var(--s-6);
+}
+
+.gate-other h3 {
+  font-size: var(--fs-body);
+  margin-bottom: var(--s-1);
+}
+
+@media (max-width: 900px) {
+  .gate-view {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto minmax(360px, 55svh) auto;
+  }
+
+  .gate-panel {
+    grid-column: 1;
+    grid-row: 4;
+  }
+
+  .pump-counters {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .calm .gate-view {
+    grid-template-rows: auto auto auto;
+  }
+}
+
+.calm .gate-stage {
+  display: none;
+}
+
+.gate-controls[hidden] {
+  display: none;
+}

@@ -115,3 +115,14 @@ Catatan harian untuk laporan (BAB IV Kendala, BAB VI Evaluasi).
 - RE pada sel tumbuhan menembus dinding sel. Solusi: diperkecil dan digeser.
 - Di ponsel, tombol menu terpotong dan sel terlalu besar. Solusi: jarak tombol diperkecil, kamera mundur otomatis di layar sempit.
 - Peringatan GSAP "target not found" dari judul yang isinya berubah. Solusi: judul dinamis diberi `data-no-reveal`.
+
+## Selasa, 10 November 2026 — Gerbang Sel (Fase 4)
+**Yang dikerjakan**
+- Gerbang Sel: 5 mode wajib (Struktur, Difusi, Difusi terfasilitasi, Osmosis, Pompa Na⁺/K⁺) dengan membran 3D, kartu info,
+  Jeda/Langkah berikutnya/Ulangi/kecepatan, penghitung dan bar pompa, tanda muatan (+ luar / − dalam).
+- Endositosis, eksositosis, kotranspor ditampilkan sebagai teks di bawah (versi 3D belum dibuat).
+
+**Kendala dan solusi**
+- Kamera terlalu dekat sehingga membran memenuhi layar. Solusi: kamera dijauhkan.
+- Tombol kontrol tidak bergaya karena gaya `.pill-button` hanya ada di file Lab Sel. Solusi: dipindah ke `components.css`.
+- Atribut `hidden` kalah oleh `display: flex` (kontrol dan tautan kartu). Solusi: aturan `[hidden]` khusus.

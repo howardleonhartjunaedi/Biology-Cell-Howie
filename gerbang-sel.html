@@ -16,11 +16,63 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Montserrat:wght@400;500;600;800&display=swap" rel="stylesheet" />
   </head>
-  <body data-page="gerbang">
-    <main id="main">
-      <span class="eyebrow">SEL · GERBANG</span>
-      <h1 class="display">Gerbang Sel</h1>
-      <p class="tagline">Membran plasma adalah gerbang sel.</p>
+  <body data-page="gerbang" class="gate-page">
+    <main id="main" class="gate">
+      <section class="gate-view" aria-labelledby="gate-title">
+        <header class="gate-header">
+          <span class="eyebrow">SEL · GERBANG</span>
+          <h1 class="display" id="gate-title" data-no-reveal>Gerbang Sel</h1>
+          <p class="gate-intro" id="gate-intro"></p>
+        </header>
+
+        <div class="gate-chips" role="tablist" aria-label="Pilih mode" id="gate-chips"></div>
+
+        <div class="gate-stage" id="gate-stage">
+          <span class="gate-side gate-side--out">LUAR SEL</span>
+          <span class="gate-side gate-side--in">DALAM SEL</span>
+          <p class="note gate-illustration">Ilustrasi, bukan skala sebenarnya.</p>
+        </div>
+
+        <article class="gate-panel" id="gate-panel" aria-live="polite">
+          <span class="eyebrow" id="mode-kind"></span>
+          <h2 class="gate-panel__title" id="mode-title" data-no-reveal></h2>
+          <p id="mode-text"></p>
+          <p class="note" id="mode-legend"></p>
+          <ol class="pump-steps" id="pump-steps"></ol>
+          <div class="pump-stats" id="pump-stats" hidden>
+            <dl class="pump-counters">
+              <div><dt>Na⁺ keluar</dt><dd id="count-na">0</dd></div>
+              <div><dt>K⁺ masuk</dt><dd id="count-k">0</dd></div>
+              <div><dt>ATP terpakai</dt><dd id="count-atp">0</dd></div>
+              <div><dt>Siklus</dt><dd id="count-cycle">0</dd></div>
+            </dl>
+            <div class="pump-bars">
+              <p class="pump-bar"><span>Na⁺ di luar sel</span><span class="meter"><span class="meter__fill meter__fill--na" id="bar-na"></span></span></p>
+              <p class="pump-bar"><span>K⁺ di dalam sel</span><span class="meter"><span class="meter__fill meter__fill--k" id="bar-k"></span></span></p>
+              <p class="note" id="pump-note"></p>
+            </div>
+          </div>
+          <a class="text-link" id="mode-link" hidden></a>
+          <div class="gate-controls" id="gate-controls">
+            <button class="pill-button" type="button" id="ctrl-play" aria-pressed="true">⏸ Jeda</button>
+            <button class="pill-button" type="button" id="ctrl-step">Langkah berikutnya</button>
+            <button class="pill-button" type="button" id="ctrl-reset">↺ Ulangi</button>
+            <label class="gate-speed">Kecepatan <input type="range" id="ctrl-speed" min="0.5" max="2" step="0.25" value="1" /></label>
+          </div>
+        </article>
+      </section>
+
+      <section class="section gate-more" aria-labelledby="judul-lewat">
+        <h2 class="section__title" id="judul-lewat">Zat apa lewat mana?</h2>
+        <div class="table-wrap">
+          <table class="table">
+            <thead><tr><th scope="col">Zat</th><th scope="col">Cara masuk/keluar</th></tr></thead>
+            <tbody id="pass-table"></tbody>
+          </table>
+        </div>
+        <p class="fact" id="carrier-note"></p>
+        <div class="gate-other" id="gate-other"></div>
+      </section>
     </main>
     <script type="module" src="/src/pages/gerbang/main.js"></script>
   </body>

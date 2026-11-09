@@ -1,7 +1,7 @@
 const CARD_OFFSET = { x: 72, y: -96 };
 const CARD_WIDTH = 260;
 
-export function createInfoCard({ onDetail }) {
+export function createInfoCard({ onDetail } = {}) {
   const layer = document.createElement('div');
   layer.className = 'info-card-layer';
   layer.hidden = true;
@@ -19,7 +19,9 @@ export function createInfoCard({ onDetail }) {
   const card = layer.querySelector('.info-card');
   let currentId = null;
 
-  layer.querySelector('.info-card__link').addEventListener('click', () => currentId && onDetail(currentId));
+  const link = layer.querySelector('.info-card__link');
+  link.hidden = !onDetail;
+  link.addEventListener('click', () => currentId && onDetail?.(currentId));
 
   function show(id, { name, short }, x, y) {
     currentId = id;

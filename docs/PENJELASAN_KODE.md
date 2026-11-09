@@ -505,3 +505,44 @@ Setiap bagian punya **titik jangkar** (`anchor`) tempat pin bernomor ditempel. O
 ## src/pages/sel/detail-pins.js
 Pin bernomor (tombol HTML) yang mengikuti titik jangkar 3D setiap frame: titik 3D diubah ke koordinat layar dengan `project(camera)`. Klik pin → panel kanan menampilkan bagian itu.
 **T: Kenapa pin pakai tombol HTML, bukan digambar di 3D?** J: Supaya bisa diklik dengan keyboard, dibaca pembaca layar, dan tetap tajam.
+
+---
+
+# GERBANG SEL (gerbang-sel.html) — Fase 4
+
+## src/data/membran.json
+Semua teks dari KONTEN-MATERI §4: pengantar, 5 bagian membran (fosfolipid, protein integral, protein perifer, glikoprotein, glikolipid), 5 mode, 6 langkah pompa, tabel "Zat apa lewat mana?", jenis protein pembawa, dan transpor aktif lain.
+
+## src/pages/gerbang/main.js
+Mengatur tombol mode (chip), panel penjelasan, tombol Jeda/Putar, Langkah berikutnya, Ulangi, dan slider kecepatan.
+Logika pompa ada di `pump-state.js`, bukan di 3D, jadi di Mode Tenang tombol "Langkah berikutnya" tetap menjalankan siklus dan penghitung.
+
+## src/pages/gerbang/pump-state.js
+**Tugas file ini:** "Otak" pompa Na⁺/K⁺ tanpa gambar.
+- `state.step` (0–5) = langkah yang sedang berjalan, `state.progress` (0–1) = sudah berapa persen langkah itu.
+- `finishStep()` menambah penghitung tepat di langkah yang benar: langkah 2 → ATP +1, langkah 3 → Na⁺ keluar +3, langkah 6 → K⁺ masuk +2 dan siklus +1.
+- Jadi satu siklus selalu **3 Na⁺ keluar, 2 K⁺ masuk, 1 ATP** (sesuai KONTEN §4.3).
+- `bars()` membuat bar Na⁺ di luar dan K⁺ di dalam naik setiap siklus (melawan gradien).
+**T: Kenapa logikanya dipisah dari 3D?** J: Supaya angka selalu benar walau 3D mati, dan kode 3D hanya "mengikuti" langkah yang sedang berjalan.
+
+## src/pages/gerbang/membrane-model.js
+Membran 3D: dua lapis fosfolipid (kepala bola biru, dua ekor tabung krem) dengan `InstancedMesh`, ditambah protein integral, saluran (channel), protein pembawa (carrier), pompa, protein perifer, rantai karbohidrat glikoprotein dan glikolipid.
+Fosfolipid tidak digambar di tempat protein berdiri (`blockedByProtein`). Setiap bagian diberi label `userData.part` untuk kartu info.
+
+## src/pages/gerbang/modes/flow.js
+Alat bantu untuk molekul yang bergerak: setiap molekul punya `phase` 0→1 yang maju setiap frame. Fungsi `path(phase)` menentukan posisinya.
+Satu `InstancedMesh` menggambar semua molekul sejenis sekaligus.
+
+## src/pages/gerbang/modes/passive.js
+- **Difusi:** O₂ (merah) dan CO₂ (abu-abu) turun menembus lapisan fosfolipid. Label LUAR/DALAM SEL menampilkan jumlah molekul di tiap sisi.
+- **Difusi terfasilitasi:** glukosa (heksagon kuning) lewat protein pembawa yang berubah bentuk (mengembang-mengempis), ion lewat saluran protein.
+- **Osmosis:** molekul air (biru) bergerak dari sisi hipotonik ke sisi hipertonik (zat terlarut krem lebih banyak di bawah).
+- Saat mendekati membran, molekul "ditarik" ke jalur protein dengan `smoothstep`, jadi gerakannya mulus.
+
+## src/pages/gerbang/modes/pump.js
+Pompa Na⁺/K⁺ 3D: Na⁺ bola oranye, K⁺ kubus merah, ATP bintang kuning (dua tetrahedron digabung). Posisi tiap ion dihitung dari `state.step` dan `state.progress` milik `pump-state.js`:
+langkah 1 Na⁺ naik ke pompa · langkah 2 ATP datang, fosfat menempel, pompa berubah bentuk · langkah 3 Na⁺ keluar · langkah 4 K⁺ masuk ke pompa · langkah 5 fosfat lepas · langkah 6 K⁺ masuk sel.
+
+## src/pages/gerbang/membrane-viewer.js
+Renderer, cahaya lab, kamera, kartu info saat kursor menunjuk bagian membran, pergantian mode, Jeda/Kecepatan.
+Mode Struktur memisahkan dua lapisan sedikit (exploded view). Kanvas berhenti menggambar saat bagian 3D digulir keluar layar (`IntersectionObserver`).

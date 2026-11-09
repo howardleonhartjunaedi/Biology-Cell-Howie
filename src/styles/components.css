@@ -339,3 +339,27 @@
     gap: var(--s-1);
   }
 }
+
+.info-card__link[hidden] {
+  display: none;
+}
+
+.pill-button {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-min);
+  padding: 0 var(--s-2);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--c-line);
+  background: color-mix(in srgb, var(--c-lab-2) 85%, transparent);
+  color: var(--c-cream);
+  font: 500 var(--fs-caption) var(--font-sans);
+  cursor: pointer;
+  transition-property: border-color, transform;
+  transition-duration: var(--dur-fast);
+  transition-timing-function: var(--ease-out);
+}
+
+.pill-button:empty {
+  visibility: hidden;
+}
