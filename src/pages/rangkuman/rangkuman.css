@@ -25,15 +25,6 @@
 .summary-card--4 { grid-column: span 5; }
 .summary-card--5 { grid-column: span 7; }
 
-.summary-card__index {
-  margin: 0 0 var(--s-1);
-  font-size: var(--fs-caption);
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  color: var(--c-coral);
-  font-variant-numeric: tabular-nums;
-}
-
 .summary-card__title {
   font-size: var(--fs-h2);
   font-weight: 800;
@@ -78,11 +69,8 @@
   margin: 0 0 var(--s-2);
   padding-bottom: var(--s-1);
   border-bottom: 1px solid var(--c-line);
-  font-size: var(--fs-caption);
   font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--c-muted);
+  color: var(--c-aqua);
 }
 
 .organel-groups__list {

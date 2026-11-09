@@ -24,13 +24,12 @@
   align-items: center;
   gap: var(--s-3);
   padding: 0 var(--gutter);
-  background: color-mix(in srgb, var(--c-lab) 80%, transparent);
-  backdrop-filter: blur(10px);
+  background: var(--c-lab);
   border-bottom: 1px solid var(--c-line);
 }
 
 .theme-water .nav {
-  background: color-mix(in srgb, var(--c-deep) 70%, transparent);
+  background: var(--c-deep);
   border-bottom-color: transparent;
 }
 
@@ -396,4 +395,20 @@
 
 .segmented__item:not([aria-checked='true']):hover {
   color: var(--c-cream);
+}
+
+/* Ikon garis di dalam tombol (src/core/icons.js) */
+.icon {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pill-button .icon {
+  margin-right: var(--s-1);
 }

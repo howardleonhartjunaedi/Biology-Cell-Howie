@@ -1,5 +1,5 @@
 {
-  "intro": "Membran plasma adalah gerbang sel. Membran ini bersifat selektif permeabel: hanya zat tertentu yang bisa lewat. Susunannya disebut model mozaik fluida — bisa bergerak seperti cairan, dan sisi luar serta dalamnya berbeda (asimetris).",
+  "intro": "Membran plasma adalah gerbang sel. Membran ini bersifat selektif permeabel: hanya zat tertentu yang bisa lewat. Susunannya disebut model mozaik fluida: bisa bergerak seperti cairan, dan sisi luar serta dalamnya berbeda (asimetris).",
   "parts": {
     "fosfolipid": { "name": "Fosfolipid", "deskripsi": "Dua lapis; kepala hidrofilik (suka air) menghadap keluar, ekor hidrofobik (tidak suka air) di tengah.", "fungsi": "Penghalang utama; jalur difusi sederhana." },
     "protein-integral": { "name": "Protein integral", "deskripsi": "Menembus membran.", "fungsi": "Saluran (channel), pembawa (carrier), dan pompa." },
@@ -41,7 +41,7 @@
       "label": "Pompa Na⁺/K⁺",
       "kind": "Transpor aktif primer",
       "title": "Pompa Na⁺/K⁺",
-      "text": "Transpor aktif primer — langsung memakai ATP, melawan gradien konsentrasi. Setiap siklus memindahkan 3 Na⁺ keluar dan 2 K⁺ masuk, memakai 1 ATP.",
+      "text": "Transpor aktif primer: langsung memakai ATP, melawan gradien konsentrasi. Setiap siklus memindahkan 3 Na⁺ keluar dan 2 K⁺ masuk, memakai 1 ATP.",
       "legend": "Na⁺ = bola oranye · K⁺ = kubus merah · ATP = bintang kuning",
       "steps": [
         "3 ion Na⁺ dari sitoplasma menempel pada protein pompa.",

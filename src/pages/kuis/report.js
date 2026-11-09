@@ -99,7 +99,7 @@ export function buildReport(container, items, usedSeconds, { onRetry, onWeakPrac
     element('p', { className: 'quiz-label', textContent: 'Kelebihan' }),
     strong.length
       ? element('ul', {}, strong.map((topic) => element('li', { textContent: `${TOPICS[topic.id].label} (${topic.percent}%)` })))
-      : element('p', { textContent: 'Belum ada topik dengan skor 80% ke atas. Tetap semangat.' }),
+      : element('p', { textContent: 'Belum ada topik dengan skor 80% ke atas.' }),
   ]);
 
   const weakBlock = element('div', { className: 'report__block' }, [
@@ -111,7 +111,7 @@ export function buildReport(container, items, usedSeconds, { onRetry, onWeakPrac
           weak.map((topic) =>
             element('li', {}, [
               element('strong', { textContent: `${TOPICS[topic.id].label} (${topic.percent}%)` }),
-              element('span', { textContent: ` — konsep yang terlewat: ${topic.missed.join(', ')}. ` }),
+              element('span', { textContent: `. Konsep yang terlewat: ${topic.missed.join(', ')}. ` }),
               element('a', { className: 'text-link', href: `/${TOPICS[topic.id].page}`, textContent: `Buka ${TOPICS[topic.id].pageLabel} →` }),
             ])
           )
@@ -124,9 +124,10 @@ export function buildReport(container, items, usedSeconds, { onRetry, onWeakPrac
     { className: 'review' },
     items.map((item) => {
       const status = item.chosen === null ? 'kosong' : item.chosen === item.correct ? 'benar' : 'salah';
+      const statusLabel = { benar: 'Benar', salah: 'Salah', kosong: 'Kosong' }[status];
       const yours = item.chosen === null ? '(kosong)' : item.options[item.chosen];
       const entry = element('li', { className: 'review__item' }, [
-        element('p', { className: 'review__status', textContent: status }),
+        element('p', { className: 'review__status', textContent: statusLabel }),
         element('p', { className: 'review__question', textContent: item.source.soal }),
         element('p', { textContent: `Jawabanmu: ${yours}` }),
         element('p', { textContent: `Jawaban benar: ${item.options[item.correct]}` }),

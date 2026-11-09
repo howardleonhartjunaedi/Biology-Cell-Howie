@@ -30,11 +30,9 @@
 
 .quiz-label {
   margin: 0 0 var(--s-1);
-  font-size: var(--fs-caption);
+  font-size: var(--fs-body);
   font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--c-muted);
+  color: var(--c-cream);
 }
 
 .chip-row {
@@ -407,10 +405,9 @@
 
 .report__score {
   margin: 0;
-  font-size: var(--fs-display);
+  font-size: var(--fs-h1);
   font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.02em;
+  line-height: 1.1;
   font-variant-numeric: tabular-nums;
 }
 
@@ -528,10 +525,11 @@
 .review__status {
   font-size: var(--fs-caption);
   font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
   color: var(--c-muted);
 }
+
+.review__item[data-status='benar'] .review__status { color: var(--c-good); }
+.review__item[data-status='salah'] .review__status { color: var(--c-bad); }
 
 .review__status::before {
   content: counter(review) ' · ';

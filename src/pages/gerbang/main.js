@@ -1,6 +1,7 @@
 import { setupPage } from '../../core/page-setup.js';
 import { isCalmMode } from '../../core/calm-mode.js';
 import { setupMagnetic } from '../../core/magnetic.js';
+import { setIconLabel } from '../../core/icons.js';
 import data from '../../data/membran.json';
 import { createPumpState } from './pump-state.js';
 import './gerbang.css';
@@ -86,10 +87,12 @@ function setPlaying(playing) {
   ui.playing = playing;
   const button = $('ctrl-play');
   button.setAttribute('aria-pressed', String(playing));
-  button.textContent = playing ? '⏸ Jeda' : '▶ Putar';
+  setIconLabel(button, playing ? 'pause' : 'play', playing ? 'Jeda' : 'Putar');
   viewer?.setPlaying(playing);
 }
 
+setIconLabel($('ctrl-reset'), 'restart', 'Ulangi');
+setIconLabel($('ctrl-play'), 'pause', 'Jeda');
 $('ctrl-play').addEventListener('click', () => setPlaying(!ui.playing));
 $('ctrl-step').addEventListener('click', () => {
   setPlaying(false);

@@ -166,3 +166,13 @@ Catatan harian untuk laporan (BAB IV Kendala, BAB VI Evaluasi).
 - Sel latar depan terlalu besar dan menutupi sel utama. Solusi: diperkecil dan digeser ke tepi kanan.
 - Jaringan sel tumbuhan terlalu terang sehingga bersaing dengan sel utama dan teks. Solusi: dibuat lebih jauh, lebih gelap, lebih transparan.
 - Adegan lumpur hampir hitam sehingga kerikil tidak terlihat. Solusi: lantai sedikit lebih terang + cahaya samping.
+
+## Selasa, 10 November 2026 — Bersih-bersih tampilan "AI slop" (CLAUDE.md §4.5 + skill ui-ux-pro-max)
+**Yang dikerjakan**
+- Navigasi: efek kaca buram (`backdrop-filter: blur`, glassmorphism) dihapus, diganti latar solid. Di atas hero Beranda tetap transparan.
+- Tombol Gerbang Sel: karakter ⏸ ▶ (di Windows tampil sebagai emoji berwarna) diganti ikon garis SVG buatan sendiri (`src/core/icons.js`) dengan `aria-hidden`.
+- Rangkuman: penomoran kartu 01–05 dihapus (urutan bukan informasi).
+- Label kecil HURUF BESAR berjarak lebar (eyebrow) di dalam panel Kuis, Lab Osmosis, dan Rangkuman diganti label biasa. Eyebrow hanya di puncak halaman (sesuai spesifikasi) dan satu label panel yang memang berisi informasi.
+- Skor laporan ujian tidak lagi memakai ukuran raksasa 220 px, cukup ukuran judul.
+- Tanda pisah panjang (—) di teks antarmuka diganti titik dua/koma; judul tab memakai "·". Kalimat generik "Tetap semangat." dihapus.
+- Panah → ← › ↺ tetap dipakai karena tertulis langsung di spesifikasi CLAUDE.md.

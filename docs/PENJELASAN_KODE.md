@@ -661,3 +661,15 @@ Lamun latar depan (`foreground`) lebih tinggi dan lebih gelap, ditaruh di jalur 
 
 ## scenes/mud.js
 `createPebbles()` menaruh kerikil (InstancedMesh) di sepanjang jalur kamera; cahaya `grazing` dari samping rendah memunculkan relief dan bayangan.
+
+---
+
+# BERSIH-BERSIH TAMPILAN (anti-vibecode §4.5)
+
+## src/core/icons.js
+`icon(nama)` mengembalikan SVG garis 24×24 (play, pause, restart). Warna mengikuti teks (`stroke: currentColor`), ukuran 16 px (`.icon` di `components.css`), dan `aria-hidden="true"` karena selalu ada teks di sebelahnya. `setIconLabel(tombol, ikon, teks)` mengisi tombol dengan ikon + teks.
+**T: Kenapa tidak memakai karakter ⏸ ▶ saja?** J: Di Windows karakter itu tampil sebagai emoji berwarna yang tidak cocok dengan gaya situs, dan §4.5 melarang ikon emoji.
+
+## Perubahan gaya lain
+- `.nav` kini berlatar solid tanpa `backdrop-filter` (kaca buram termasuk gaya yang dilarang §4.5).
+- `.quiz-label`, `.result__grid dt`, `.organel-groups__name`, `.review__status`: tidak lagi huruf besar berjarak lebar, supaya label eyebrow tidak muncul di setiap panel.

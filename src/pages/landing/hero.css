@@ -114,14 +114,13 @@
 }
 
 .landing .nav {
-  transition-property: background-color, border-color, backdrop-filter;
+  transition-property: background-color, border-color;
   transition-duration: var(--dur-base);
   transition-timing-function: var(--ease-out);
 }
 
 .nav-over-hero .nav {
   background: transparent;
-  backdrop-filter: none;
   border-bottom-color: transparent;
 }
 

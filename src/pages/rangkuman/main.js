@@ -42,7 +42,6 @@ function renderCards() {
   $('summary-cards').replaceChildren(
     ...data.cards.map((card, index) =>
       element('article', { className: `summary-card summary-card--${index + 1}`, id: card.id }, [
-        element('p', { className: 'summary-card__index', textContent: String(index + 1).padStart(2, '0') }),
         element('h3', { className: 'summary-card__title', textContent: card.title }),
         cardBody(card),
         element('a', { className: 'text-link', href: `/${card.link.href}`, textContent: `${card.link.label} →` }),

@@ -188,12 +188,16 @@
   display: none;
 }
 
-.result__grid dt {
-  font-size: var(--fs-caption);
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+.result__label {
+  margin: 0 0 var(--s-1);
   color: var(--c-muted);
+  font-size: var(--fs-caption);
+}
+
+.result__grid dt {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--c-cream);
   margin-bottom: var(--s-1);
 }
 
