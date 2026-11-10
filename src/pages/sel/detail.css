@@ -80,7 +80,14 @@
   inset: -6px;
 }
 
-.detail-pin:hover,
+@media (hover: hover) {
+  .detail-pin:hover {
+    background: var(--c-coral);
+    border-color: var(--c-coral);
+    color: var(--c-lab);
+  }
+}
+
 .detail-pin[aria-pressed='true'] {
   background: var(--c-coral);
   border-color: var(--c-coral);

@@ -84,8 +84,10 @@
   transition-timing-function: var(--ease-out);
 }
 
-.solution:hover {
-  border-color: var(--c-muted);
+@media (hover: hover) {
+  .solution:hover {
+    border-color: var(--c-muted);
+  }
 }
 
 .solution[aria-pressed='true'] {

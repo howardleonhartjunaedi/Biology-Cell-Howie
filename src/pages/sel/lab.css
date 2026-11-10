@@ -174,7 +174,13 @@
   transition-timing-function: var(--ease-out);
 }
 
-.organelle-button:hover,
+@media (hover: hover) {
+  .organelle-button:hover {
+    background: var(--c-lab);
+    color: var(--c-coral);
+  }
+}
+
 .organelle-button.is-active {
   background: var(--c-lab);
   color: var(--c-coral);

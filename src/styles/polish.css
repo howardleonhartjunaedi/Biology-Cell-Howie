@@ -48,19 +48,25 @@
   transition-timing-function: var(--ease-out);
 }
 
-.button:hover {
-  background: color-mix(in srgb, var(--c-coral) 88%, var(--c-cream));
+@media (hover: hover) {
+  .button:hover {
+    background: color-mix(in srgb, var(--c-coral) 88%, var(--c-cream));
+  }
 }
 
-.button--ghost:hover {
-  background: color-mix(in srgb, var(--c-coral) 12%, transparent);
+@media (hover: hover) {
+  .button--ghost:hover {
+    background: color-mix(in srgb, var(--c-coral) 12%, transparent);
+  }
 }
 
-.pill-button:hover,
-.round-button:hover,
-.toggle:hover,
-.part-chip:hover {
-  border-color: var(--c-coral);
+@media (hover: hover) {
+  .pill-button:hover,
+  .round-button:hover,
+  .toggle:hover,
+  .part-chip:hover {
+    border-color: var(--c-coral);
+  }
 }
 
 .button:disabled,
@@ -82,13 +88,17 @@
 }
 
 /* Hover yang sebelumnya belum ada: saklar dua pilihan dan chip mode Gerbang Sel */
-.segmented__item:hover:not([aria-pressed='true'], [aria-checked='true']),
-.cell-switch__item:hover:not([aria-pressed='true'], [aria-checked='true']) {
-  color: var(--c-cream);
+@media (hover: hover) {
+  .segmented__item:hover:not([aria-pressed='true'], [aria-checked='true']),
+  .cell-switch__item:hover:not([aria-pressed='true'], [aria-checked='true']) {
+    color: var(--c-cream);
+  }
 }
 
-.gate-chip:hover {
-  border-color: var(--c-coral);
+@media (hover: hover) {
+  .gate-chip:hover {
+    border-color: var(--c-coral);
+  }
 }
 
 /* Active (saat ditekan) untuk semua tombol, di mouse maupun layar sentuh */

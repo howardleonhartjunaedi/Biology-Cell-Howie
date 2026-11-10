@@ -56,8 +56,10 @@
   transition-timing-function: var(--ease-out);
 }
 
-.chip:hover {
-  border-color: var(--c-muted);
+@media (hover: hover) {
+  .chip:hover {
+    border-color: var(--c-muted);
+  }
 }
 
 .chip[aria-checked='true'] {
@@ -133,8 +135,10 @@
   transition-timing-function: var(--ease-out);
 }
 
-.option:hover:not(:disabled) {
-  border-color: var(--c-muted);
+@media (hover: hover) {
+  .option:hover:not(:disabled) {
+    border-color: var(--c-muted);
+  }
 }
 
 .option__letter {
@@ -333,8 +337,10 @@
   cursor: pointer;
 }
 
-.nav-cell:hover {
-  border-color: var(--c-muted);
+@media (hover: hover) {
+  .nav-cell:hover {
+    border-color: var(--c-muted);
+  }
 }
 
 .nav-cell[data-status='done'] {

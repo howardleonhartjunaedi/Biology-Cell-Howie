@@ -249,3 +249,11 @@ Catatan harian untuk laporan (BAB IV Kendala, BAB VI Evaluasi).
 - Masker reveal memotong huruf "TUMBUHAN" → masker akhir dibuat lebih lebar dari kotak teks.
 - Skala "30 cm › … › 20 µm" terpecah dua baris → panel 6 kolom, `nowrap`, jarak lebih kecil di HP.
 **Diuji:** 1440, 1024, 390 px tanpa scroll horizontal; mode gerak dikurangi menampilkan 6 gambar diam; scrub seluruh walkthrough 129 fps, frame terlama 21 ms di PC Howard (RTX 5060 Ti); tidak ada error console; `npm run build` lulus. **Belum diuji di laptop sekolah dan HP asli.**
+
+
+## Selasa, 10 November 2026 — Perbaikan hover pada layar sentuh
+**Yang dikerjakan:** Membungkus seluruh 16 blok CSS yang mengandung `:hover` di tujuh file dalam `@media (hover: hover)`, sesuai temuan HIGH di AGENTS.md bagian 8. Selector pin dan organel terpilih dipisahkan agar tetap berlaku pada layar sentuh. Deklarasi dan token desain tetap digunakan seperti sebelumnya.
+**Masalah & solusi:** Hover dapat tertinggal setelah ketukan pada HP. Media query membatasi hover berdasarkan kemampuan input utama. Saat memeriksa browser, chip yang sudah terpilih memang mengalahkan warna hover; pengujian kemudian memakai chip yang belum terpilih.
+**Diuji:** Audit parser PostCSS atas semua CSS dalam src: 16 blok hover, semuanya terlindungi. Chrome headless pada enam halaman di lebar 1440, 1024, dan 390 px: tidak ada overflow horizontal atau exception JavaScript. Pemaksaan pseudo-state hover pada chip kuis mengubah warna border pada desktop, tetapi tidak pada emulasi sentuh 390 px. State pin terpilih dan organel aktif tetap memakai warna coral pada ketiga lebar. Build produksi berhasil dengan peringatan ukuran chunk di atas 500 kB. Tangkapan layar kuis dalam Mode Tenang: docs/laporan/screenshots/hover-kuis-{1440,1024,390}.png.
+**Batas pengujian:** Emulasi sentuh desktop, belum diuji di HP asli.
+**Langkah berikutnya:** Uji ketukan di HP asli sebelum presentasi; temuan review lain di AGENTS.md bagian 8 masih terpisah dari perbaikan ini.

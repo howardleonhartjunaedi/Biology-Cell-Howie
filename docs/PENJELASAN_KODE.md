@@ -743,3 +743,85 @@ Cadangan kalau WebGL tidak bisa dibuat: `drawImage` ke `<canvas>` biasa. Potonga
 - Klip sel hewan dan sel tumbuhan adalah **render model 3D Lab Sel** (montanna dan okchs), bukan video mikroskop. Pexels tidak punya video sel hewan asli yang jelas; video "sel" di sana kebanyakan animasi abstrak.
 - Foto mikroskop (Lidija Ostojić) adalah sel daun yang memiliki stomata, **bukan sel lamun**, dan diberi keterangan begitu di panel.
 - Rekaman dasar laut menunjukkan pasir, sedangkan teks KONTEN menyebut "lumpur".
+
+
+## Perbaikan hover layar sentuh — 10 November 2026
+
+`@media (hover: hover)` memeriksa apakah perangkat input utama mampu melakukan hover (menunjuk tanpa menekan). Browser hanya menjalankan aturan di dalamnya jika kemampuan tersebut tersedia. Pada layar sentuh, ketukan tidak lagi meninggalkan warna atau gerakan hover. Pemeriksaan ini berdasarkan kemampuan input, bukan lebar layar.
+
+### src/styles/polish.css
+**Tugas perubahan ini:** State hover tombol umum, tombol hantu, tombol pil/bulat, saklar, chip bagian, segmented, pilihan sel, dan chip Gerbang Sel.
+**Dipakai oleh:** Semua halaman melalui gaya bersama.
+**Cara kerja (langkah demi langkah):**
+1. Browser memeriksa media query `@media (hover: hover)`.
+2. Jika cocok, selector `:hover` menggunakan deklarasi CSS yang sama seperti sebelumnya.
+3. Jika tidak cocok, gaya hover dilewati; aturan fokus, tekan, dan pilihan tetap berlaku.
+**Bagian penting:** Nilai warna, ukuran, dan token yang sudah digunakan tidak diubah.
+**Kemungkinan pertanyaan guru & jawabannya:**
+- T: Mengapa hover dibatasi? J: Layar sentuh tidak memiliki gerakan menunjuk seperti mouse. Media query mencegah efek hover tersisa setelah ketukan, sementara klik tetap bekerja.
+
+### src/styles/components.css
+**Tugas perubahan ini:** State hover tautan navigasi, navigasi halaman berikut/sebelumnya, dan pilihan segmented.
+**Dipakai oleh:** Semua halaman melalui komponen bersama.
+**Cara kerja (langkah demi langkah):**
+1. Browser memeriksa media query `@media (hover: hover)`.
+2. Jika cocok, selector `:hover` menggunakan deklarasi CSS yang sama seperti sebelumnya.
+3. Jika tidak cocok, gaya hover dilewati; aturan fokus, tekan, dan pilihan tetap berlaku.
+**Bagian penting:** Nilai warna, ukuran, dan token yang sudah digunakan tidak diubah.
+**Kemungkinan pertanyaan guru & jawabannya:**
+- T: Mengapa hover dibatasi? J: Layar sentuh tidak memiliki gerakan menunjuk seperti mouse. Media query mencegah efek hover tersisa setelah ketukan, sementara klik tetap bekerja.
+
+### src/pages/kuis/kuis.css
+**Tugas perubahan ini:** State hover chip topik, opsi jawaban yang tidak dinonaktifkan, dan nomor navigasi soal.
+**Dipakai oleh:** kuis.html.
+**Cara kerja (langkah demi langkah):**
+1. Browser memeriksa media query `@media (hover: hover)`.
+2. Jika cocok, selector `:hover` menggunakan deklarasi CSS yang sama seperti sebelumnya.
+3. Jika tidak cocok, gaya hover dilewati; aturan fokus, tekan, dan pilihan tetap berlaku.
+**Bagian penting:** Nilai warna, ukuran, dan token yang sudah digunakan tidak diubah.
+**Kemungkinan pertanyaan guru & jawabannya:**
+- T: Mengapa hover dibatasi? J: Layar sentuh tidak memiliki gerakan menunjuk seperti mouse. Media query mencegah efek hover tersisa setelah ketukan, sementara klik tetap bekerja.
+
+### src/pages/osmosis/osmosis.css
+**Tugas perubahan ini:** State hover tombol larutan.
+**Dipakai oleh:** lab-osmosis.html.
+**Cara kerja (langkah demi langkah):**
+1. Browser memeriksa media query `@media (hover: hover)`.
+2. Jika cocok, selector `:hover` menggunakan deklarasi CSS yang sama seperti sebelumnya.
+3. Jika tidak cocok, gaya hover dilewati; aturan fokus, tekan, dan pilihan tetap berlaku.
+**Bagian penting:** Nilai warna, ukuran, dan token yang sudah digunakan tidak diubah.
+**Kemungkinan pertanyaan guru & jawabannya:**
+- T: Mengapa hover dibatasi? J: Layar sentuh tidak memiliki gerakan menunjuk seperti mouse. Media query mencegah efek hover tersisa setelah ketukan, sementara klik tetap bekerja.
+
+### src/pages/sel/detail.css
+**Tugas perubahan ini:** State hover pin detail organel.
+**Dipakai oleh:** sel.html pada tampilan detail organel.
+**Cara kerja (langkah demi langkah):**
+1. Browser memeriksa media query `@media (hover: hover)`.
+2. Jika cocok, selector `:hover` menggunakan deklarasi CSS yang sama seperti sebelumnya.
+3. Jika tidak cocok, gaya hover dilewati; aturan fokus, tekan, dan pilihan tetap berlaku.
+**Bagian penting:** Selector `.detail-pin[aria-pressed='true']` dipisahkan dari `:hover` dan tetap di luar media query agar pin terpilih tetap terlihat pada HP.
+**Kemungkinan pertanyaan guru & jawabannya:**
+- T: Mengapa hover dibatasi? J: Layar sentuh tidak memiliki gerakan menunjuk seperti mouse. Media query mencegah efek hover tersisa setelah ketukan, sementara klik tetap bekerja.
+
+### src/pages/sel/lab.css
+**Tugas perubahan ini:** State hover tombol daftar organel.
+**Dipakai oleh:** sel.html pada tampilan sel.
+**Cara kerja (langkah demi langkah):**
+1. Browser memeriksa media query `@media (hover: hover)`.
+2. Jika cocok, selector `:hover` menggunakan deklarasi CSS yang sama seperti sebelumnya.
+3. Jika tidak cocok, gaya hover dilewati; aturan fokus, tekan, dan pilihan tetap berlaku.
+**Bagian penting:** Selector `.organelle-button.is-active` dipisahkan dari `:hover` dan tetap di luar media query agar organel terpilih tetap terlihat pada HP.
+**Kemungkinan pertanyaan guru & jawabannya:**
+- T: Mengapa hover dibatasi? J: Layar sentuh tidak memiliki gerakan menunjuk seperti mouse. Media query mencegah efek hover tersisa setelah ketukan, sementara klik tetap bekerja.
+
+### src/pages/landing/hero.css
+**Tugas perubahan ini:** State hover tautan Lewati intro.
+**Dipakai oleh:** index.html.
+**Cara kerja (langkah demi langkah):**
+1. Browser memeriksa media query `@media (hover: hover)`.
+2. Jika cocok, selector `:hover` menggunakan deklarasi CSS yang sama seperti sebelumnya.
+3. Jika tidak cocok, gaya hover dilewati; aturan fokus, tekan, dan pilihan tetap berlaku.
+**Bagian penting:** Nilai warna, ukuran, dan token yang sudah digunakan tidak diubah.
+**Kemungkinan pertanyaan guru & jawabannya:**
+- T: Mengapa hover dibatasi? J: Layar sentuh tidak memiliki gerakan menunjuk seperti mouse. Media query mencegah efek hover tersisa setelah ketukan, sementara klik tetap bekerja.

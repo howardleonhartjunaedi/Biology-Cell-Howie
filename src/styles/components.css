@@ -68,9 +68,11 @@
   transition-timing-function: var(--ease-out);
 }
 
-.nav__link:hover {
-  color: var(--c-cream);
-  background: var(--c-lab-2);
+@media (hover: hover) {
+  .nav__link:hover {
+    color: var(--c-cream);
+    background: var(--c-lab-2);
+  }
 }
 
 .nav__link--active {
@@ -183,9 +185,11 @@
   transition-timing-function: var(--ease-out);
 }
 
-.footer-next__main:hover {
-  border-color: var(--c-coral);
-  transform: translateY(-2px);
+@media (hover: hover) {
+  .footer-next__main:hover {
+    border-color: var(--c-coral);
+    transform: translateY(-2px);
+  }
 }
 
 .footer-next__main:active {
@@ -222,8 +226,10 @@
   font-size: var(--fs-caption);
 }
 
-.footer-next__prev:hover {
-  color: var(--c-text);
+@media (hover: hover) {
+  .footer-next__prev:hover {
+    color: var(--c-text);
+  }
 }
 
 .progress-dots {
@@ -393,8 +399,10 @@
   color: var(--c-lab);
 }
 
-.segmented__item:not([aria-checked='true']):hover {
-  color: var(--c-cream);
+@media (hover: hover) {
+  .segmented__item:not([aria-checked='true']):hover {
+    color: var(--c-cream);
+  }
 }
 
 /* Ikon garis di dalam tombol (src/core/icons.js) */

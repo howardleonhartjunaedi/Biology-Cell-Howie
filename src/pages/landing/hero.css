@@ -103,8 +103,10 @@
   text-underline-offset: 0.25em;
 }
 
-.skip-intro:hover {
-  color: var(--c-cream);
+@media (hover: hover) {
+  .skip-intro:hover {
+    color: var(--c-cream);
+  }
 }
 
 
