@@ -252,13 +252,13 @@ Contoh soal (sudah dari rancangan Pertemuan 2):
 
 ## 8. Identitas & anggota (halaman rangkuman.html)
 - **Anggota Kelompok 4 · XI-A5:**
+  - 20 — Howard Leonhart Junaedi (ketua) [CEK ejaan: file Pertemuan 2 menulis "Juneadi"]
   - 17 — Gavin Maruli Wilianata
   - 19 — Greg Nigel Kenjiro Pardede
-  - 20 — Howard Leonhart Junaedi (ketua) [CEK ejaan: file Pertemuan 2 menulis "Juneadi"]
   - 21 — Jaden Sutedja
   - 33 — Raphael Krisna Rahardian
-- Sekolah: Kolese Kanisius, Jakarta · Tahun pelajaran 2025/2026 · Mata pelajaran: Biologi & Web Development
-- Guru: [ISI nama guru Biologi] · [ISI nama guru Web Development]
+- Sekolah: Kolese Kanisius, Jakarta · Tahun pelajaran 2026/2027 · Mata pelajaran: Biologi & INF (Informatika)
+- Guru: [ISI nama guru Biologi] · [ISI nama guru INF (Informatika)]
 - Pernyataan AI: "Website ini dibuat dengan bantuan Claude Code dari Anthropic menggunakan model Opus 5.5 dan Fable 5.2, serta Codex dari OpenAI menggunakan model Astra 6, Sol 6.1, dan Terra, sebagai asisten pemrograman. Seluruh materi telah diperiksa oleh kelompok berdasarkan slide guru dan sumber yang dicantumkan."
 
 ---

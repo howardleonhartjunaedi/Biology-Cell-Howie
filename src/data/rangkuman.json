@@ -89,18 +89,18 @@
     { "title": "Penggunaan AI", "kategori": ["ai"] }
   ],
   "members": [
+    ["20", "Howard Leonhart Junaedi", "ketua"],
     ["17", "Gavin Maruli Wilianata", ""],
     ["19", "Greg Nigel Kenjiro Pardede", ""],
-    ["20", "Howard Leonhart Junaedi", "ketua"],
     ["21", "Jaden Sutedja", ""],
     ["33", "Raphael Krisna Rahardian", ""]
   ],
   "identity": [
     ["Kelas", "XI-A5"],
     ["Sekolah", "Kolese Kanisius, Jakarta"],
-    ["Tahun pelajaran", "2025/2026"],
-    ["Mata pelajaran", "Biologi & Web Development"],
+    ["Tahun pelajaran", "2026/2027"],
+    ["Mata pelajaran", "Biologi & INF (Informatika)"],
     ["Guru Biologi", ""],
-    ["Guru Web Development", ""]
+    ["Guru INF (Informatika)", ""]
   ]
 }

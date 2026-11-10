@@ -310,3 +310,6 @@ Build berhasil dan halaman Rangkuman di Chrome menampilkan kedua alat serta selu
 Nama model dipindahkan ke baris setelah Anthropic dan OpenAI. Keterangan keduanya menyebut asisten coding. Penulis slide BAB 1 SEL diubah menjadi Guru Biologi SMA Kristen 1 BPK Penabur sesuai keterangan Howard.
 
 Build berhasil. Halaman Rangkuman diperiksa di Chrome pada lebar 1280 dan 390 piksel; baris model, keterangan, dan sumber materi pertama tampil sesuai permintaan tanpa overflow horizontal.
+## Selasa, 10 November 2026 — Identitas kelompok
+
+Nama ketua diletakkan di baris pertama, mata pelajaran menjadi Biologi & INF (Informatika), dan tahun pelajaran menjadi 2026/2027 sesuai keterangan Howard. Build dan tampilan Rangkuman pada desktop serta ponsel diperiksa.

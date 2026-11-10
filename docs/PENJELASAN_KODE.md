@@ -888,3 +888,6 @@ Kartu informasi bersama untuk Lab Sel dan Gerbang Sel mengukur ukuran kartu dan 
 ## Penataan kredit AI dan sumber materi — 10 November 2026
 
 `src/data/credits.json` menyimpan nama model pada kolom `model` untuk Claude Code dan Codex. `src/pages/rangkuman/main.js` menampilkan kolom tersebut setelah nama penyedia pada baris informasi kredit. Keterangan kedua alat menyebut penggunaannya sebagai asisten coding. Penulis sumber materi pertama diperbarui sesuai keterangan Howard, begitu juga daftar sumber di `docs/KONTEN-MATERI.md`.
+## Identitas anggota — 10 November 2026
+
+`src/data/rangkuman.json` menentukan urutan anggota yang ditampilkan oleh `renderTeam()`. Ketua dipindah ke urutan pertama dan identitas mencantumkan tahun pelajaran 2026/2027 serta mata pelajaran Biologi & INF (Informatika). Sumber identitas di `docs/KONTEN-MATERI.md` diperbarui sesuai keterangan Howard.
