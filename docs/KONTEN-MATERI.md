@@ -275,7 +275,7 @@ Contoh soal (sudah dari rancangan Pertemuan 2):
 ---
 
 ## 10. Sumber (untuk credits.json kategori "materi")
-- Slide guru "BAB 1 SEL" — Biologi XI, TP 25/26, Kolese Kanisius.
+- Slide guru "BAB 1 SEL" — Biologi XI, TP 25/26, Guru Biologi SMA Kristen 1 BPK Penabur.
 - Slide guru "SEL Update 2" — Biologi XI, Kolese Kanisius.
 - Rangkuman Biologi Sel — Kelompok 4.
 - Rancangan Website Sel Kelompok 4 (Pertemuan 2).

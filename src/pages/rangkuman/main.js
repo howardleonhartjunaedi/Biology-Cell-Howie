@@ -52,7 +52,7 @@ function renderCards() {
 
 function creditLine(entry) {
   const title = entry.url ? element('a', { href: entry.url, target: '_blank', rel: 'noopener', textContent: entry.judul }) : element('span', { textContent: entry.judul });
-  const meta = [entry.pembuat, entry.lisensi].filter(Boolean).join(' · ');
+  const meta = [entry.pembuat, entry.model, entry.lisensi].filter(Boolean).join(' · ');
   return element('li', { className: 'credit' }, [
     element('p', { className: 'credit__title' }, [title]),
     element('p', { className: 'credit__meta', textContent: meta }),

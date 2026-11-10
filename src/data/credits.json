@@ -2,7 +2,7 @@
   {
     "kategori": "materi",
     "judul": "Slide BAB 1 SEL, Biologi XI, TP 25/26",
-    "pembuat": "Guru Biologi Kolese Kanisius",
+    "pembuat": "Guru Biologi SMA Kristen 1 BPK Penabur",
     "lisensi": "Materi kelas",
     "url": "",
     "catatan": "",
@@ -146,9 +146,10 @@
     "kategori": "ai",
     "judul": "Claude Code (Anthropic)",
     "pembuat": "Anthropic",
-    "lisensi": "-",
+    "model": "Opus 5.5, Fable 5.2",
+    "lisensi": "",
     "url": "https://claude.ai",
-    "catatan": "Digunakan sebagai asisten pemrograman dengan model Opus 5.5 dan Fable 5.2. Seluruh materi telah diperiksa oleh kelompok berdasarkan slide guru dan sumber yang dicantumkan.",
+    "catatan": "Digunakan sebagai asisten coding. Seluruh materi telah diperiksa oleh kelompok berdasarkan slide guru dan sumber yang dicantumkan.",
     "dipakaiDi": [
       "semua"
     ]
@@ -157,9 +158,10 @@
     "kategori": "ai",
     "judul": "Codex (OpenAI)",
     "pembuat": "OpenAI",
+    "model": "Astra 6, Sol 6.1, Terra",
     "lisensi": "",
     "url": "https://openai.com/codex/",
-    "catatan": "Digunakan sebagai asisten pemrograman dengan model Astra 6, Sol 6.1, dan Terra.",
+    "catatan": "Digunakan sebagai asisten coding.",
     "dipakaiDi": ["semua"]
   },
   {

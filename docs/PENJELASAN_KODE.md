@@ -885,3 +885,6 @@ Kartu informasi bersama untuk Lab Sel dan Gerbang Sel mengukur ukuran kartu dan 
 ## Kredit penggunaan AI — 10 November 2026
 
 `src/data/credits.json` mencatat Claude Code dan Codex sebagai dua entri kategori `ai`, beserta nama model yang diberikan Howard. `src/pages/rangkuman/main.js` membaca dan menampilkan entri tersebut otomatis di kelompok Penggunaan AI. Pernyataan di `docs/KONTEN-MATERI.md` diperbarui agar sesuai dengan kredit.
+## Penataan kredit AI dan sumber materi — 10 November 2026
+
+`src/data/credits.json` menyimpan nama model pada kolom `model` untuk Claude Code dan Codex. `src/pages/rangkuman/main.js` menampilkan kolom tersebut setelah nama penyedia pada baris informasi kredit. Keterangan kedua alat menyebut penggunaannya sebagai asisten coding. Penulis sumber materi pertama diperbarui sesuai keterangan Howard, begitu juga daftar sumber di `docs/KONTEN-MATERI.md`.

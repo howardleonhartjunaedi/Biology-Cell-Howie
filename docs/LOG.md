@@ -305,3 +305,8 @@ Build berhasil. Chrome WebGL mencatat 29 pembaruan opacity selama transisi 1,35 
 Menambahkan nama Claude Code dengan model Opus 5.5 dan Fable 5.2, serta Codex dengan model Astra 6, Sol 6.1, dan Terra sesuai keterangan Howard. Data kredit dan pernyataan AI di KONTEN-MATERI diperbarui.
 
 Build berhasil dan halaman Rangkuman di Chrome menampilkan kedua alat serta seluruh nama model.
+## Selasa, 10 November 2026 — Penataan kredit dan sumber materi
+
+Nama model dipindahkan ke baris setelah Anthropic dan OpenAI. Keterangan keduanya menyebut asisten coding. Penulis slide BAB 1 SEL diubah menjadi Guru Biologi SMA Kristen 1 BPK Penabur sesuai keterangan Howard.
+
+Build berhasil. Halaman Rangkuman diperiksa di Chrome pada lebar 1280 dan 390 piksel; baris model, keterangan, dan sumber materi pertama tampil sesuai permintaan tanpa overflow horizontal.
