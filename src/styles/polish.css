@@ -81,14 +81,29 @@
   cursor: progress;
 }
 
-@media (hover: none) {
-  .button:active,
-  .pill-button:active,
-  .round-button:active,
-  .toggle:active,
-  .part-chip:active {
-    transform: scale(0.96);
-  }
+/* Hover yang sebelumnya belum ada: saklar dua pilihan dan chip mode Gerbang Sel */
+.segmented__item:hover:not([aria-pressed='true'], [aria-checked='true']),
+.cell-switch__item:hover:not([aria-pressed='true'], [aria-checked='true']) {
+  color: var(--c-cream);
+}
+
+.gate-chip:hover {
+  border-color: var(--c-coral);
+}
+
+/* Active (saat ditekan) untuk semua tombol, di mouse maupun layar sentuh */
+.button:active,
+.pill-button:active,
+.round-button:active,
+.toggle:active,
+.part-chip:active,
+.gate-chip:active,
+.segmented__item:active,
+.cell-switch__item:active,
+.option:active:not(:disabled),
+.solution:active,
+.nav-cell:active {
+  transform: scale(0.97);
 }
 
 /* Grain + vignette global, sangat halus */

@@ -167,7 +167,7 @@
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 500;
-  font-size: clamp(2.5rem, 7vw, 5.5rem);
+  font-size: var(--fs-h1);
   line-height: 1.05;
   color: var(--c-cream);
 }

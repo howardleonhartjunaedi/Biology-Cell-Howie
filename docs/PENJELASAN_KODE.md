@@ -696,3 +696,13 @@ Jika GPU kehilangan konteks (driver error, memori penuh), `event.preventDefault(
 
 ## src/core/smooth-scroll.js
 Lenis tidak dijalankan jika `prefers-reduced-motion: reduce`.
+
+## Kepatuhan token (§4.5) — src/styles/polish.css, src/pages/kuis/report.js
+**Tugas perubahan ini:** memastikan semua ukuran huruf dan jarak memakai token, dan setiap tombol punya semua state.
+**Bagian penting:**
+- `:active { transform: scale(0.97) }` — saat tombol ditekan, tombol mengecil sedikit sebagai tanda "sudah ditekan". Dulu hanya di layar sentuh, sekarang di semua perangkat.
+- `.segmented__item:hover:not([aria-checked='true'])` — teks pilihan yang belum aktif menjadi krem saat disorot. Pilihan yang sudah aktif tidak berubah.
+- Di `report.js`, tombol unduh diberi `aria-busy="true"` dan teks "Menyiapkan gambar…" selama kanvas diubah menjadi PNG. Jika `toBlob` mengembalikan `null` (gagal), tombol menampilkan "Gagal membuat gambar, coba lagi".
+**Kemungkinan pertanyaan guru & jawabannya:**
+- T: Kenapa semua angka jarak harus token? J: Supaya jarak di seluruh situs mengikuti satu irama 8px dan bisa diubah dari satu file (`tokens.css`).
+- T: Apa itu `aria-busy`? J: Atribut yang memberi tahu pembaca layar bahwa tombol sedang memproses.

@@ -1,7 +1,7 @@
 .skip-link {
   position: fixed;
-  top: 8px;
-  left: 8px;
+  top: var(--s-1);
+  left: var(--s-1);
   z-index: 60;
   padding: var(--s-2) var(--s-2);
   border-radius: var(--radius-pill);
@@ -249,7 +249,7 @@
 .toast {
   position: fixed;
   left: 50%;
-  bottom: 24px;
+  bottom: var(--s-3);
   z-index: 70;
   transform: translateX(-50%);
   max-width: min(90vw, 480px);
@@ -368,7 +368,7 @@
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
-  padding: 4px;
+  padding: calc(var(--s-1) / 2);
   border: 1px solid var(--c-line);
   border-radius: var(--radius-pill);
 }

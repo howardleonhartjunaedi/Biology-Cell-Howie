@@ -145,10 +145,21 @@ export function buildReport(container, items, usedSeconds, { onRetry, onWeakPrac
   practiceWeak.addEventListener('click', () => onWeakPractice(WEAK_PRACTICE[weakest.id]));
   const download = element('button', { type: 'button', className: 'button button--ghost', textContent: 'Unduh Report Card' });
   download.addEventListener('click', () => {
+    download.setAttribute('aria-busy', 'true');
+    download.textContent = 'Menyiapkan gambar…';
+    const finish = (label) => {
+      download.removeAttribute('aria-busy');
+      download.textContent = label;
+    };
     drawCard(summary).toBlob((blob) => {
+      if (!blob) {
+        finish('Gagal membuat gambar, coba lagi');
+        return;
+      }
       const link = element('a', { href: URL.createObjectURL(blob), download: `report-card-kuis-sel-${score}.png` });
       link.click();
       setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+      finish('Unduh Report Card');
     }, 'image/png');
   });
 

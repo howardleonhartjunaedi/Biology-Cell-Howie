@@ -192,3 +192,15 @@ Catatan harian untuk laporan (BAB IV Kendala, BAB VI Evaluasi).
 - Jika kartu grafis kehilangan konteks WebGL, situs otomatis pindah ke Mode Tenang dengan pesan, bukan layar hitam.
 - Setiap halaman punya pesan `<noscript>` bila JavaScript mati.
 **Diuji:** semua halaman dalam di-scroll sampai bawah, tidak ada blok yang tertinggal tersembunyi; mode gerak dikurangi menampilkan semua isi seketika; tidak ada error console.
+
+## Selasa, 10 November 2026 — Kepatuhan §4.5 Aturan anti-vibecode
+**Catatan:** aturan dari Howard sudah tercatat lengkap di CLAUDE.md §4.5, jadi tidak ada teks baru; yang dikerjakan adalah audit kode terhadap aturan itu.
+**Yang sudah patuh:** tidak ada bayangan/glow pada teks, tidak ada glassmorphism, tidak ada gradien ungu/biru generik (gradien yang ada hanya lapisan gelap agar teks terbaca dan isi batang progres), ikon pakai SVG garis, radius kecil (8px), token grid 12 kolom, skala spasi 8px, skala huruf, dan token gerak sudah ada di `tokens.css`.
+**Yang diperbaiki:**
+- Ukuran huruf di luar skala diganti token: soal kuis dan timer → `--fs-h2`, kalimat penutup Rangkuman → `--fs-h1`.
+- Spasi di luar skala diganti token: `80px` → `--s-8`, `28px`/`24px` → `--s-3`, `8px` → `--s-1`, `4px` → `calc(var(--s-1) / 2)`.
+- State *active* (saat ditekan) kini berlaku di mouse juga, untuk semua tombol, opsi kuis, tombol larutan, chip mode, dan kotak nomor soal.
+- State *hover* ditambah pada saklar dua pilihan dan chip mode Gerbang Sel.
+- Tombol "Unduh Report Card" kini punya state *loading* ("Menyiapkan gambar…") dan state *error* jika gambar gagal dibuat.
+**Diuji:** Kuis di 1440, 1024, 390 px; Rangkuman di 1024 px; tidak ada scroll horizontal; `npm run build` lulus.
+**Belum:** desain Figma/Claude Design yang disetujui untuk perbandingan per layar belum ada, jadi pembandingan dilakukan terhadap spesifikasi CLAUDE.md §6.
