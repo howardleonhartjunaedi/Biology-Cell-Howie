@@ -1,23 +1,20 @@
-// Sel hewan dari model "Animal cell 2.0" (montanna, CC BY 4.0), dikompresi dengan Draco.
-// Setiap material di file .glb dipetakan ke satu organel (lihat docs/ASSETS.md), lalu diganti
-// dengan material "lab" kita supaya bisa menyala saat disorot dan cocok dengan ruang lab gelap.
+// Memuat model sel unduhan (.glb, dikompresi Draco) dan menyiapkannya untuk Lab Sel:
+// - sel hewan: "Animal cell 2.0" oleh montanna (CC BY 4.0)
+// - sel tumbuhan: "Plant Cell | Biology" oleh Oliver/okchs (CC BY 4.0)
+// Setiap mesh dipetakan ke satu organel (lihat docs/ASSETS.md), materialnya diganti dengan
+// material "lab" kita supaya bisa menyala saat disorot dan cocok dengan ruang lab gelap.
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { buildPeroxisomes } from './cell-models.js';
 import { seededRandom } from '../landing/scenes/shared.js';
 
-const MODEL_URL = '/models/animal-cell.glb';
-const TARGET_SIZE = 5.4;
 const TILT_TOWARD_CAMERA = THREE.MathUtils.degToRad(48);
-const DROP = -0.45;
-const PEROXISOME_SPOTS = [[2.2, 0.12, 0.4], [-1.4, 0.16, 2.8], [1.4, 0.16, -1.6]];
-const PEROXISOME_SCALE = 1.4;
 const ELONGATED = 2.2;
 const SPECK_SIZE = 0.1;
 
-// Nama material di file → id organel di organel.json
-const ORGANELLE_BY_MATERIAL = {
+// Sel hewan: nama material di file → id organel di organel.json
+const ANIMAL_BY_MATERIAL = {
   Material: 'membran-plasma',
   'Material.004': 'sitoplasma',
   'Material.001': 'nukleus',
@@ -35,27 +32,65 @@ const ORGANELLE_BY_MATERIAL = {
   'Material.025': 'sentriol-lisosom',
 };
 
-// Membran dan sitoplasma tembus pandang supaya organel di dalamnya tetap terlihat.
-const SHELL = {
-  'membran-plasma': { opacity: 0.5, side: THREE.DoubleSide },
-  sitoplasma: { opacity: 0.62, side: THREE.DoubleSide, darken: 0.22 },
+// Sel tumbuhan: awalan nama node di file → id organel. Yang tidak ada di daftar disembunyikan
+// (sitoskeleton dan lisosom tidak termasuk daftar organel sel tumbuhan di KONTEN-MATERI).
+const PLANT_BY_NODE = [
+  [/^cell_wall/, 'dinding-sel'],
+  [/^lipid_bilayer/, 'membran-plasma'],
+  [/^Disc_glass/, 'sitoplasma'],
+  [/vacuole/, 'vakuola'],
+  [/^(Cloner|Boole)/, 'kloroplas'],
+  [/^(Nucleus|Nucleolus|chromatin|shell|Icosphere)/, 'nukleus'],
+  [/^Sphere_00[25]/, 'mitokondria'],
+  [/^golgi/, 'golgi'],
+  [/^floating_ribosomes/, 'ribosom'],
+  [/^rough_smooth_er/, 're-kasar'],
+];
+
+const CELLS = {
+  hewan: {
+    url: '/models/animal-cell.glb',
+    organelleOf: (mesh) => ANIMAL_BY_MATERIAL[mesh.material.name],
+    size: 5.4,
+    drop: -0.45,
+    shells: {
+      sitoplasma: { darken: 0.22 },
+    },
+    peroxisomes: { spots: [[2.2, 0.12, 0.4], [-1.4, 0.16, 2.8], [1.4, 0.16, -1.6]], scale: 1.4 },
+  },
+  tumbuhan: {
+    url: '/models/plant-cell.glb',
+    organelleOf: (mesh) => PLANT_BY_NODE.find(([pattern]) => pattern.test(mesh.name))?.[1],
+    size: 5.8,
+    drop: -0.5,
+    shells: {
+      'membran-plasma': { color: '#8CC7A4' },
+      sitoplasma: { color: '#2E6B57' },
+    },
+    // Warna asli dinding sel hampir hitam di ruang lab gelap; diganti hijau zaitun.
+    colors: { 'dinding-sel': '#7E9B5C' },
+    // RE kasar dan RE halus di model ini satu mesh, jadi keduanya menyorot mesh yang sama.
+    aliases: { 're-kasar': ['re-halus'] },
+    peroxisomes: { spots: [[9.2, 0.15, 1.8], [4.8, 0.15, 2.2], [8.8, 0.15, -1.0]], scale: 1.8 },
+  },
 };
 
-function labMaterial(source, id) {
-  const shell = SHELL[id];
-  const color = source.color.clone().offsetHSL(0, -0.12, -0.04 - (shell?.darken ?? 0));
+function labMaterial(source, shell, color) {
+  const base = (color ?? shell?.color) ? new THREE.Color(color ?? shell.color) : source.color.clone().offsetHSL(0, -0.12, -0.04 - (shell?.darken ?? 0));
+  // Membran dan sitoplasma dibuat padat (tidak tembus pandang), sesuai permintaan Howard.
+  const transparent = shell ? false : source.transparent;
   return new THREE.MeshPhysicalMaterial({
     name: source.name,
-    color,
-    emissive: color,
+    color: base,
+    emissive: base,
     emissiveIntensity: 0,
     roughness: 0.4,
     clearcoat: 0.5,
     clearcoatRoughness: 0.3,
-    transparent: Boolean(shell),
-    opacity: shell?.opacity ?? 1,
-    side: shell?.side ?? source.side,
-    depthWrite: !shell,
+    transparent,
+    opacity: shell ? 1 : source.opacity,
+    side: shell ? THREE.DoubleSide : source.side,
+    depthWrite: !transparent,
   });
 }
 
@@ -109,7 +144,7 @@ function compact(geometry, indices) {
   return result;
 }
 
-// Material.025 berisi sentriol (tabung panjang) dan lisosom (bola) dalam satu mesh.
+// Sel hewan: Material.025 berisi sentriol (tabung panjang) dan lisosom (bola) dalam satu mesh.
 function splitCentriolesAndLysosomes(mesh) {
   const lists = { sentriol: [], lisosom: [] };
   const position = mesh.geometry.attributes.position;
@@ -131,57 +166,70 @@ function isSpeck(mesh) {
   return Math.max(size.x, size.y, size.z) < SPECK_SIZE;
 }
 
-function prepare(scene) {
+function prepare(scene, config) {
   scene.updateMatrixWorld(true);
   const materials = new Map();
   const swaps = [];
+  const unused = [];
   scene.traverse((child) => {
     if (!child.isMesh) return;
-    const id = ORGANELLE_BY_MATERIAL[child.material.name];
+    const id = config.organelleOf(child);
     if (!id || (!child.isInstancedMesh && isSpeck(child))) {
-      child.visible = false;
+      unused.push(child);
       return;
     }
-    if (!materials.has(child.material.name)) materials.set(child.material.name, labMaterial(child.material, id));
-    child.material = materials.get(child.material.name);
+    const key = `${child.material.name}|${id}`;
+    if (!materials.has(key)) materials.set(key, labMaterial(child.material, config.shells[id], config.colors?.[id]));
+    child.material = materials.get(key);
     child.userData.organelle = id;
+    if (config.aliases?.[id]) child.userData.aliases = config.aliases[id];
     if (id === 'sentriol-lisosom') swaps.push(child);
   });
   swaps.forEach((mesh) => {
     mesh.parent.add(...splitCentriolesAndLysosomes(mesh));
     mesh.removeFromParent();
   });
+  // Bagian yang tidak dipakai dibuang (bukan sekadar disembunyikan) supaya raycast lebih ringan.
+  unused.forEach((mesh) => {
+    mesh.removeFromParent();
+    mesh.geometry.dispose();
+  });
 }
 
-function fit(model) {
+// Kedua model tidak punya peroksisom, jadi kita tambahkan peroksisom buatan sendiri di titik
+// sitoplasma yang kosong (dicari dengan raycast dari atas, dalam koordinat model).
+function addPeroxisomes(scene, { spots, scale }) {
+  const peroxisomes = buildPeroxisomes(seededRandom(11), 1);
+  peroxisomes.children.forEach((child, i) => {
+    child.position.set(...spots[i]);
+    child.scale.setScalar(scale);
+  });
+  scene.add(peroxisomes);
+}
+
+function fit(model, config) {
   const box = new THREE.Box3().setFromObject(model);
   const size = box.getSize(new THREE.Vector3());
   const center = box.getCenter(new THREE.Vector3());
   model.position.sub(center);
   const pivot = new THREE.Group();
   pivot.add(model);
-  pivot.scale.setScalar(TARGET_SIZE / Math.max(size.x, size.z));
+  pivot.scale.setScalar(config.size / Math.max(size.x, size.z));
   pivot.rotation.x = TILT_TOWARD_CAMERA;
-  pivot.position.y = DROP;
+  pivot.position.y = config.drop;
   return pivot;
 }
 
-export function loadAnimalCell() {
+export function loadCellModel(cellId) {
+  const config = CELLS[cellId];
   const draco = new DRACOLoader().setDecoderPath('/draco/');
   const loader = new GLTFLoader().setDRACOLoader(draco);
-  return loader.loadAsync(MODEL_URL).then((gltf) => {
+  return loader.loadAsync(config.url).then((gltf) => {
     draco.dispose();
-    prepare(gltf.scene);
-    // Model ini tidak punya peroksisom, jadi kita tambahkan peroksisom buatan sendiri
-    // di titik sitoplasma yang kosong (dicari dengan raycast dari atas, koordinat model).
-    const peroxisomes = buildPeroxisomes(seededRandom(11), 1);
-    peroxisomes.children.forEach((child, i) => {
-      child.position.set(...PEROXISOME_SPOTS[i]);
-      child.scale.setScalar(PEROXISOME_SCALE);
-    });
-    gltf.scene.add(peroxisomes);
+    prepare(gltf.scene, config);
+    addPeroxisomes(gltf.scene, config.peroxisomes);
     const cell = new THREE.Group();
-    cell.add(fit(gltf.scene));
+    cell.add(fit(gltf.scene, config));
     return cell;
   });
 }

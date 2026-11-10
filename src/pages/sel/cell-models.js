@@ -251,7 +251,7 @@ function sharedOrganelles(cell, random, { radius, nucleusAt }) {
   cell.add(buildPeroxisomes(random, radius));
 }
 
-// Dipakai juga oleh animal-model.js, karena model sel hewan unduhan tidak punya peroksisom.
+// Dipakai juga oleh glb-cell.js, karena kedua model sel unduhan tidak punya peroksisom.
 export function buildPeroxisomes(random, radius) {
   const materials = {
     shell: partMaterial('#D8B4A0', { transparent: true, opacity: 0.55, depthWrite: false }),
@@ -336,9 +336,11 @@ export function organelleMeshes(cell) {
   const map = new Map();
   cell.traverse((child) => {
     if (!child.isMesh) return;
-    const id = child.userData.organelle;
-    if (!map.has(id)) map.set(id, []);
-    map.get(id).push(child);
+    // `aliases`: satu mesh bisa mewakili dua organel (misalnya RE kasar + RE halus dalam satu mesh).
+    [child.userData.organelle, ...(child.userData.aliases ?? [])].forEach((id) => {
+      if (!map.has(id)) map.set(id, []);
+      map.get(id).push(child);
+    });
   });
   return map;
 }

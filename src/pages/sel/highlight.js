@@ -25,9 +25,11 @@ export function createHighlight(cellMeshes) {
     const map = cellMeshes[cellId];
     if (!map) return;
     map.forEach((list, id) => {
-      const level = !activeId ? 'normal' : id === activeId ? 'glow' : 'dim';
-      list.forEach((mesh) => apply(mesh, store, level));
+      if (id === activeId) return;
+      list.forEach((mesh) => apply(mesh, store, activeId ? 'dim' : 'normal'));
     });
+    // Organel aktif diproses terakhir, supaya mesh yang dipakai bersama tetap menyala.
+    (map.get(activeId) ?? []).forEach((mesh) => apply(mesh, store, 'glow'));
   }
 
   function setParts(parts, activeId) {

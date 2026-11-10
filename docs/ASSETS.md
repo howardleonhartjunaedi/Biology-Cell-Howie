@@ -1,6 +1,6 @@
 # AUDIT ASET 3D
 
-Status: **sel hewan selesai (10 Nov 2026).** Sel tumbuhan masih model buatan sendiri, menunggu file `assets-src/plant-cell.glb` dari Howard.
+Status: **sel hewan dan sel tumbuhan selesai (10 Nov 2026).**
 
 ## Temuan awal (8 Nov 2026)
 - Repo `patrickzhou1234/BiologySimulation` sudah pindah ke `BiologySimulation/BiologySimulation`.
@@ -22,6 +22,7 @@ Status: **sel hewan selesai (10 Nov 2026).** Sel tumbuhan masih model buatan sen
 | Model | Lisensi di file | Mesh | Material | Segitiga | Ukuran setelah kompres | Keputusan |
 |---|---|---|---|---|---|---|
 | `animal_cell.glb` (montanna, "Animal cell 2.0 - annotated in English") | CC-BY-4.0 (tertulis di metadata `asset.extras`) | 2.032 → 25 | 23 → 15 | 746.049 → 180.037 | 70,6 MB → **1,8 MB** | **Dipakai** untuk sel hewan di Lab Sel |
+| `plant_cell__biology.glb` (Oliver/okchs, "Plant Cell \| Biology", diunduh Howard dari Sketchfab) | CC-BY-4.0 (metadata `asset.extras`) | 23 → 21 | 17 | 170.474 → 154.345 | 8,7 MB → **0,76 MB** | **Dipakai** untuk sel tumbuhan di Lab Sel |
 
 Catatan pengunduhan: URL `patrickzhou1234/.../raw/main/...` dialihkan ke `BiologySimulation/BiologySimulation` dan cabangnya bernama `master`, bukan `main`. File diambil dari
 `https://github.com/BiologySimulation/BiologySimulation/raw/master/models/animal_cell.glb` ke `assets-src/` (tidak di-commit, ada di `.gitignore`).
@@ -57,7 +58,25 @@ Nama material dan nama node di file tidak bermakna (`Material.005`, `Object_32`)
 - Bintik sangat kecil (< 0,1 satuan, sisa titik anotasi) disembunyikan.
 - **Model tidak punya peroksisom.** Peroksisom buatan sendiri (dari `cell-models.js`) ditaruh di tiga titik sitoplasma yang kosong; titiknya dicari dengan raycast dari atas.
 
+### Sel tumbuhan: nama node → organel
+Model okchs memberi nama yang jelas pada setiap node, jadi pemetaan memakai nama node (bukan material).
+
+| Node (awalan) | Organel |
+|---|---|
+| `cell_wall` | `dinding-sel` (warna diganti hijau zaitun; aslinya hampir hitam) |
+| `lipid_bilayer` | `membran-plasma` |
+| `Disc_glass` (cakram penampang) | `sitoplasma` |
+| `central_vacuole`, `vacuoles` | `vakuola` |
+| `Cloner`, `Boole` | `kloroplas` (tilakoid + membran luar) |
+| `Nucleus`, `Nucleolus`, `chromatin`, `shell`, `Icosphere` | `nukleus` |
+| `Sphere_005`, `Sphere_002` | `mitokondria` |
+| `golgi` | `golgi` |
+| `floating_ribosomes` | `ribosom` |
+| `rough_smooth_er` | `re-kasar`, juga dipakai untuk `re-halus` (di model ini RE kasar dan halus satu mesh) |
+| `cytoskeleton`, `Lysosomes` | **dibuang** (tidak ada di daftar organel sel tumbuhan KONTEN-MATERI; sitoskeleton juga menghalangi sorotan) |
+
+Model ini juga tidak punya peroksisom, jadi peroksisom buatan sendiri ditambahkan di tiga titik kosong.
+
 ## Keputusan
-- Sel hewan Lab Sel: model montanna (CC BY 4.0), material diganti `MeshPhysicalMaterial` lab (clearcoat 0,5, roughness 0,4; membran dan sitoplasma tembus pandang).
+- Sel hewan Lab Sel: model montanna (CC BY 4.0); sel tumbuhan: model okchs (CC BY 4.0). Material diganti `MeshPhysicalMaterial` lab (clearcoat 0,5, roughness 0,4). Membran dan sitoplasma dibuat **padat**, tidak tembus pandang (permintaan Howard, supaya lantai lab tidak terlihat menembus sel).
 - Model buatan sendiri tetap tampil lebih dulu dan menjadi cadangan jika file .glb gagal dimuat.
-- Sel tumbuhan: menunggu file dari Howard; sementara memakai model buatan sendiri.

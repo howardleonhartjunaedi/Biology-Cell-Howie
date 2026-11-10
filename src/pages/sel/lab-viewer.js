@@ -7,7 +7,7 @@ import { createInfoCard } from '../../core/info-card.js';
 import { disposeScene } from '../landing/scenes/shared.js';
 import { buildAnimalCell, buildPlantCell, organelleMeshes, SHELL_IDS } from './cell-models.js';
 import { buildDetail } from './detail-models.js';
-import { loadAnimalCell } from './animal-model.js';
+import { loadCellModel } from './glb-cell.js';
 import { createLabRoom } from './lab-room.js';
 import { organelleOf } from './organelle-ui.js';
 import { createHighlight } from './highlight.js';
@@ -55,22 +55,25 @@ export function createLabViewer({ onPick, onHover, onSwipe, onPartPick }) {
   const card = createInfoCard({ onDetail: (id) => onPick(id) });
   const pins = createPins(document.getElementById('detail-pins'), (id) => onPartPick(id));
 
-  // Model sel hewan unduhan (montanna) menggantikan model buatan setelah selesai dimuat.
-  // Jika gagal dimuat (misalnya offline), model buatan sendiri tetap dipakai.
-  loadAnimalCell()
-    .then((model) => {
-      if (disposed) return disposeScene(model);
-      const old = cells.hewan;
-      model.visible = old.visible;
-      model.position.copy(old.position);
-      tilt.add(model);
-      tilt.remove(old);
-      disposeScene(old);
-      cells.hewan = model;
-      meshes.hewan = organelleMeshes(model);
-      if (current === 'hewan') highlight.set('hewan', hovered);
-    })
-    .catch(() => {});
+  // Model sel unduhan (montanna dan okchs) menggantikan model buatan setelah selesai dimuat.
+  // Jika gagal dimuat (misalnya file hilang), model buatan sendiri tetap dipakai.
+  function swapInModel(cellId, model) {
+    if (disposed) return disposeScene(model);
+    const old = cells[cellId];
+    model.visible = old.visible;
+    model.position.copy(old.position);
+    tilt.add(model);
+    tilt.remove(old);
+    disposeScene(old);
+    cells[cellId] = model;
+    meshes[cellId] = organelleMeshes(model);
+    if (current === cellId) highlight.set(cellId, hovered);
+  }
+  Object.keys(cells).forEach((cellId) => {
+    loadCellModel(cellId)
+      .then((model) => swapInModel(cellId, model))
+      .catch((error) => console.warn('Model 3D unduhan gagal dimuat, model buatan sendiri dipakai:', error));
+  });
 
   const raycaster = new THREE.Raycaster();
   const pointer = new THREE.Vector2();

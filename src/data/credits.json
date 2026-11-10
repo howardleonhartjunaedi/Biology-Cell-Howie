@@ -210,11 +210,11 @@
   },
   {
     "kategori": "model3d",
-    "judul": "Model 3D buatan sendiri: sel tumbuhan, detail organel, peroksisom sel hewan, membran plasma, ion Na⁺/K⁺",
+    "judul": "Model 3D buatan sendiri: detail organel, peroksisom, membran plasma Gerbang Sel, ion Na⁺/K⁺",
     "pembuat": "Kelompok 4 XI-A5 (dibuat dengan kode Three.js)",
     "lisensi": "Karya sendiri",
     "url": "",
-    "catatan": "Dibuat dari kode Three.js. Sel hewan di Lab Sel memakai model montanna (lihat entri di bawah). Ilustrasi, bukan skala sebenarnya.",
+    "catatan": "Dibuat dari kode Three.js. Sel hewan dan sel tumbuhan di Lab Sel memakai model montanna dan okchs (lihat entri di bawah); model buatan sendiri dipakai sebagai cadangan. Ilustrasi, bukan skala sebenarnya.",
     "dipakaiDi": [
       "sel.html",
       "gerbang-sel.html"
@@ -227,6 +227,17 @@
     "lisensi": "CC BY 4.0",
     "url": "https://sketchfab.com/3d-models/animal-cell-20-annotated-in-english-0d9f7f4257224975b2ef83a283709b2f",
     "catatan": "Dikompresi & material dimodifikasi (Draco, 70,6 MB → 1,8 MB; warna dan bahan diganti agar cocok dengan lab gelap). Salinan diunduh dari repositori GitHub BiologySimulation/BiologySimulation.",
+    "dipakaiDi": [
+      "sel.html"
+    ]
+  },
+  {
+    "kategori": "model3d",
+    "judul": "Plant Cell | Biology",
+    "pembuat": "Oliver (okchs)",
+    "lisensi": "CC BY 4.0",
+    "url": "https://sketchfab.com/3d-models/plant-cell-biology-0640c7a14f41400fbdac382c7de1d776",
+    "catatan": "Dikompresi & material dimodifikasi (Draco, 8,7 MB → 0,76 MB; warna dan bahan diganti; sitoskeleton dan lisosom tidak ditampilkan).",
     "dipakaiDi": [
       "sel.html"
     ]

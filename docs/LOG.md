@@ -221,3 +221,16 @@ Catatan harian untuk laporan (BAB IV Kendala, BAB VI Evaluasi).
 - Detail sentriol kecil dan tidak di tengah: potongan mesh masih menyimpan semua titik dan ada bintik anotasi kecil → titik dipadatkan, bintik disembunyikan.
 **Diuji:** semua 11 organel sel hewan bisa disorot (uji sapuan pointer), glow/redup jalan, layar detail jalan, 1440 px dan 390 px, tidak ada error console, `npm run build` lulus. FPS 144 di PC Howard (RTX 5060 Ti) — **belum diuji di laptop sekolah**.
 **Belum:** sel tumbuhan menunggu `assets-src/plant-cell.glb` dari Howard.
+
+## Selasa, 10 November 2026 — Sel tumbuhan Lab Sel memakai model okchs (CC BY 4.0)
+**Yang dikerjakan:**
+- Howard mengunduh "Plant Cell | Biology" (Oliver/okchs) dari Sketchfab ke `assets-src/plant_cell__biology.glb`. Lisensi CC BY 4.0 tertulis di metadata file.
+- Dikompres Draco: 8,7 MB → 0,76 MB (`public/models/plant-cell.glb`).
+- `animal-model.js` digabung menjadi `glb-cell.js` yang memuat kedua sel. Sel tumbuhan dipetakan lewat nama node (`cell_wall`, `golgi`, …). Sitoskeleton dan lisosom dibuang karena tidak ada di daftar organel sel tumbuhan KONTEN-MATERI. Peroksisom buatan sendiri ditambahkan.
+- RE kasar dan RE halus satu mesh di model ini, jadi keduanya menyorot mesh yang sama (`aliases`); `highlight.js` diubah supaya mesh bersama tetap menyala.
+- Atas permintaan Howard, membran dan sitoplasma kedua sel dibuat padat (tidak tembus pandang) supaya lantai lab tidak terlihat menembus sel.
+- Kredit okchs ditambah; jika model gagal dimuat, console kini menampilkan peringatan.
+**Masalah & solusi:**
+- Sketchfab perlu login, jadi file diunduh oleh Howard sendiri. Salinan tanpa login yang ditemukan (brianj.seely) hanya 3 material, organel tidak terpisah, jadi tidak dipakai.
+- Dinding sel dan membran asli hampir hitam di ruang lab gelap, jadi warnanya diganti hijau zaitun dan hijau muda.
+**Diuji:** semua organel kedua sel bisa disorot (uji sapuan pointer), RE halus menyorot mesh RE, layar detail vakuola jalan, 1440 px dan 390 px, tidak ada error console. FPS di laptop sekolah **belum diuji**.
