@@ -1,6 +1,7 @@
 import { statSync } from 'node:fs';
 import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
+import draco3d from 'draco3dgltf';
 
 const file = process.argv[2];
 if (!file) {
@@ -8,7 +9,9 @@ if (!file) {
   process.exit(1);
 }
 
-const io = new NodeIO().registerExtensions(ALL_EXTENSIONS);
+const io = new NodeIO()
+  .registerExtensions(ALL_EXTENSIONS)
+  .registerDependencies({ 'draco3d.decoder': await draco3d.createDecoderModule() });
 const doc = await io.read(file);
 const root = doc.getRoot();
 

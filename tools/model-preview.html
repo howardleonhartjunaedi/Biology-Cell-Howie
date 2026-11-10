@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pratinjau model · alat dev</title>
+  <style>
+    body { margin: 0; background: #0E1116; color: #D3D9DE; font: 13px/1.5 system-ui, sans-serif; }
+    canvas { display: block; }
+    #panel { position: fixed; top: 8px; left: 8px; max-height: calc(100vh - 16px); overflow: auto; background: #151B22; border: 1px solid #26303A; padding: 8px; }
+    #panel button { display: block; width: 100%; margin: 2px 0; text-align: left; background: none; color: inherit; border: 1px solid #26303A; padding: 4px 8px; cursor: pointer; }
+    #panel button[aria-pressed='true'] { border-color: #FF7A59; color: #FFF4D6; }
+    #log { position: fixed; bottom: 8px; left: 8px; right: 8px; background: #151B22; border: 1px solid #26303A; padding: 8px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <div id="panel"></div>
+  <pre id="log">Klik bagian model untuk melihat material dan koordinatnya.</pre>
+  <script type="module" src="./model-preview.js"></script>
+</body>
+</html>

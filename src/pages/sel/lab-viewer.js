@@ -7,6 +7,7 @@ import { createInfoCard } from '../../core/info-card.js';
 import { disposeScene } from '../landing/scenes/shared.js';
 import { buildAnimalCell, buildPlantCell, organelleMeshes, SHELL_IDS } from './cell-models.js';
 import { buildDetail } from './detail-models.js';
+import { loadAnimalCell } from './animal-model.js';
 import { createLabRoom } from './lab-room.js';
 import { organelleOf } from './organelle-ui.js';
 import { createHighlight } from './highlight.js';
@@ -54,6 +55,23 @@ export function createLabViewer({ onPick, onHover, onSwipe, onPartPick }) {
   const card = createInfoCard({ onDetail: (id) => onPick(id) });
   const pins = createPins(document.getElementById('detail-pins'), (id) => onPartPick(id));
 
+  // Model sel hewan unduhan (montanna) menggantikan model buatan setelah selesai dimuat.
+  // Jika gagal dimuat (misalnya offline), model buatan sendiri tetap dipakai.
+  loadAnimalCell()
+    .then((model) => {
+      if (disposed) return disposeScene(model);
+      const old = cells.hewan;
+      model.visible = old.visible;
+      model.position.copy(old.position);
+      tilt.add(model);
+      tilt.remove(old);
+      disposeScene(old);
+      cells.hewan = model;
+      meshes.hewan = organelleMeshes(model);
+      if (current === 'hewan') highlight.set('hewan', hovered);
+    })
+    .catch(() => {});
+
   const raycaster = new THREE.Raycaster();
   const pointer = new THREE.Vector2();
   const tiltTarget = new THREE.Vector2();
@@ -64,6 +82,7 @@ export function createLabViewer({ onPick, onHover, onSwipe, onPartPick }) {
   let detail = null;
   let dragStart = null;
   let running = true;
+  let disposed = false;
 
   function stageCenterOffset() {
     const id = mode === 'cell' ? 'lab-stage' : 'detail-pins';
@@ -239,6 +258,7 @@ export function createLabViewer({ onPick, onHover, onSwipe, onPartPick }) {
 
   function dispose() {
     running = false;
+    disposed = true;
     window.removeEventListener('pointermove', onPointerMove);
     stage.removeEventListener('pointerdown', onPointerDown);
     window.removeEventListener('pointerup', onPointerUp);

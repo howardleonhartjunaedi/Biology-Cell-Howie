@@ -706,3 +706,26 @@ Lenis tidak dijalankan jika `prefers-reduced-motion: reduce`.
 **Kemungkinan pertanyaan guru & jawabannya:**
 - T: Kenapa semua angka jarak harus token? J: Supaya jarak di seluruh situs mengikuti satu irama 8px dan bisa diubah dari satu file (`tokens.css`).
 - T: Apa itu `aria-busy`? J: Atribut yang memberi tahu pembaca layar bahwa tombol sedang memproses.
+
+## src/pages/sel/animal-model.js
+**Tugas file ini:** memuat model 3D sel hewan buatan montanna (CC BY 4.0) dan menyiapkannya supaya setiap organel bisa disorot dan diklik.
+**Dipakai oleh:** sel.html → main.js → lab-viewer.js
+**Cara kerja (langkah demi langkah):**
+1. `GLTFLoader` membaca `/models/animal-cell.glb`. File ini dikompresi dengan Draco, jadi `DRACOLoader` membukanya memakai file dekoder di `/draco/` (lokal, tanpa internet).
+2. `prepare()` melihat nama material setiap mesh, lalu mencarinya di tabel `ORGANELLE_BY_MATERIAL` untuk tahu organelnya. Id organel ditulis di `mesh.userData.organelle`.
+3. Material asli diganti `labMaterial()`: `MeshPhysicalMaterial` dengan clearcoat 0,5 dan roughness 0,4. Membran dan sitoplasma dibuat tembus pandang.
+4. Satu mesh kuning berisi sentriol dan lisosom sekaligus. `islandIndices()` memecahnya menjadi bagian-bagian yang tidak tersambung. Bagian yang panjang (tabung) menjadi sentriol, yang bulat menjadi lisosom.
+5. Model tidak punya peroksisom, jadi `buildPeroxisomes()` dari `cell-models.js` ditaruh di tiga titik sitoplasma yang kosong (`PEROXISOME_SPOTS`).
+6. `fit()` memusatkan model, mengecilkannya ke ukuran panggung (`TARGET_SIZE`), dan memiringkannya ke arah kamera (`TILT_TOWARD_CAMERA`).
+**Bagian penting:**
+- `ORGANELLE_BY_MATERIAL` — tabel nama material → organel. Isinya dicek dengan melihat setiap material sendiri-sendiri di `tools/model-preview.html` (lihat `docs/ASSETS.md`).
+- `islandIndices()` — memakai cara "union-find": dua titik yang ada di satu segitiga dianggap satu kelompok. Kelompok yang terpisah = benda terpisah.
+- `compact()` — membuat geometri baru yang hanya berisi titik milik bagian itu, supaya kotak batasnya pas (penting untuk layar detail dan kamera terbang).
+- Di `lab-viewer.js`, `loadAnimalCell().then(...)` mengganti sel hewan buatan sendiri dengan model ini setelah selesai dimuat. Jika gagal (misalnya file hilang), model buatan sendiri tetap dipakai.
+**Kemungkinan pertanyaan guru & jawabannya:**
+- T: Kenapa model 70 MB bisa jadi 1,8 MB? J: Draco memadatkan data titik, dan 2.002 ribosom yang bentuknya sama disimpan sekali saja lalu digambar berulang (*instancing*).
+- T: Bagaimana komputer tahu organel mana yang disorot? J: Raycaster menembakkan garis dari kamera melewati posisi kursor. Mesh pertama yang kena dibaca `userData.organelle`-nya.
+- T: Boleh memakai model orang lain? J: Boleh, lisensinya CC BY 4.0: wajib mencantumkan nama pembuat dan menyebut bahwa model dimodifikasi. Itu ada di halaman Rangkuman.
+
+## tools/inspect-materials.mjs, tools/model-preview.html
+**Tugas:** alat bantu pengembang, tidak ikut ke situs. `inspect-materials.mjs` mencetak warna, jumlah segitiga, dan posisi setiap material. `model-preview.html` menampilkan model dengan tombol per material dan mencatat koordinat titik yang diklik (mode `?pick`).

@@ -248,11 +248,16 @@ function sharedOrganelles(cell, random, { radius, nucleusAt }) {
   place(cell, golgi, [1.4, -1.1, -0.2], [0.6, -0.5, 0.9]);
   tag(golgi, 'golgi');
 
-  const peroxisomeMaterials = {
+  cell.add(buildPeroxisomes(random, radius));
+}
+
+// Dipakai juga oleh animal-model.js, karena model sel hewan unduhan tidak punya peroksisom.
+export function buildPeroxisomes(random, radius) {
+  const materials = {
     shell: partMaterial('#D8B4A0', { transparent: true, opacity: 0.55, depthWrite: false }),
     core: partMaterial('#8C5A3C', { roughness: 0.25 }),
   };
-  addTagged(cell, scatter(random, 3, radius, () => peroxisome(peroxisomeMaterials)), 'peroksisom');
+  return tag(scatter(random, 3, radius, () => peroxisome(materials)), 'peroksisom');
 }
 
 export function buildAnimalCell() {

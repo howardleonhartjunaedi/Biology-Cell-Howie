@@ -204,3 +204,20 @@ Catatan harian untuk laporan (BAB IV Kendala, BAB VI Evaluasi).
 - Tombol "Unduh Report Card" kini punya state *loading* ("Menyiapkan gambar…") dan state *error* jika gambar gagal dibuat.
 **Diuji:** Kuis di 1440, 1024, 390 px; Rangkuman di 1024 px; tidak ada scroll horizontal; `npm run build` lulus.
 **Belum:** desain Figma/Claude Design yang disetujui untuk perbandingan per layar belum ada, jadi pembandingan dilakukan terhadap spesifikasi CLAUDE.md §6.
+
+## Selasa, 10 November 2026 — Sel hewan Lab Sel memakai model montanna (CC BY 4.0)
+**Catatan awal:** permintaan menyebut kit "Cell Studio" (model AI dari LearningCell/Tripo, diambil dari media.prettysites.io). Setelah dicek, kit itu tidak ada di proyek ini: tidak ada `assets.json`, tidak ada model sel darah putih/neuron/DNA. Lab Sel sebelumnya memakai model buatan sendiri dengan kode Three.js. Setelah Howard setuju, sel hewan diganti dengan model montanna.
+**Yang dikerjakan:**
+- Unduh `animal_cell.glb` (70,6 MB) ke `assets-src/`; lisensi CC BY 4.0 tertulis di metadata file.
+- Kompres dengan gltf-transform + Draco → `public/models/animal-cell.glb` 1,8 MB. Dekoder Draco disalin ke `public/draco/` (tidak memanggil internet).
+- Alat baru `tools/inspect-materials.mjs` dan `tools/model-preview.html` untuk memetakan 15 material ke 11 organel (tabel di `docs/ASSETS.md`). Mode `?pick` mencatat koordinat titik yang diklik.
+- `src/pages/sel/animal-model.js`: memuat model, mengganti material dengan `MeshPhysicalMaterial` lab, memecah satu mesh kuning menjadi sentriol dan lisosom, menambah peroksisom buatan sendiri (model asli tidak punya).
+- Sorot/klik tetap memakai raycast per mesh organel (menyala + yang lain redup), bukan titik perkiraan. Kartu info muncul di titik yang kena raycast.
+- Kredit: entri montanna dan dekoder Draco ditambah; entri model buatan sendiri diperbarui.
+**Masalah & solusi:**
+- URL unduhan memberi 404: repositori pindah ke `BiologySimulation/BiologySimulation` dengan cabang `master`.
+- Kompresi bawaan menggabungkan organel menjadi 5 mesh + tekstur palet → dimatikan dengan `--join false --palette false --flatten false`.
+- Penampang inti bergaris: material baru tidak mewarisi `side` (dua sisi) dari material asli → diperbaiki.
+- Detail sentriol kecil dan tidak di tengah: potongan mesh masih menyimpan semua titik dan ada bintik anotasi kecil → titik dipadatkan, bintik disembunyikan.
+**Diuji:** semua 11 organel sel hewan bisa disorot (uji sapuan pointer), glow/redup jalan, layar detail jalan, 1440 px dan 390 px, tidak ada error console, `npm run build` lulus. FPS 144 di PC Howard (RTX 5060 Ti) — **belum diuji di laptop sekolah**.
+**Belum:** sel tumbuhan menunggu `assets-src/plant-cell.glb` dari Howard.
