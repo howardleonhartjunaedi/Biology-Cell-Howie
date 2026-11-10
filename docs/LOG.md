@@ -264,3 +264,7 @@ Pada lebar 320 piksel, tombol navigasi, skala Beranda, dan judul Rangkuman melam
 Kanvas Gerbang Sel sekarang menyesuaikan ukuran panggung. Kamera dan deteksi bagian membran memakai ukuran kanvas, lalu kartu informasi dibatasi agar muat di layar. Ketukan pada model membuka kartu yang sama seperti saat kursor menunjuk model.
 
 Chrome menguji enam halaman dalam Mode Tenang di tujuh ukuran dari 320 × 568 sampai 1920 × 946, termasuk ponsel mendatar 667 × 375. Halaman dan menu muat tanpa gulir horizontal. Gerbang Sel juga diuji dengan WebGL aktif dan emulasi ketuk pada empat ukuran. Pergantian orientasi bolak-balik diuji pada Gerbang Sel dan Beranda. Build produksi berhasil. Tangkapan layar Gerbang Sel ada di `docs/laporan/screenshots/viewport-gerbang-390.png` dan `docs/laporan/screenshots/viewport-gerbang-1920.png`. Pengujian perangkat fisik belum dilakukan.
+
+## 10 November 2026 — Hero Beranda diperbarui
+
+Pulau di latar sekarang menyambung dari tepi kiri ke tepi kanan (foto diulang bolak-balik), tidak lagi terpotong. Teks hero ditata ulang: label kecil, judul dengan jarak huruf lebih rapat, slogan, dan kalimat pembuka dari KONTEN §1. Kontras dinaikkan dengan bayangan teks dan elips gelap di belakang judul. Judul, slogan, label, dan kalimat miring mengikuti kursor (maks. 7°, mati di Mode Tenang). Diuji di Playwright pada 1600 × 800 dan 390 × 800 tanpa gulir horizontal dan tanpa error konsol. Tangkapan layar: `docs/laporan/screenshots/fase8-hero-*.png`.

@@ -9,6 +9,10 @@ const MAX_AMPLITUDE = 3.5;
 const CLICK_AMPLITUDE = 5;
 const MAX_LENS_PX = 6;
 const SPEED_FOR_MAX = 900;
+// Kemiringan perspektif mengikuti kursor (mirip kemiringan model di Lab Sel).
+const MAX_TILT_DEG = 7;
+const PERSPECTIVE_PX = 1400;
+const TILT_EASE = 6;
 
 function drawText(canvas, title, tagline, dpr) {
   canvas.width = window.innerWidth * dpr;
@@ -24,6 +28,10 @@ function drawText(canvas, title, tagline, dpr) {
     ctx.font = `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
     ctx.letterSpacing = style.letterSpacing === 'normal' ? '0px' : style.letterSpacing;
     ctx.fillStyle = style.getPropertyValue('--webgl-color') || '#FFF4D6';
+    // Bayangan lembut supaya teks krem tetap kontras di atas langit yang terang.
+    ctx.shadowColor = 'rgba(3, 28, 36, 0.45)';
+    ctx.shadowBlur = parseFloat(style.fontSize) * 0.12;
+    ctx.shadowOffsetY = parseFloat(style.fontSize) * 0.02;
     const shift = parseFloat(ctx.letterSpacing) / 2 || 0;
     ctx.fillText(element.textContent, rect.left + rect.width / 2 + shift, rect.top + window.scrollY + rect.height / 2);
   });
@@ -49,7 +57,14 @@ export function createTitleRipple(title, tagline) {
     uStrength: { value: 1 },
     uOpacity: { value: 1 },
     uRipples: { value: ripples },
+    uTilt: { value: new THREE.Vector2() },
+    uTiltCenter: { value: new THREE.Vector2() },
+    uPerspective: { value: PERSPECTIVE_PX },
   };
+  const tiltTarget = new THREE.Vector2();
+  const tiltLayer = document.querySelector('.hero-meta');
+  const calm = () => document.documentElement.classList.contains('calm')
+    || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const scene = new THREE.Scene();
   const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
@@ -82,6 +97,9 @@ export function createTitleRipple(title, tagline) {
       speed = speed * 0.7 + (moved / seconds) * 0.3;
     }
     lastMove = { x: event.clientX, y: event.clientY, t: now };
+    if (event.pointerType === 'mouse') {
+      tiltTarget.set((event.clientX / window.innerWidth) * 2 - 1, (event.clientY / window.innerHeight) * 2 - 1);
+    }
     uniforms.uMouse.value.set(event.clientX, event.clientY);
 
     if (!lastDrop || Math.hypot(event.clientX - lastDrop.x, event.clientY - lastDrop.y) > DROP_EVERY_PX) {
@@ -101,6 +119,8 @@ export function createTitleRipple(title, tagline) {
     texture.needsUpdate = true;
     uniforms.uTextSize.value.set(window.innerWidth, window.innerHeight);
     uniforms.uViewport.value.set(window.innerWidth, window.innerHeight);
+    const box = title.getBoundingClientRect();
+    uniforms.uTiltCenter.value.set(box.left + box.width / 2, box.top + window.scrollY + box.height);
   }
 
   function update(dt, scrollY, heroProgress, renderer) {
@@ -112,6 +132,18 @@ export function createTitleRipple(title, tagline) {
     uniforms.uScroll.value = scrollY - heroProgress * 120;
     uniforms.uStrength.value = (1 + heroProgress * 3) * settings.rippleScale;
     uniforms.uOpacity.value = 1 - heroProgress;
+
+    const goal = calm() ? 0 : 1;
+    const ease = 1 - Math.exp(-TILT_EASE * dt);
+    const k = Math.sin(THREE.MathUtils.degToRad(MAX_TILT_DEG)) * goal;
+    uniforms.uTilt.value.x += (tiltTarget.x * k - uniforms.uTilt.value.x) * ease;
+    uniforms.uTilt.value.y += (tiltTarget.y * k - uniforms.uTilt.value.y) * ease;
+    if (tiltLayer) {
+      // Teks DOM (label & kalimat) dimiringkan dengan sudut yang sama lewat CSS.
+      const toDeg = MAX_TILT_DEG / Math.max(Math.sin(THREE.MathUtils.degToRad(MAX_TILT_DEG)), 1e-4);
+      tiltLayer.style.setProperty('--tilt-y', `${(uniforms.uTilt.value.x * toDeg).toFixed(2)}deg`);
+      tiltLayer.style.setProperty('--tilt-x', `${(-uniforms.uTilt.value.y * toDeg).toFixed(2)}deg`);
+    }
   }
 
   window.addEventListener('pointermove', onPointerMove, { passive: true });

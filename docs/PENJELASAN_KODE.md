@@ -844,3 +844,13 @@ Kanvas membran berada di dalam `#gate-stage`. `ResizeObserver` mengukur ulang pa
 Kartu informasi bersama untuk Lab Sel dan Gerbang Sel mengukur ukuran kartu dan ruang layar sebelum menentukan posisinya. Kartu bisa muncul di kiri atau kanan titik pilihan. Posisinya dibatasi agar tetap di dalam layar dan di bawah navigasi.
 
 **Pertanyaan guru. Mengapa kamera mengukur kanvas?** Kanvas Gerbang Sel hanya memakai satu bagian dari halaman. Ukuran kanvas menentukan cara model diproyeksikan dan bagian model yang terkena saat pengguna mengetuk.
+
+## Hero Beranda: pulau penuh, tipografi baru, kemiringan kursor — 10 November 2026
+
+**Pulau dari tepi ke tepi.** Di `scenes/island-layers.js` tiap lapisan sekarang punya `tile` (lebar satu potongan foto) dan `span` (lebar total). Shader `island.frag.glsl` mengulang foto sebanyak `span / tile` kali secara bolak-balik: potongan ganjil dicerminkan, jadi tepi kanan foto bertemu tepi kanan cerminnya dan sambungan tidak terlihat patah. Pudar tepi hanya 3% di ujung paling luar, sehingga garis pulau tidak lagi terpotong di tengah layar.
+
+**Teks.** Judul punya label kecil di atas ("Biologi XI · Bab 1 · Kelompok 4") dan kalimat pembuka dari KONTEN §1 di bawah slogan. Jarak huruf judul diturunkan dari 0,25em ke 0,06em supaya "SEL" terbaca sebagai satu kata.
+
+**Kontras.** Judul dan slogan digambar lewat WebGL (`title-ripple.js`), jadi kontrasnya diatur di sana: kanvas teks diberi bayangan lembut, dan shader `title.frag.glsl` menggambar elips gelap transparan di belakang judul sebelum teks. Label dan kalimat DOM memakai `text-shadow`.
+
+**Perspektif mengikuti kursor.** Shader judul menghitung `depth = 1 - dot(jarak dari pusat, uTilt) / perspektif`, lalu membagi posisi dengan `depth`: sisi yang dekat kursor menjauh dan sisi lain mendekat, seperti model di Lab Sel. Label dan kalimat (`.hero-meta`) dimiringkan dengan sudut yang sama lewat variabel CSS `--tilt-x` dan `--tilt-y`. Kemiringan maksimal 7°, dihaluskan tiap frame, hanya untuk mouse, dan dimatikan di Mode Tenang atau saat gerak dikurangi.

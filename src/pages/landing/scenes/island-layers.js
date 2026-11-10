@@ -7,9 +7,11 @@ const PHOTO_ASPECT = 2000 / 1318;
 const HAZE_COLOR = '#B9D3DA';
 
 const LAYERS = [
-  { photo: WAISILIP, crop: [0, 0.33, 1, 0.585], mirror: 1, distance: 180, width: 110, x: 10, haze: 0.6, depth: 0.15 },
-  { photo: KARST, crop: [0.17, 0.4, 1, 0.6], mirror: 0, distance: 125, width: 66, x: 34, haze: 0.3, depth: 0.45 },
-  { photo: WAISILIP, crop: [0, 0.33, 1, 0.585], mirror: 0, distance: 92, width: 68, x: -26, haze: 0.1, depth: 1 },
+// tile = lebar satu potongan foto; span = lebar total lapisan. Foto diulang bolak-balik (cermin)
+// sampai span supaya garis pulau menyambung dari tepi kiri ke tepi kanan layar.
+  { photo: WAISILIP, crop: [0, 0.33, 1, 0.585], mirror: 1, distance: 180, tile: 110, span: 520, x: 10, haze: 0.6, depth: 0.15 },
+  { photo: KARST, crop: [0.17, 0.4, 1, 0.6], mirror: 0, distance: 125, tile: 66, span: 330, x: 34, haze: 0.3, depth: 0.45 },
+  { photo: WAISILIP, crop: [0, 0.33, 1, 0.585], mirror: 0, distance: 92, tile: 68, span: 272, x: -26, haze: 0.1, depth: 1 },
 ];
 
 const VERTEX = `
@@ -37,12 +39,13 @@ export function createIslandLayers(loader) {
   LAYERS.forEach((layer) => {
     const [left, top, right, bottom] = layer.crop;
     const cropAspect = ((right - left) / (bottom - top)) * PHOTO_ASPECT;
-    const height = layer.width / cropAspect;
+    const height = layer.tile / cropAspect;
     const material = new THREE.ShaderMaterial({
       uniforms: {
         uPhoto: { value: texture(layer.photo) },
         uCrop: { value: new THREE.Vector4(left, 1 - top, right, 1 - bottom) },
         uMirror: { value: layer.mirror },
+        uTiles: { value: layer.span / layer.tile },
         uHazeColor: { value: new THREE.Color(HAZE_COLOR) },
         uHaze: { value: layer.haze },
         uOpacity: { value: 1 },
@@ -52,7 +55,7 @@ export function createIslandLayers(loader) {
       transparent: true,
       depthWrite: false,
     });
-    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(layer.width, height), material);
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(layer.span, height), material);
     const base = new THREE.Vector3(layer.x ?? 0, height / 2 - height * 0.04, -layer.distance);
     mesh.position.copy(base);
     mesh.renderOrder = -layer.distance;

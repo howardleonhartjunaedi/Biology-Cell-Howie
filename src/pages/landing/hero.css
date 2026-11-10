@@ -26,8 +26,8 @@
   font-weight: 800;
   font-size: var(--fs-display);
   line-height: 1;
-  letter-spacing: 0.25em;
-  margin-right: -0.25em;
+  letter-spacing: 0.06em;
+  margin-right: -0.06em;
   color: var(--c-cream);
 }
 
@@ -37,9 +37,37 @@
   font-style: italic;
   font-weight: 500;
   font-size: var(--fs-h2);
+  line-height: 1.25;
   color: var(--c-cream);
-  margin: var(--s-2) 0 0;
+  margin: var(--s-1) 0 0;
   max-width: none;
+}
+
+/* Label dan kalimat pembuka: teks DOM biasa, dimiringkan mengikuti kursor (--tilt-x/y dari title-ripple.js). */
+.hero-meta {
+  transform: perspective(1400px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transform-origin: 50% 100%;
+}
+
+.hero-eyebrow {
+  margin: 0 0 var(--s-2);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-aqua);
+  text-shadow: 0 1px 8px rgb(3 28 36 / 0.5);
+}
+
+.hero-lead {
+  margin: var(--s-3) 0 0;
+  max-width: 34ch;
+  font-size: var(--fs-body);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--c-cream);
+  text-shadow: 0 1px 10px rgb(3 28 36 / 0.6);
+  text-wrap: pretty;
 }
 
 .webgl-on .hero-title,
@@ -165,6 +193,7 @@
   pointer-events: none;
   background: linear-gradient(180deg, rgb(4 30 40 / 0.45), rgb(4 30 40 / 0));
 }
+
 
 .nav-over-hero .toggle,
 .nav-over-hero .nav__logo {
