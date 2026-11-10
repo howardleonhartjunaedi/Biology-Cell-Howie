@@ -234,3 +234,18 @@ Catatan harian untuk laporan (BAB IV Kendala, BAB VI Evaluasi).
 - Sketchfab perlu login, jadi file diunduh oleh Howard sendiri. Salinan tanpa login yang ditemukan (brianj.seely) hanya 3 material, organel tidak terpisah, jadi tidak dipakai.
 - Dinding sel dan membran asli hampir hitam di ruang lab gelap, jadi warnanya diganti hijau zaitun dan hijau muda.
 **Diuji:** semua organel kedua sel bisa disorot (uji sapuan pointer), RE halus menyorot mesh RE, layar detail vakuola jalan, 1440 px dan 390 px, tidak ada error console. FPS di laptop sekolah **belum diuji**.
+
+## Selasa, 10 November 2026 — Walkthrough Beranda diganti video scroll-scrub
+**Yang dikerjakan:**
+- Adegan 3D setelah hero (ikan, karang, lamun, sel hewan/tumbuhan primitif, lumpur) dihapus dan diganti walkthrough scroll-scrub gaya AirPods. Hero pulau + judul beriak tetap.
+- Klip diambil dari Pexels (disetujui Howard): Pavel Danilyuk, Adrien JACTA (2 klip), Sunda Manda (Gili, Indonesia), Markus Winkler, dan foto mikroskop Lidija Ostojić. Klip sel hewan dan sel tumbuhan dirender dari model Lab Sel (`tools/render-cell.html`), karena Pexels tidak punya video sel hewan asli.
+- `tools/make-walkthrough.mjs` merakit video 34,5 detik (xfade 1 detik, zoom pelan, grade teal). `tools/make-frames.mjs` memotongnya menjadi 345 frame WebP (17,5 MB) + `src/data/seq.json`.
+- `scroll-sequence.js` + `sequence/` (frames, plane, canvas2d, panels): pin 600%, scrub 0,5, muat bertahap (tiap frame ke-8 dulu), frame terdekat, preloader sampai 25%, shader grain + vignette + riak kursor, cadangan canvas 2D, Mode Tenang 6 gambar diam.
+- Teks panel dari `src/data/landing-beats.json` (KONTEN §1), kolom 1–6 dari grid 12 dengan scrim gradien, reveal masker per baris.
+- Tabel "Dua sel, satu laguna" dan tombol "Lanjut: Lab Sel" kini tampil di atas frame terakhir, bukan layar hitam.
+**Masalah & solusi:**
+- URL unduhan Pexels memberi file 4K besar; untuk 4 klip dipakai versi 1080p dengan nama file yang sama polanya. Total unduhan ±280 MB, disimpan di `assets-src/candidates/` (tidak di-commit).
+- Frame pertama 21,1 MB (kualitas 70) → kualitas 55: 17,5 MB, masih tajam.
+- Masker reveal memotong huruf "TUMBUHAN" → masker akhir dibuat lebih lebar dari kotak teks.
+- Skala "30 cm › … › 20 µm" terpecah dua baris → panel 6 kolom, `nowrap`, jarak lebih kecil di HP.
+**Diuji:** 1440, 1024, 390 px tanpa scroll horizontal; mode gerak dikurangi menampilkan 6 gambar diam; scrub seluruh walkthrough 129 fps, frame terlama 21 ms di PC Howard (RTX 5060 Ti); tidak ada error console; `npm run build` lulus. **Belum diuji di laptop sekolah dan HP asli.**

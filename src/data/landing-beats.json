@@ -1,0 +1,85 @@
+{
+  "_catatan": "Teks dari docs/KONTEN-MATERI.md §1. from/to = titik progres scroll (0–1) saat panel tampil. still = detik video untuk gambar diam di Mode Tenang.",
+  "beats": [
+    {
+      "id": "terumbu",
+      "from": 0.02,
+      "to": 0.24,
+      "still": 7,
+      "label": "Terumbu dan ikan",
+      "blocks": [
+        { "type": "quote", "text": "“Setiap sel berasal dari sel yang sudah ada sebelumnya.”", "by": "Rudolf Virchow, 1858" },
+        { "type": "lead", "text": "Sebagian besar sel berukuran 10–100 µm, terlalu kecil untuk dilihat tanpa mikroskop." },
+        { "type": "scale", "steps": ["30 cm", "1 cm", "1 mm", "20 µm"], "label": "Skala dari ikan sampai sel" }
+      ]
+    },
+    {
+      "id": "sel-hewan",
+      "from": 0.26,
+      "to": 0.4,
+      "still": 13.2,
+      "label": "Sel hewan",
+      "blocks": [
+        { "type": "title", "text": "Sel hewan" },
+        { "type": "lead", "html": "Sel hewan hanya dibatasi <strong>membran plasma</strong>, tanpa dinding sel. Karena itu bentuknya lentur dan tidak tetap." },
+        { "type": "terms", "items": [
+          ["Membran plasma", "Mengatur zat yang keluar dan masuk sel"],
+          ["Nukleus", "Pusat kendali sel, tempat DNA disimpan"],
+          ["Mitokondria", "Tempat respirasi sel yang menghasilkan ATP"],
+          ["RE dan badan Golgi", "Membuat, mengemas, dan mengirim protein"],
+          ["Lisosom", "Mencerna zat di dalam sel"],
+          ["Sentriol", "Membentuk benang spindel saat sel membelah"]
+        ] },
+        { "type": "fact", "html": "Otot ikan yang terus berenang butuh banyak energi, jadi selnya kaya <strong>mitokondria</strong>." },
+        { "type": "note", "text": "Model 3D: ilustrasi, bukan skala sebenarnya." }
+      ]
+    },
+    {
+      "id": "karang",
+      "from": 0.42,
+      "to": 0.52,
+      "still": 16,
+      "label": "Karang",
+      "blocks": [
+        { "type": "poetic", "html": "Karang adalah <strong>hewan</strong>. Di dalam selnya hidup alga kecil yang berfotosintesis dan berbagi makanan dengan karang." }
+      ]
+    },
+    {
+      "id": "lamun",
+      "from": 0.54,
+      "to": 0.65,
+      "still": 21,
+      "label": "Lamun",
+      "blocks": [
+        { "type": "poetic", "html": "Lamun bukan rumput laut. Lamun adalah <strong>tumbuhan berbunga</strong> yang hidup di laut." }
+      ]
+    },
+    {
+      "id": "sel-tumbuhan",
+      "from": 0.67,
+      "to": 0.85,
+      "still": 29.8,
+      "label": "Sel tumbuhan",
+      "blocks": [
+        { "type": "title", "text": "Sel tumbuhan" },
+        { "type": "terms", "items": [
+          ["Dinding sel", "Lapisan kaku dari selulosa yang membuat bentuk sel tetap"],
+          ["Kloroplas", "Tempat fotosintesis"],
+          ["Vakuola besar", "Menyimpan cairan sel dan menjaga tekanan turgor"]
+        ] },
+        { "type": "fact", "text": "Sebagian oksigen di air laguna berasal dari fotosintesis lamun dan alga." },
+        { "type": "note", "text": "Foto mikroskop: contoh sel tumbuhan (daun), bukan sel lamun. Model 3D: ilustrasi, bukan skala sebenarnya." }
+      ]
+    },
+    {
+      "id": "dasar",
+      "from": 0.87,
+      "to": 0.99,
+      "still": 32,
+      "label": "Dasar laguna",
+      "blocks": [
+        { "type": "poetic", "html": "Lumpur ini juga penuh <strong>bakteri</strong>: sel prokariotik yang tidak punya membran inti." }
+      ]
+    }
+  ]
+}

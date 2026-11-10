@@ -263,8 +263,8 @@ main.js -> stage.js -+-> conductor.js   (posisi gulir -> adegan + progres)
 - T: Apa itu FPS? J: Frames per second. 60 FPS = gambar diganti 60 kali per detik, terasa mulus. Di bawah 30 mulai patah-patah.
 
 ## src/data/landing-chapters.json
-**Tugas file ini:** "Naskah" Beranda. Tiap baris berkata: section HTML mana → adegan 3D apa → bagian mana dari adegan itu.
-- `from`/`to` — bagian section (0 = atas, 1 = bawah). Section `sel-tumbuhan` dibagi dua: 0–0,45 lamun, 0,45–1 sel tumbuhan.
+**Tugas file ini:** "Naskah" adegan hero Beranda. Tiap baris berkata: section HTML mana → adegan 3D apa → bagian mana dari adegan itu. Sejak 10 Nov hanya dua baris (permukaan dan menyelam); sisa perjalanan memakai video scroll-scrub (lihat `scroll-sequence.js`).
+- `from`/`to` — bagian section (0 = atas, 1 = bawah).
 - `sceneStart`/`sceneEnd` — progres adegan. Contoh: adegan `surface` dipakai di dua section: permukaan (0–0,35) lalu menyelam (0,35–1).
 - `veilIn`/`veilOut` — warna "tirai" yang menutup layar sebentar saat berganti adegan, supaya pergantian tidak terlihat meloncat.
 **Kemungkinan pertanyaan guru & jawabannya:**
@@ -291,17 +291,13 @@ main.js -> stage.js -+-> conductor.js   (posisi gulir -> adegan + progres)
 3. Dirigen memberi tahu adegan aktif dan progresnya. Adegan dibuat **hanya saat pertama dibutuhkan** (`getScene`) lalu disimpan.
 4. Adegan aktif di-`update` lalu digambar. Hanya adegan aktif yang digambar.
 5. Kalau sedang di section permukaan/menyelam, judul SEL digambar di atasnya.
-6. Opasitas dan warna tirai diatur. `syncDom` menyorot teks yang sesuai.
+6. Opasitas dan warna tirai diatur.
+7. **Setelah hero** (bagian atas `#perjalanan` sudah melewati tengah layar), panggung tidak menggambar adegan 3D lagi, tetapi bidang frame walkthrough dari `sequence/plane.js`. Tirai teal memudar sesuai posisi section, jadi peralihan dari menyelam ke video tidak meloncat. Tetap **satu** renderer WebGL untuk seluruh halaman.
 **Bagian penting:**
 - `visibilitychange` — kalau tab disembunyikan, loop berhenti (hemat baterai). Saat kembali, jalan lagi.
 - `ResizeObserver` — kalau tinggi isi halaman berubah (font selesai dimuat, layar diputar), posisi section diukur ulang.
 - `dispose()` — saat Mode Tenang dinyalakan atau halaman ditinggalkan, semua geometri, material, dan tekstur dibuang dari memori.
 - `try { createRenderer } catch` — kalau browser tidak mendukung WebGL, panggung tidak dibuat dan halaman tetap tampil sebagai teks.
-
-## src/pages/landing/dom-sync.js
-**Tugas file ini:** Menyamakan teks dengan 3D. Saat mitokondria menyala di 3D, kata "Mitokondria" di daftar juga berwarna koral.
-- `activePart(progress, jumlah)` — rumus yang **sama** dipakai oleh adegan 3D dan teks, jadi keduanya tidak mungkin berbeda.
-- Tangga skala 30 cm → 1 cm → 1 mm → 20 µm ikut menyala satu per satu saat section terumbu digulir.
 
 ## src/pages/landing/title-ripple.js + shaders/title.frag.glsl
 **Tugas file ini:** Efek riak air pada judul **SEL** (CLAUDE.md §6.1.1).
@@ -337,31 +333,6 @@ main.js -> stage.js -+-> conductor.js   (posisi gulir -> adegan + progres)
 
 ## scenes/god-rays.js
 Sinar cahaya bawah air: beberapa bidang tipis bertekstur gradasi putih→transparan, dicampur dengan `AdditiveBlending` (warnanya ditambahkan, jadi terlihat bercahaya). Opasitasnya naik-turun pelan.
-
-## scenes/reef.js + fish-school.js + coral-garden.js (adegan 3 dan 5)
-- **Ikan:** satu `InstancedMesh` — satu bentuk ikan digambar puluhan kali dalam **satu** perintah gambar (hemat). Badan = bola yang dipipihkan, ekor = kerucut.
-- Setiap frame, posisi tiap ikan dihitung di lingkaran, dan arah hadapnya mengikuti arah renang.
-- **Ekor bergoyang:** `addSwimWiggle` menyisipkan rumus ke shader bawaan: bagian ekor (`tailWeight`) digeser ke samping dengan gelombang sinus.
-- **Kamera:** mengikuti satu ikan pemimpin dan makin mendekat (seperti zoom ke kulit ikan, lalu masuk ke sel hewan).
-- **Karang (progres 0,6–1):** kamera berpindah ke taman karang: cabang (silinder) bergoyang dan gundukan bertekstur kasar.
-
-## scenes/animal-cell.js + cell-parts.js (adegan 4)
-- **Membran:** bola transparan yang bergoyang seperti jeli (`addWobble` menggeser permukaan dengan perkalian tiga sinus).
-- **Organel:** nukleus + nukleolus, 5 mitokondria (kapsul), RE dan badan Golgi (busur bertumpuk), lisosom (bola kecil), sentriol (dua tabung tegak lurus).
-- **Menyala bergiliran:** `createHighlighter` — organel aktif warnanya penuh dan bercahaya (`emissiveIntensity`), yang lain diredupkan ke 55%. Urutannya sama dengan daftar teks.
-- Di layar lebar, sel digeser ke kanan (`subjectShift`) supaya tidak menutupi teks.
-- Label di halaman: "Ilustrasi, bukan skala sebenarnya."
-
-## scenes/seagrass.js + shaders/caustics.frag.glsl (adegan 6, bagian 1)
-- **Lamun:** ribuan helai tipis dalam satu `InstancedMesh`, bergoyang dengan `addSway`.
-- **Kaustik:** pola cahaya bergelombang di pasir. Shader mengulang rumus sinus/kosinus tiga kali untuk membuat garis-garis terang yang bergerak.
-
-## scenes/plant-cell.js (adegan 6, bagian 2)
-Kotak membulat (`RoundedBoxGeometry`) sebagai dinding sel, membran di dalamnya, vakuola besar di tengah, nukleus terdorong ke pinggir, 16 kloroplas di tepi.
-Yang menyala bergiliran: dinding sel → kloroplas → vakuola, sama dengan urutan daftar teks.
-
-## scenes/mud.js (adegan 7–8)
-Dasar lumpur bergelombang (titik-titik bidang digeser acak), butiran sedimen melayang. Di progres 0,7–1, latar, kabut, dan cahaya memudar ke hitam.
 
 ## Catatan performa (diukur 8 Nov di PC Howard, 1440×900)
 139–144 FPS di semua adegan. **Belum diuji di laptop sekolah**; kalau berat, `quality.js` menurunkan resolusi lalu Mode Tenang.
@@ -648,19 +619,6 @@ Selama mode Pompa, material pompa dibuat tembus pandang (`opacity 0.55`, `depthW
 - `createDepthDust()`: tiga lapis partikel. Lapis jauh kecil dan banyak, lapis dekat besar, buram, dan jarang (seperti bokeh kamera).
   Di shader, `mod(p - uCamera + uBox/2, uBox) - uBox/2` membuat kotak partikel "membungkus" kamera: partikel yang tertinggal di belakang muncul lagi di depan, jadi berapa pun jauhnya kamera bergerak, selalu ada partikel di sekitarnya. Semua dihitung di GPU, tanpa beban JavaScript per partikel.
   Ukuran titik `uSize * 300 / jarak` → makin dekat makin besar. Partikel memudar di tepi kotak (tidak "muncul tiba-tiba") dan terlalu dekat dengan kamera.
-- `createNeighborCells()`: 5–9 sel sederhana tersebar 13–29 satuan dari sel utama (memudar oleh kabut) + satu sel latar depan yang ikut kamera di tepi kanan dan naik seiring scroll.
-- `createTissueWall()`: tiga lapis deretan sel kotak (pola batu bata) di belakang sel tumbuhan, makin jauh makin pudar. Ini juga sesuai materi: sel tumbuhan tersusun rapat dalam jaringan.
-
-## scenes/animal-cell.js dan plant-cell.js
-- Kamera mengorbit: `camera.position = (sin(orbit)·jarak, tinggi, cos(orbit)·jarak)` dengan `orbit` berubah dari kiri ke kanan seiring scroll. Karena kamera berputar mengelilingi sel, latar belakang bergeser berlawanan arah → paralaks.
-- `applySubjectOffset()` memakai `camera.setViewOffset` untuk menampilkan sel di kanan layar (kolom teks di kiri) tanpa memindahkan sel dari titik (0,0,0). Di layar ≤ 900 px offset dimatikan.
-**T: Kenapa tidak cukup memindahkan sel ke kanan seperti sebelumnya?** J: Kalau sel dipindah, orbit kamera tidak lagi mengelilingi sel. Dengan view offset, geometri adegan tetap benar dan hanya "bingkai" kamera yang digeser.
-
-## scenes/seagrass.js
-Lamun latar depan (`foreground`) lebih tinggi dan lebih gelap, ditaruh di jalur kamera sehingga kamera melewatinya. Daun dibuat meruncing (lebar dikali `1 - y·0.75`) dan melengkung (`z = y²·0.12`).
-
-## scenes/mud.js
-`createPebbles()` menaruh kerikil (InstancedMesh) di sepanjang jalur kamera; cahaya `grazing` dari samping rendah memunculkan relief dan bayangan.
 
 ---
 
@@ -732,3 +690,56 @@ Lenis tidak dijalankan jika `prefers-reduced-motion: reduce`.
 
 ## tools/inspect-materials.mjs, tools/model-preview.html
 **Tugas:** alat bantu pengembang, tidak ikut ke situs. `inspect-materials.mjs` mencetak warna, jumlah segitiga, dan posisi setiap material. `model-preview.html` menampilkan model dengan tombol per material dan mencatat koordinat titik yang diklik (mode `?pick`).
+
+---
+
+# WALKTHROUGH SCROLL-SCRUB BERANDA (10 Nov, permintaan Howard)
+
+Adegan 3D setelah hero (ikan, karang, lamun, sel, lumpur buatan kode) diganti video nyata yang "digulir" seperti halaman produk AirPods. Hero pulau + judul SEL beriak tetap memakai Three.js.
+
+## Dari video ke gambar
+1. `tools/make-walkthrough.mjs` merakit video sementara `assets-src/walkthrough.mp4` (34,5 detik) dari 5 klip Pexels, 1 foto mikroskop, dan 2 render sel Lab Sel (`tools/render-cell.html`). ffmpeg menyamakan ukuran (1280×720), menambah transisi `xfade` 1 detik, zoom pelan pada foto, dan grade warna teal yang sama untuk semua klip. Kalau Howard punya hasil edit DaVinci sendiri, cukup taruh di `assets-src/walkthrough.mp4`.
+2. `tools/make-frames.mjs` memotong video menjadi 10 gambar per detik → `public/seq/f_0001.webp` … `f_0345.webp` (WebP kualitas 55, total 17,5 MB), lalu menulis jumlah frame ke `src/data/seq.json`.
+
+## src/pages/landing/scroll-sequence.js
+**Tugas file ini:** menghubungkan posisi scroll dengan nomor frame dan panel teks.
+**Cara kerja (langkah demi langkah):**
+1. Section `#perjalanan` di-**pin** oleh ScrollTrigger: section diam di layar selama pengguna menggulir sejauh 600% tinggi layar (`end: '+=600%'`).
+2. Timeline GSAP dengan `scrub: 0.5` mengubah `state.progress` dari 0 ke 1 sepanjang jarak itu. `scrub: 0.5` artinya progres mengejar scroll dengan jeda setengah detik, supaya terasa halus.
+3. **progress → frame:** `nomor = 1 + round(progress × (jumlah frame − 1))`. Progres 0 = frame 1, progres 1 = frame 345.
+4. Panel teks dari `landing-beats.json` muncul dan hilang di titik progres `from`/`to`. Setiap baris dibuka dengan masker (`clip-path: inset(...)`) sambil naik sedikit (`yPercent`).
+5. Mode Tenang / `prefers-reduced-motion`: tidak ada pin dan tidak ada animasi. `buildStatic()` menampilkan 6 gambar diam (detik `still` tiap panel) berurutan bersama teksnya.
+**Kemungkinan pertanyaan guru & jawabannya:**
+- T: Kenapa tidak memutar `<video>` saja? J: Video yang dilompati waktunya (`currentTime`) sering patah-patah dan tidak bisa mundur dengan halus. Gambar satu per satu bisa langsung ditampilkan di posisi mana pun, maju atau mundur.
+- T: Apa itu pin? J: Section ditahan di layar seolah menempel, sementara scroll tetap berjalan; scroll itu dipakai untuk memajukan video.
+
+## src/pages/landing/sequence/frames.js
+**Tugas file ini:** memuat gambar frame secara bertahap.
+- **Urutan muat:** setiap frame ke-8 dulu (1, 9, 17, …), lalu sisanya. Jadi seluruh perjalanan cepat tersedia dalam versi "kasar", lalu celahnya diisi.
+- **Frame terdekat:** `imageAt(progress)` mencari frame yang diminta; kalau belum dimuat, dicari ke kiri dan kanan sampai ketemu frame yang sudah ada. Layar tidak pernah kosong.
+- **Siap 25%:** preloader halaman menunggu sampai 25% frame dimuat (`READY_SHARE`), sisanya dimuat di latar belakang sambil pengguna membaca hero.
+- **HP:** di layar < 768 px hanya setiap frame ke-2 yang dimuat, supaya memori dan kuota lebih hemat.
+
+## src/pages/landing/sequence/plane.js + shaders/sequence.vert.glsl + sequence.frag.glsl
+**Tugas file ini:** menggambar frame di WebGL dengan efek halus.
+- Satu bidang 2×2 yang menutupi layar (kamera ortografis). Tekstur Three.js-nya **diganti gambarnya** setiap frame berubah: `texture.image = gambar; texture.needsUpdate = true` → gambar diunggah ulang ke GPU.
+- `uCoverScale` meniru CSS `object-fit: cover`: kalau layar lebih lebar dari video, bagian atas-bawah video dipotong; kalau lebih sempit, kiri-kanan dipotong. Gambar tidak pernah gepeng.
+- **Riak kursor:** `sin(jarak × 42 − waktu × 3,5) × e^(−jarak × 7)` menggeser koordinat tekstur sedikit di sekitar kursor. Kekuatannya (`uRipple`) naik saat kursor bergerak dan meluruh lagi.
+- **Vignette:** tepi layar digelapkan sedikit. **Grain:** bintik acak kecil yang berubah tiap frame, seperti film.
+**T: Kenapa tekstur memakai `NoColorSpace`?** J: Gambar WebP sudah dalam sRGB dan shader kita tidak mengubah warna, jadi warna dikirim apa adanya ke layar.
+
+## src/pages/landing/sequence/canvas2d.js
+Cadangan kalau WebGL tidak bisa dibuat: `drawImage` ke `<canvas>` biasa. Potongan sumber (`sx, sy, width, height`) dihitung manual supaya hasilnya seperti `object-fit: cover`.
+
+## src/pages/landing/sequence/panels.js + src/data/landing-beats.json
+`buildBeat()` membuat `<article>` dari data JSON. Setiap blok (`title`, `lead`, `quote`, `scale`, `terms`, `fact`, `note`, `poetic`) punya fungsi pembuatnya sendiri di objek `BUILDERS`. Isi teks diambil dari KONTEN-MATERI §1, termasuk skala satu baris "30 cm › 1 cm › 1 mm › 20 µm".
+
+## src/pages/landing/main.js (pembaruan)
+- Preloader menunggu **dua** hal: tekstur hero (`sel:surface-ready`) dan 25% frame. `reportLoading()` menggabungkan keduanya menjadi satu persentase.
+- Kalau WebGL gagal dibuat, walkthrough dibuat ulang dengan canvas 2D.
+- Saat Mode Tenang dinyalakan/dimatikan, panggung dan walkthrough dibuang lalu dibuat ulang dalam mode yang sesuai.
+
+## Kejujuran materi
+- Klip sel hewan dan sel tumbuhan adalah **render model 3D Lab Sel** (montanna dan okchs), bukan video mikroskop. Pexels tidak punya video sel hewan asli yang jelas; video "sel" di sana kebanyakan animasi abstrak.
+- Foto mikroskop (Lidija Ostojić) adalah sel daun yang memiliki stomata, **bukan sel lamun**, dan diberi keterangan begitu di panel.
+- Rekaman dasar laut menunjukkan pasir, sedangkan teks KONTEN menyebut "lumpur".

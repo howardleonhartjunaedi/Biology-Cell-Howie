@@ -34,54 +34,24 @@
   max-width: 560px;
 }
 
-.webgl-on .scene .scale-steps {
-  max-width: none;
-}
-
-.webgl-on .scene:not(.scene--surface):not(.scene--dark) {
+.webgl-on .scene--dive {
   background: linear-gradient(90deg, rgb(3 22 28 / 0.86) 0%, rgb(3 22 28 / 0.62) 40%, rgb(3 22 28 / 0) 64%);
 }
 
 @media (max-width: 900px) {
-  .webgl-on .scene:not(.scene--surface):not(.scene--dark) {
+  .webgl-on .scene--dive {
     background: rgb(3 22 28 / 0.6);
   }
 }
 
-
-.webgl-on .scene--mud .table-wrap,
-.webgl-on .fact {
-  background: rgb(6 20 24 / 0.72);
-  border-radius: var(--radius);
-}
-
-.webgl-on .scene--mud .table-wrap {
+.scene--summary .table-wrap {
   max-width: 640px;
-}
-
-.term-list dt,
-.scale-steps li {
-  transition-property: color;
-  transition-duration: var(--dur-base);
-  transition-timing-function: var(--ease-out);
-}
-
-.webgl-on .term-list dt.is-active {
-  color: var(--c-coral);
-}
-
-.webgl-on .scale-steps li {
-  color: color-mix(in srgb, var(--c-cream) 45%, transparent);
-}
-
-.webgl-on .scale-steps li.is-active {
-  color: var(--c-cream);
 }
 
 
 .landing .footer-next {
-  background: #000;
-  border-top-color: #000;
+  background: var(--c-deep);
+  border-top-color: var(--c-deep);
 }
 
 .scene {
@@ -114,20 +84,12 @@
 }
 
 .scene--dive { --scene-bg: var(--c-deep); }
-.scene--reef { --scene-bg: #05333F; }
-.scene--animal { --scene-bg: #042B35; }
-.scene--coral { --scene-bg: #04252D; }
-.scene--seagrass { --scene-bg: #0A2A24; }
-.scene--mud { --scene-bg: #17191A; }
-.scene--dark { --scene-bg: #000; }
+.scene--summary { --scene-bg: #04252D; }
+.scene--end { --scene-bg: #04252D; }
 
-.scene--mud {
-  --c-muted: #8E9AA3;
-}
-
-.scene--mud .table th,
-.scene--mud .table td {
-  border-bottom-color: #2B3033;
+.scene--summary .table th,
+.scene--summary .table td {
+  border-bottom-color: rgb(184 241 236 / 0.16);
 }
 
 .scene__wrap--end {
@@ -145,7 +107,7 @@
   margin-top: var(--s-3);
 }
 
-.scene--dark .button {
+.scene--end .button {
   font-size: var(--fs-body);
   padding: var(--s-2) var(--s-4);
 }

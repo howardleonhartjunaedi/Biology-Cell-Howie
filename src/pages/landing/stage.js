@@ -3,22 +3,24 @@ import { createRenderer, applyTier, resizeRenderer } from '../../core/renderer.j
 import { createQualityMonitor, startTier } from '../../core/quality.js';
 import { createConductor } from './conductor.js';
 import { createTitleRipple } from './title-ripple.js';
-import { syncDom } from './dom-sync.js';
 import { sceneFactories } from './scenes/index.js';
 import { disposeScene } from './scenes/shared.js';
+import { createSequencePlane } from './sequence/plane.js';
 
 const MAX_DT = 1 / 30;
 const HERO_SECTIONS = ['permukaan', 'menyelam'];
+const SEQUENCE_VEIL = '#04252D';
 
 function reportAssets() {
   const manager = THREE.DefaultLoadingManager;
   manager.onProgress = (url, loaded, total) => {
-    window.dispatchEvent(new CustomEvent('sel:assets-progress', { detail: { ratio: total ? loaded / total : 0 } }));
+    window.dispatchEvent(new CustomEvent('sel:surface-progress', { detail: { ratio: total ? loaded / total : 0 } }));
   };
-  manager.onLoad = () => window.dispatchEvent(new Event('sel:assets-ready'));
+  manager.onLoad = () => window.dispatchEvent(new Event('sel:surface-ready'));
 }
 
-export function createStage() {
+// `sequence` (dari scroll-sequence.js) memberi gambar frame walkthrough untuk progres scroll saat ini.
+export function createStage({ sequence } = {}) {
   const canvas = document.createElement('canvas');
   canvas.className = 'stage-canvas';
   canvas.setAttribute('aria-hidden', 'true');
@@ -32,7 +34,7 @@ export function createStage() {
   } catch {
     canvas.remove();
     veil.remove();
-    window.dispatchEvent(new Event('sel:assets-ready'));
+    window.dispatchEvent(new Event('sel:surface-ready'));
     return null;
   }
 
@@ -43,6 +45,8 @@ export function createStage() {
   const title = createTitleRipple(document.getElementById('judul-sel'), document.querySelector('.hero-tagline'));
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const scenes = new Map();
+  const plane = createSequencePlane();
+  const journey = document.getElementById('perjalanan');
   const timer = new THREE.Timer();
   timer.connect(document);
   let time = 0;
@@ -61,6 +65,7 @@ export function createStage() {
       camera.updateProjectionMatrix();
     });
     conductor.remeasure();
+    plane.resize();
     title.redraw(renderer.getPixelRatio());
   }
 
@@ -72,6 +77,18 @@ export function createStage() {
     const dt = Math.min(rawDt, MAX_DT);
     time += reduceMotion ? 0 : dt;
     quality.tick(dt);
+
+    // Setelah hero: section #perjalanan menutupi layar → gambar frame walkthrough, bukan adegan 3D.
+    const journeyTop = journey.getBoundingClientRect().top;
+    const half = window.innerHeight / 2;
+    if (sequence && journeyTop < half) {
+      plane.setImage(sequence.imageAt());
+      renderer.clear();
+      plane.render(renderer, time, dt);
+      veil.style.opacity = Math.max(0, journeyTop / half).toFixed(3);
+      veil.style.backgroundColor = SEQUENCE_VEIL;
+      return;
+    }
 
     const state = conductor.update(rawDt, reduceMotion);
     const active = getScene(state.scene);
@@ -89,7 +106,6 @@ export function createStage() {
 
     veil.style.opacity = state.veil.amount.toFixed(3);
     veil.style.backgroundColor = state.veil.color;
-    syncDom(conductor.exact());
   }
 
   function setRunning(next) {
@@ -118,6 +134,7 @@ export function createStage() {
       disposeScene(item.scene);
     });
     timer.dispose();
+    plane.dispose();
     title.dispose();
     renderer.dispose();
     canvas.remove();

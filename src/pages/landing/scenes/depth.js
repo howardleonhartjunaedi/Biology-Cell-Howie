@@ -2,7 +2,6 @@
 // Ide utamanya: mata menilai jarak dari PARALAKS (benda dekat bergeser lebih cepat dari benda jauh),
 // dari BENDA YANG MENUTUPI benda lain (oklusi), dan dari BENDA PEMBANDING di kejauhan yang memudar oleh kabut.
 import * as THREE from 'three';
-import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { seededRandom } from './shared.js';
 
 const DUST_VERTEX = `
@@ -98,95 +97,3 @@ export function createDepthDust({ tier = 'medium', color = '#CFF3EE', scale = 1 
   return { group, update };
 }
 
-// Sel-sel tetangga di kejauhan (pembanding ukuran + kabut = perspektif udara) dan satu sel
-// besar di latar depan yang lewat dekat kamera (oklusi). Bentuknya sengaja sederhana dan buram.
-export function createNeighborCells({ color = '#7FD6D0', count = 9, seed = 41 } = {}) {
-  const random = seededRandom(seed);
-  const group = new THREE.Group();
-  const geometry = new THREE.IcosahedronGeometry(1, 5);
-  const material = new THREE.MeshPhysicalMaterial({
-    color,
-    roughness: 0.3,
-    clearcoat: 0.4,
-    transparent: true,
-    opacity: 0.28,
-    depthWrite: false,
-    side: THREE.DoubleSide,
-  });
-  const coreMaterial = new THREE.MeshStandardMaterial({ color: '#2C5F8F', roughness: 0.6, transparent: true, opacity: 0.5 });
-  const coreGeometry = new THREE.SphereGeometry(0.3, 20, 14);
-  const cells = [];
-  for (let i = 0; i < count; i += 1) {
-    const angle = (i / count) * Math.PI * 2 + random() * 0.5;
-    const distance = 13 + random() * 16;
-    const cell = new THREE.Group();
-    const body = new THREE.Mesh(geometry, material);
-    const core = new THREE.Mesh(coreGeometry, coreMaterial);
-    core.position.set((random() - 0.5) * 0.4, (random() - 0.5) * 0.3, 0);
-    cell.add(body, core);
-    const radius = 2.2 + random() * 1.6;
-    cell.scale.set(radius * (1 + random() * 0.2), radius * (0.8 + random() * 0.15), radius);
-    cell.position.set(Math.cos(angle) * distance, (random() - 0.5) * 9, Math.sin(angle) * distance - 6);
-    cell.userData.base = cell.position.clone();
-    cell.userData.phase = random() * 6;
-    group.add(cell);
-    cells.push(cell);
-  }
-
-  // Sel latar depan: besar, dekat kamera, di tepi kanan bawah (tidak menutupi kolom teks di kiri).
-  const front = new THREE.Group();
-  const frontBody = new THREE.Mesh(geometry, material.clone());
-  frontBody.material.opacity = 0.18;
-  front.add(frontBody, new THREE.Mesh(coreGeometry, coreMaterial));
-  front.scale.setScalar(1.7);
-  group.add(front);
-
-  function update(time, camera, progress) {
-    cells.forEach((cell) => {
-      cell.position.y = cell.userData.base.y + Math.sin(time * 0.15 + cell.userData.phase) * 0.4;
-      cell.rotation.y = time * 0.05 + cell.userData.phase;
-    });
-    // Sel depan melintas dari kanan bawah ke atas seiring scroll.
-    const toCamera = new THREE.Vector3().subVectors(camera.position, new THREE.Vector3(0, 0, 0)).normalize();
-    const side = new THREE.Vector3().crossVectors(new THREE.Vector3(0, 1, 0), toCamera).normalize();
-    front.position
-      .copy(camera.position)
-      .addScaledVector(toCamera, -4.5)
-      .addScaledVector(side, 4.4)
-      .add(new THREE.Vector3(0, -3.2 + progress * 5, 0));
-    front.rotation.y = time * 0.1;
-  }
-
-  return { group, update };
-}
-
-// Jaringan tumbuhan di belakang sel: deretan sel kotak seperti batu bata yang menjauh dan memudar.
-export function createTissueWall({ seed = 17 } = {}) {
-  const random = seededRandom(seed);
-  const group = new THREE.Group();
-  const geometry = new RoundedBoxGeometry(6.4, 4.2, 3.6, 3, 0.5);
-  const material = new THREE.MeshPhysicalMaterial({
-    color: '#6E9A55',
-    roughness: 0.5,
-    transparent: true,
-    opacity: 0.11,
-    depthWrite: false,
-    side: THREE.DoubleSide,
-  });
-  const inner = new THREE.MeshStandardMaterial({ color: '#2E6B40', roughness: 0.7, transparent: true, opacity: 0.16, depthWrite: false });
-  const vacuoleGeometry = new RoundedBoxGeometry(3.8, 2.4, 2, 2, 0.6);
-  for (let layer = 0; layer < 3; layer += 1) {
-    const z = -14 - layer * 8;
-    for (let row = -2; row <= 2; row += 1) {
-      const offset = (row + layer) % 2 ? 3.3 : 0;
-      for (let col = -3; col <= 3; col += 1) {
-        const cell = new THREE.Group();
-        cell.add(new THREE.Mesh(geometry, material), new THREE.Mesh(vacuoleGeometry, inner));
-        cell.position.set(col * 6.7 + offset + (random() - 0.5) * 0.4, row * 4.5 + (random() - 0.5) * 0.3, z + (random() - 0.5) * 1.2);
-        cell.rotation.set((random() - 0.5) * 0.05, (random() - 0.5) * 0.1, (random() - 0.5) * 0.04);
-        group.add(cell);
-      }
-    }
-  }
-  return { group };
-}
