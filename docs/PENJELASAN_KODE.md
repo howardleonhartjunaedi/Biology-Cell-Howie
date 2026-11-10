@@ -859,3 +859,7 @@ Kartu informasi bersama untuk Lab Sel dan Gerbang Sel mengukur ukuran kartu dan 
 - `src/pages/landing/title-ripple.js` mengubah posisi mouse menjadi target kemiringan hingga 20° per sumbu. Perubahan sudut tetap bertahap. Saat mouse meninggalkan halaman, sudut kembali ke nol. Label dan kalimat pembuka membaca variabel CSS yang sama dari pembungkus teks. Ketika efek dilepas, misalnya saat Mode Tenang dinyalakan, variabel kemiringan dibersihkan.
 - `src/styles/tokens.css` menyimpan jarak perspektif 1000 px yang dipakai oleh shader dan `src/pages/landing/hero.css`. Jarak yang lebih pendek membuat perubahan ukuran sisi dekat dan sisi jauh terlihat lebih jelas.
 - `src/pages/landing/shaders/title.frag.glsl` memperlebar gradasi gelap yang sudah ada di belakang teks. Opasitas pusat naik dari 42% ke 74% dan warna diambil dari token `--c-lab`. Tepi gradasi tetap memudar ke pemandangan.
+## Transisi Beranda dan kecepatan gulir — 10 November 2026
+
+- `src/pages/landing/landing.css` memindahkan lapisan gelap adegan menyelam ke elemen semu `::before`. Masker gradien membuat lapisan memudar pada bagian atas dan bawah, sehingga batas dengan pemandangan air tidak tampak sebagai garis mendadak. Teks tetap berada di atas lapisan.
+- `src/core/smooth-scroll.js` mengubah `WHEEL_MULTIPLIER` dari 0,9 menjadi 0,55. Putaran roda mouse menghasilkan jarak gulir yang lebih pendek. `LERP` turun dari 0,1 menjadi 0,075 agar gerak menuju posisi baru lebih perlahan. Mode Tenang dan preferensi gerak dikurangi tetap memakai pengaturan gulir sebelumnya.

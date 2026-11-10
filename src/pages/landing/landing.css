@@ -35,11 +35,25 @@
 }
 
 .webgl-on .scene--dive {
+  position: relative;
+  background: transparent;
+}
+
+.webgl-on .scene--dive::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
   background: linear-gradient(90deg, rgb(3 22 28 / 0.86) 0%, rgb(3 22 28 / 0.62) 40%, rgb(3 22 28 / 0) 64%);
+  mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+}
+
+.webgl-on .scene--dive .scene__wrap {
+  position: relative;
 }
 
 @media (max-width: 900px) {
-  .webgl-on .scene--dive {
+  .webgl-on .scene--dive::before {
     background: rgb(3 22 28 / 0.6);
   }
 }

@@ -273,3 +273,8 @@ Pulau di latar sekarang menyambung dari tepi kiri ke tepi kanan (foto diulang bo
 Kemiringan maksimum naik dari 7° ke 20° per sumbu. Perspektif diperkuat dan kedua blok teks pendamping sekarang mengikuti kemiringan judul. Gradasi di belakang teks dibuat lebih gelap dan menjangkau kalimat pembuka agar teks lebih mudah dibaca di atas pemandangan terang.
 
 Build berhasil. Chrome WebGL pada 1280 × 800 mencapai 19,84° di dekat tepi kanan. Kedua blok teks pendamping mengikuti sudut tersebut, kembali ke 0° setelah mouse keluar, dan berhenti miring ketika Mode Tenang diaktifkan. Tampilan diperiksa lewat `docs/laporan/screenshots/hero-tilt-contrast.png`.
+## Selasa, 10 November 2026 — Transisi air dan gulir lebih halus
+
+Lapisan gelap adegan menyelam kini memudar di batas atas dan bawah untuk mengurangi garis mendadak di atas air. Kecepatan gulir roda dan faktor peralihan Lenis dikurangi.
+
+Build berhasil. Chrome WebGL memeriksa transisi pada 1280 × 800 dan menyimpan `docs/laporan/screenshots/transisi-beranda.png`. Masukan roda 400 piksel menghasilkan perpindahan sekitar 220 piksel. Mode Tenang dapat diaktifkan dan tidak ditemukan exception JavaScript.

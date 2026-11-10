@@ -4,8 +4,8 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { isCalmMode } from './calm-mode.js';
 
-const LERP = 0.1;
-const WHEEL_MULTIPLIER = 0.9;
+const LERP = 0.075;
+const WHEEL_MULTIPLIER = 0.55;
 
 gsap.registerPlugin(ScrollTrigger);
 
