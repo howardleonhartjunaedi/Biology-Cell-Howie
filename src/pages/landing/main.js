@@ -30,7 +30,7 @@ window.addEventListener('sel:surface-ready', () => {
   reportLoading();
 });
 
-setupPage();
+setupPage({ footer: false });
 setupSmoothScroll();
 setupWordReveal();
 

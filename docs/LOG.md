@@ -283,3 +283,8 @@ Build berhasil. Chrome WebGL memeriksa transisi pada 1280 × 800 dan menyimpan `
 Lapisan gelap walkthrough memudar pada kedua ujungnya dan latar ringkasan berubah gelap secara bertahap. Warna latar akhir ringkasan disamakan dengan awal penutup. Lenis diperlambat dan pelunakannya ditingkatkan.
 
 Build berhasil. Chrome WebGL pada 1280 × 800 memeriksa transisi menuju ringkasan dan menyimpan `docs/laporan/screenshots/transisi-ringkasan.png`. Masukan roda 400 piksel menghasilkan perpindahan 160 piksel. Mode Tenang dapat diaktifkan dan tidak ditemukan exception JavaScript.
+## Selasa, 10 November 2026 — Latar gelap menyatu di Beranda
+
+Satu gradien menggantikan lapisan terpisah dari bagian menyelam sampai penutup, dan tetap gelap sampai bawah. Footer Lab Sel duplikat di Beranda dihapus; tombol di bagian penutup tetap dipakai untuk lanjut.
+
+Build berhasil. Chrome menguji Beranda pada 1280 × 800 dan 390 × 844, memeriksa tombol Lab Sel, tidak adanya footer duplikat, dan Mode Tenang. Foto layar bagian bawah disimpan sebagai `shadow-bottom-1280.png` dan `shadow-bottom-390.png` di `docs/laporan/screenshots/`.

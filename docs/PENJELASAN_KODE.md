@@ -867,3 +867,8 @@ Kartu informasi bersama untuk Lab Sel dan Gerbang Sel mengukur ukuran kartu dan 
 
 - `src/pages/landing/sequence.css` memakai masker gradien pada lapisan gelap walkthrough agar lapisan itu memudar di batas awal dan akhir. Latar ringkasan memakai gradien yang berawal transparan lalu menjadi gelap secara bertahap. Latar bagian penutup dimulai dengan warna dan opasitas yang sama dengan akhir ringkasan. Warna gelap menggunakan token `--c-lab`.
 - `src/core/smooth-scroll.js` menurunkan `WHEEL_MULTIPLIER` dari 0,55 ke 0,4 agar satu putaran roda menghasilkan jarak lebih pendek. `LERP` turun dari 0,075 ke 0,05 sehingga pergerakan menuju posisi baru lebih halus.
+## Latar gelap Beranda yang menyatu — 10 November 2026
+
+- `index.html` membungkus bagian menyelam, perjalanan, ringkasan, dan penutup dalam `.journey-shade`. `src/pages/landing/landing.css` menempatkan satu lapisan gradien di belakang semua bagian tersebut. Lapisan masuk perlahan di awal dan tetap gelap sampai bagian paling bawah.
+- `src/styles/tokens.css` menyimpan tiga tingkat kegelapan gradien. `src/pages/landing/sequence.css` tidak lagi menambahkan lapisan terpisah pada video, ringkasan, dan penutup.
+- `src/core/page-setup.js` menerima opsi `footer`. `src/pages/landing/main.js` memilih `footer: false` agar Beranda berakhir dengan tombol Lab Sel yang sudah ada. Halaman lain tetap memakai footer secara bawaan.

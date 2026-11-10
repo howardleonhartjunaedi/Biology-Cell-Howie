@@ -15,12 +15,12 @@ import { setupMagnetic } from './magnetic.js';
 import { applyCssSettings } from './settings.js';
 import { setupDebug } from './debug.js';
 
-export function setupPage() {
+export function setupPage({ footer = true } = {}) {
   const pageId = document.body.dataset.page;
   applyCalmMode();
   applyCssSettings();
   renderNav(pageId);
-  renderFooterNext(pageId);
+  if (footer) renderFooterNext(pageId);
   runPreloader().then(() => {
     setupTextReveal();
     setupPageIntro();

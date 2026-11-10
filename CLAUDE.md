@@ -296,6 +296,7 @@ Each page: `<title>`, meta description in Indonesian, Open Graph image, favicon 
 > Content strings: `docs/KONTEN-MATERI.md`. Mockups were approved by Howard in chat; follow these descriptions.
 
 ### 6.1 Page 1 — Landing "SEL" (`index.html`) — cinematic dive into a Raja Ampat–style lagoon
+> **Update 10 Nov 2026:** The existing Lab Sel button in the final scene replaces the duplicate landing footer. Use one continuous dark backdrop behind the journey through the bottom of the final scene.
 > **Update 10 Nov 2026 (Howard):** scenes 3–8 below are replaced by a scroll-scrub video walkthrough (`src/pages/landing/scroll-sequence.js`, frames in `public/seq/`, text in `src/data/landing-beats.json`). Scenes 1–2 (island hero + ripple title + dive) still use Three.js.
 **Concept:** a tropical lagoon where rainforest meets the sea (Raja Ampat). Blue, fresh, morning light.
 One continuous journey downward: above water → dive → fish → **animal cell** → coral → seagrass (lamun) → **plant cell**

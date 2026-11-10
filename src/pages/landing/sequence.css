@@ -18,16 +18,6 @@
   z-index: 0;
 }
 
-/* Scrim: gradien gelap di kiri supaya teks terbaca di atas video. */
-.sequence-live .sequence::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgb(3 22 28 / 0.88) 0%, rgb(3 22 28 / 0.6) 34%, rgb(3 22 28 / 0) 58%);
-  mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
-  pointer-events: none;
-}
-
 .sequence__panels {
   position: relative;
   height: 100%;
@@ -191,15 +181,7 @@
 .sequence-live .scene--end {
   position: relative;
   z-index: 2;
-  background: color-mix(in srgb, var(--c-lab) 72%, transparent);
-}
-
-.sequence-live .scene--summary {
-  background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--c-lab) 72%, transparent) 25%);
-}
-
-.sequence-live .scene--end {
-  background: linear-gradient(180deg, color-mix(in srgb, var(--c-lab) 72%, transparent), color-mix(in srgb, var(--c-lab) 35%, transparent));
+  background: transparent;
 }
 
 .sequence-static .scene--summary,
@@ -208,10 +190,6 @@
 }
 
 @media (max-width: 900px) {
-  .sequence-live .sequence::before {
-    background: linear-gradient(0deg, rgb(3 22 28 / 0.92) 0%, rgb(3 22 28 / 0.7) 45%, rgb(3 22 28 / 0) 75%);
-  }
-
   .beat__scale {
     gap: calc(var(--s-1) / 2);
   }

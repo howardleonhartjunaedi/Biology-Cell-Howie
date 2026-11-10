@@ -44,6 +44,9 @@
   --ease-in: cubic-bezier(0.55, 0, 1, 0.45);
   --hero-perspective: 1000px;
   --hero-scrim-opacity: 0.74;
+  --journey-shade-strong: color-mix(in srgb, var(--c-lab) 86%, transparent);
+  --journey-shade-middle: color-mix(in srgb, var(--c-lab) 68%, transparent);
+  --journey-shade-edge: color-mix(in srgb, var(--c-lab) 28%, transparent);
 
   /* Grid 12 kolom */
   --grid-columns: 12;
