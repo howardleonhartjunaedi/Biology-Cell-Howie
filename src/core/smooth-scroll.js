@@ -17,7 +17,7 @@ function onTick(time) {
 
 function start() {
   if (lenis) return;
-  lenis = new Lenis({ lerp: LERP, wheelMultiplier: WHEEL_MULTIPLIER, smoothWheel: true, anchors: true });
+  lenis = new Lenis({ lerp: LERP, wheelMultiplier: WHEEL_MULTIPLIER, smoothWheel: true, anchors: true, allowNestedScroll: true });
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add(onTick);
   gsap.ticker.lagSmoothing(0);

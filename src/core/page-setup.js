@@ -5,6 +5,7 @@ import '../styles/content.css';
 import '../styles/preloader.css';
 import '../styles/polish.css';
 import { applyCalmMode } from './calm-mode.js';
+import { setupSmoothScroll } from './smooth-scroll.js';
 import { renderNav } from './nav.js';
 import { renderFooterNext } from './footer-next.js';
 import { runPreloader } from './preloader.js';
@@ -18,6 +19,7 @@ import { setupDebug } from './debug.js';
 export function setupPage({ footer = true } = {}) {
   const pageId = document.body.dataset.page;
   applyCalmMode();
+  setupSmoothScroll();
   applyCssSettings();
   renderNav(pageId);
   if (footer) renderFooterNext(pageId);

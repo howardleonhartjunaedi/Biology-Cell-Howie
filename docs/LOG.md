@@ -313,3 +313,8 @@ Build berhasil. Halaman Rangkuman diperiksa di Chrome pada lebar 1280 dan 390 pi
 ## Selasa, 10 November 2026 — Identitas kelompok
 
 Nama ketua diletakkan di baris pertama, mata pelajaran menjadi Biologi & INF (Informatika), dan tahun pelajaran menjadi 2026/2027 sesuai keterangan Howard. Build dan tampilan Rangkuman pada desktop serta ponsel diperiksa.
+## Selasa, 10 November 2026 — Lenis di seluruh halaman
+
+Lenis dimulai dari pengaturan halaman bersama dan gulir di dalam daftar organel tetap didukung. Beranda tidak lagi memulainya secara terpisah.
+
+Chrome menguji roda mouse pada keenam halaman, termasuk daftar organel yang dapat digulir tanpa menggeser Lab Sel. Mode Tenang dan preferensi gerak dikurangi menghentikan Lenis. Build berhasil.

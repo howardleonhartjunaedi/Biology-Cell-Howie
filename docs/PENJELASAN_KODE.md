@@ -891,3 +891,6 @@ Kartu informasi bersama untuk Lab Sel dan Gerbang Sel mengukur ukuran kartu dan 
 ## Identitas anggota — 10 November 2026
 
 `src/data/rangkuman.json` menentukan urutan anggota yang ditampilkan oleh `renderTeam()`. Ketua dipindah ke urutan pertama dan identitas mencantumkan tahun pelajaran 2026/2027 serta mata pelajaran Biologi & INF (Informatika). Sumber identitas di `docs/KONTEN-MATERI.md` diperbarui sesuai keterangan Howard.
+## Lenis pada semua halaman — 10 November 2026
+
+`src/core/page-setup.js` memanggil `setupSmoothScroll()` saat halaman disiapkan. Semua halaman memakai fungsi ini sehingga gulir roda mouse memakai Lenis di seluruh situs. Pemanggilan khusus di `src/pages/landing/main.js` dihapus agar Beranda tidak memulai Lenis dua kali. Opsi `allowNestedScroll` pada `src/core/smooth-scroll.js` menjaga kotak yang bisa digulir sendiri, seperti daftar organel, tetap dapat digunakan. Mode Tenang dan preferensi gerak dikurangi tetap mematikan Lenis.

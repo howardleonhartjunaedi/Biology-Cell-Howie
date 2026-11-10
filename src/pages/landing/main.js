@@ -1,5 +1,4 @@
 import { setupPage } from '../../core/page-setup.js';
-import { setupSmoothScroll } from '../../core/smooth-scroll.js';
 import { isCalmMode } from '../../core/calm-mode.js';
 import { prefersReducedMotion } from '../../core/motion.js';
 import { setupWordReveal } from './word-reveal.js';
@@ -31,7 +30,6 @@ window.addEventListener('sel:surface-ready', () => {
 });
 
 setupPage({ footer: false });
-setupSmoothScroll();
 setupWordReveal();
 
 const hero = document.getElementById('permukaan');
