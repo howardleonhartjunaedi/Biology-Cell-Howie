@@ -872,3 +872,10 @@ Kartu informasi bersama untuk Lab Sel dan Gerbang Sel mengukur ukuran kartu dan 
 - `index.html` membungkus bagian menyelam, perjalanan, ringkasan, dan penutup dalam `.journey-shade`. `src/pages/landing/landing.css` menempatkan satu lapisan gradien di belakang semua bagian tersebut. Lapisan masuk perlahan di awal dan tetap gelap sampai bagian paling bawah.
 - `src/styles/tokens.css` menyimpan tiga tingkat kegelapan gradien. `src/pages/landing/sequence.css` tidak lagi menambahkan lapisan terpisah pada video, ringkasan, dan penutup.
 - `src/core/page-setup.js` menerima opsi `footer`. `src/pages/landing/main.js` memilih `footer: false` agar Beranda berakhir dengan tombol Lab Sel yang sudah ada. Halaman lain tetap memakai footer secara bawaan.
+## Posisi dan pergantian model Lab Sel — 10 November 2026
+
+- `src/pages/sel/lab.css` membatasi tampilan sel utama setinggi layar pada desktop dengan tinggi minimal 600 piksel. Daftar organel bisa digulir di dalam kotaknya. Pada ponsel dan layar desktop yang lebih pendek, halaman tetap bisa digulir agar semua kontrol terjangkau. Footer disembunyikan saat tampilan sel utama terkunci; navigasi di atas tetap dapat dipakai.
+- `src/pages/sel/main.js` mengembalikan posisi halaman ke atas saat pengguna kembali dari detail organel.
+- `src/pages/sel/lab-viewer.js` membiarkan model lama tetap di tempat sambil menurunkan `opacity` materialnya selama 1,5 kali durasi lambat. Model baru masuk seperti sebelumnya. `setCellOpacity()` menyimpan opacity, transparansi, dan pengaturan penulisan kedalaman tiap material lalu mengembalikannya setelah model lama memudar. `finishFade()` juga membersihkan animasi ketika pengguna berganti cepat, membuka detail, atau keluar dari tampilan. Jika model selesai dimuat saat transisi, tingkat opacity diterapkan ke model penggantinya. Preferensi gerak dikurangi tetap berpindah langsung.
+
+**Pertanyaan guru. Mengapa material dikembalikan setelah memudar?** Model yang sama dapat dipilih lagi. Nilai aslinya dipulihkan agar model tampil penuh ketika digunakan kembali.

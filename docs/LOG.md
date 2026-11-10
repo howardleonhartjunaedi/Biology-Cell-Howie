@@ -288,3 +288,10 @@ Build berhasil. Chrome WebGL pada 1280 × 800 memeriksa transisi menuju ringkasa
 Satu gradien menggantikan lapisan terpisah dari bagian menyelam sampai penutup, dan tetap gelap sampai bawah. Footer Lab Sel duplikat di Beranda dihapus; tombol di bagian penutup tetap dipakai untuk lanjut.
 
 Build berhasil. Chrome menguji Beranda pada 1280 × 800 dan 390 × 844, memeriksa tombol Lab Sel, tidak adanya footer duplikat, dan Mode Tenang. Foto layar bagian bawah disimpan sebagai `shadow-bottom-1280.png` dan `shadow-bottom-390.png` di `docs/laporan/screenshots/`.
+## Selasa, 10 November 2026 — Posisi dan pergantian sel
+
+Tampilan sel utama dikunci agar tetap memenuhi layar pada desktop. Daftar organel dapat digulir di dalam panel, sedangkan layar kecil dan halaman detail tetap dapat digulir. Saat kembali dari detail, halaman kembali ke posisi awal.
+
+Ketika pilihan sel berubah, model sebelumnya memudar perlahan sementara model berikutnya masuk. Animasi dibersihkan saat pilihan diubah cepat, detail dibuka, atau viewer dibuang. Jika model selesai dimuat ketika transisi berlangsung, model baru melanjutkan tingkat transparansi yang sedang berjalan.
+
+Build berhasil. Chrome menguji 1440 × 900 dan 1024 × 768 dengan roda mouse, tampilan detail, kembali ke posisi awal, serta gulir ponsel 390 × 844. Pergantian biasa dan berulang diuji dengan WebGL aktif tanpa exception JavaScript. Tangkapan layar ada di `docs/laporan/screenshots/lab-viewport.png` dan `docs/laporan/screenshots/lab-crossfade.png`. Ponsel fisik belum diuji.

@@ -211,6 +211,31 @@
 
 .lab-loader[hidden] { display: none; }
 
+@media (min-width: 901px) and (min-height: 600px) {
+  html:has(.lab-page #layar-sel:not([hidden])) {
+    overflow-y: hidden;
+  }
+
+  .lab-page:has(#layar-sel:not([hidden])) .footer-next {
+    display: none;
+  }
+
+  .lab-view {
+    height: 100dvh;
+    min-height: 0;
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .lab-stage {
+    min-height: 0;
+  }
+
+  .organelle-list {
+    max-height: calc(100dvh - var(--nav-height) - 2 * var(--s-4));
+    overflow-y: auto;
+  }
+}
+
 @media (max-width: 900px) {
   .lab-view {
     grid-template-columns: 1fr;

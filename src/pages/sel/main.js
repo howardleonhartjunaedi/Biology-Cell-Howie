@@ -69,6 +69,7 @@ async function openOrganelle(id) {
 function closeDetail() {
   detailView.hidden = true;
   cellView.hidden = false;
+  window.scrollTo(0, 0);
   viewer?.showCell();
   history.replaceState(null, '', window.location.pathname);
   document.querySelector(`.organelle-button[data-organelle]`)?.focus({ preventScroll: true });

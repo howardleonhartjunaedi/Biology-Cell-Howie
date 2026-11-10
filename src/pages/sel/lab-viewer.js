@@ -51,6 +51,40 @@ export function createLabViewer({ onPick, onHover, onSwipe, onPartPick }) {
     tilt.add(cell);
   });
   const meshes = { hewan: organelleMeshes(cells.hewan), tumbuhan: organelleMeshes(cells.tumbuhan) };
+  const materialStates = new WeakMap();
+  const fade = { opacity: 1 };
+  let outgoing = null;
+  let fadeTween = null;
+
+  function setCellOpacity(cell, opacity) {
+    cell.traverse((object) => {
+      if (!object.isMesh) return;
+      const materials = Array.isArray(object.material) ? object.material : [object.material];
+      materials.forEach((material) => {
+        if (!materialStates.has(material)) {
+          materialStates.set(material, { opacity: material.opacity, transparent: material.transparent, depthWrite: material.depthWrite });
+        }
+        const original = materialStates.get(material);
+        const fading = opacity < 1;
+        material.opacity = original.opacity * opacity;
+        if (material.transparent !== (fading || original.transparent)) {
+          material.transparent = fading || original.transparent;
+          material.needsUpdate = true;
+        }
+        material.depthWrite = fading ? false : original.depthWrite;
+      });
+    });
+  }
+
+  function finishFade() {
+    fadeTween?.kill();
+    fadeTween = null;
+    if (!outgoing) return;
+    outgoing.visible = false;
+    setCellOpacity(outgoing, 1);
+    outgoing = null;
+    fade.opacity = 1;
+  }
   const highlight = createHighlight(meshes);
   const card = createInfoCard({ onDetail: (id) => onPick(id) });
   const pins = createPins(document.getElementById('detail-pins'), (id) => onPartPick(id));
@@ -62,6 +96,14 @@ export function createLabViewer({ onPick, onHover, onSwipe, onPartPick }) {
     const old = cells[cellId];
     model.visible = old.visible;
     model.position.copy(old.position);
+    const wasMoving = gsap.isTweening(old.position);
+    gsap.killTweensOf(old.position);
+    if (old === outgoing) {
+      outgoing = model;
+      setCellOpacity(model, fade.opacity);
+    } else if (wasMoving) {
+      gsap.to(model.position, { x: 0, duration: DURATION.slow, ease: EASE.inOut });
+    }
     tilt.add(model);
     tilt.remove(old);
     disposeScene(old);
@@ -157,19 +199,30 @@ export function createLabViewer({ onPick, onHover, onSwipe, onPartPick }) {
 
   function setCell(id) {
     if (id === current) return;
+    finishFade();
+    Object.values(cells).forEach((cell) => gsap.killTweensOf(cell.position));
     const previous = current ? cells[current] : null;
     const next = cells[id];
     const direction = current && Object.keys(cells).indexOf(id) < Object.keys(cells).indexOf(current) ? -1 : 1;
     current = id;
     card.hide();
     next.visible = true;
+    setCellOpacity(next, 1);
     if (!previous || reduce) {
       if (previous) previous.visible = false;
       next.position.x = 0;
       return;
     }
     gsap.fromTo(next.position, { x: SLIDE_DISTANCE * direction }, { x: 0, duration: DURATION.slow, ease: EASE.inOut });
-    gsap.to(previous.position, { x: -SLIDE_DISTANCE * direction, duration: DURATION.slow, ease: EASE.inOut, onComplete: () => (previous.visible = previous === cells[current]) });
+    outgoing = previous;
+    fade.opacity = 1;
+    fadeTween = gsap.to(fade, {
+      opacity: 0,
+      duration: DURATION.slow * 1.5,
+      ease: EASE.inOut,
+      onUpdate: () => setCellOpacity(outgoing, fade.opacity),
+      onComplete: finishFade,
+    });
   }
 
   function highlightFromList(id) {
@@ -193,6 +246,8 @@ export function createLabViewer({ onPick, onHover, onSwipe, onPartPick }) {
 
   function showDetail(id, partId) {
     mode = 'detail';
+    finishFade();
+    Object.values(cells).forEach((cell) => gsap.killTweensOf(cell.position));
     card.hide();
     Object.values(cells).forEach((cell) => (cell.visible = false));
     if (detail) {
@@ -262,6 +317,8 @@ export function createLabViewer({ onPick, onHover, onSwipe, onPartPick }) {
   function dispose() {
     running = false;
     disposed = true;
+    finishFade();
+    Object.values(cells).forEach((cell) => gsap.killTweensOf(cell.position));
     window.removeEventListener('pointermove', onPointerMove);
     stage.removeEventListener('pointerdown', onPointerDown);
     window.removeEventListener('pointerup', onPointerUp);

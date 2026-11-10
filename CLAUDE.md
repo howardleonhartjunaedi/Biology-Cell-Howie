@@ -329,6 +329,7 @@ ScrollTrigger over a tall pinned section. Text panels are normal HTML positioned
 - Reference look: unseen.co hero text. **Subtle, not extreme.**
 
 ### 6.2 Page 2 — Lab Sel (`sel.html`)
+> **Update 10 Nov 2026:** Keep the main cell view fixed to the viewport on desktop, with the organelle list independently scrollable when needed. Keep small screens and detail content scrollable. During a cell change, fade the outgoing model out slowly while the incoming model enters.
 **Mood:** dark laboratory. Very dark background (`--c-lab`), faint grid, a spotlight cone from above, the cell resting on
 a softly glowing **glass pedestal**, a few dust particles. No full lab 3D room (too heavy).
 
