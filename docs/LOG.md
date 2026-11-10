@@ -295,3 +295,8 @@ Tampilan sel utama dikunci agar tetap memenuhi layar pada desktop. Daftar organe
 Ketika pilihan sel berubah, model sebelumnya memudar perlahan sementara model berikutnya masuk. Animasi dibersihkan saat pilihan diubah cepat, detail dibuka, atau viewer dibuang. Jika model selesai dimuat ketika transisi berlangsung, model baru melanjutkan tingkat transparansi yang sedang berjalan.
 
 Build berhasil. Chrome menguji 1440 × 900 dan 1024 × 768 dengan roda mouse, tampilan detail, kembali ke posisi awal, serta gulir ponsel 390 × 844. Pergantian biasa dan berulang diuji dengan WebGL aktif tanpa exception JavaScript. Tangkapan layar ada di `docs/laporan/screenshots/lab-viewport.png` dan `docs/laporan/screenshots/lab-crossfade.png`. Ponsel fisik belum diuji.
+## Selasa, 10 November 2026 — Fade pada model yang keluar
+
+Menyesuaikan permintaan Howard: model sel lama bergerak ke samping dan memudar perlahan sampai hilang, sedangkan animasi masuk model baru tetap. Gerakan model lama dipersingkat agar fade terlihat sebelum model keluar dari layar.
+
+Build berhasil. Chrome WebGL mencatat 29 pembaruan opacity selama transisi 1,35 detik, dari 0,82 hingga 0,02 pada sampel yang teramati. Pergantian cepat diuji tanpa exception JavaScript.

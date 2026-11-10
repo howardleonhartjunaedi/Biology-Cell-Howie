@@ -879,3 +879,6 @@ Kartu informasi bersama untuk Lab Sel dan Gerbang Sel mengukur ukuran kartu dan 
 - `src/pages/sel/lab-viewer.js` membiarkan model lama tetap di tempat sambil menurunkan `opacity` materialnya selama 1,5 kali durasi lambat. Model baru masuk seperti sebelumnya. `setCellOpacity()` menyimpan opacity, transparansi, dan pengaturan penulisan kedalaman tiap material lalu mengembalikannya setelah model lama memudar. `finishFade()` juga membersihkan animasi ketika pengguna berganti cepat, membuka detail, atau keluar dari tampilan. Jika model selesai dimuat saat transisi, tingkat opacity diterapkan ke model penggantinya. Preferensi gerak dikurangi tetap berpindah langsung.
 
 **Pertanyaan guru. Mengapa material dikembalikan setelah memudar?** Model yang sama dapat dipilih lagi. Nilai aslinya dipulihkan agar model tampil penuh ketika digunakan kembali.
+## Fade model sel yang keluar — 10 November 2026
+
+`src/pages/sel/lab-viewer.js` menggerakkan model lama ke samping dengan jarak lebih pendek sambil menurunkan opacity secara merata selama 1,35 detik. Model lama disembunyikan setelah opacity mencapai nol. Animasi masuk model baru tetap memakai jarak dan durasi sebelumnya. Jika model selesai dimuat di tengah transisi, posisi, sisa gerakan keluar, dan opacity diterapkan ke model pengganti.

@@ -18,6 +18,8 @@ const MAX_PITCH = THREE.MathUtils.degToRad(15);
 const CELL_CAMERA = new THREE.Vector3(0, 0.8, 13);
 const DETAIL_CAMERA = new THREE.Vector3(0, 0.4, 9);
 const SLIDE_DISTANCE = 9;
+const EXIT_SLIDE_DISTANCE = 3.5;
+const EXIT_DURATION_FACTOR = 1.5;
 const SWIPE_MIN_PX = 60;
 const NARROW_ASPECT = 0.8;
 const CELL_LOOK = new THREE.Vector3(0, -0.2, 0);
@@ -55,6 +57,7 @@ export function createLabViewer({ onPick, onHover, onSwipe, onPartPick }) {
   const fade = { opacity: 1 };
   let outgoing = null;
   let fadeTween = null;
+  let exitDestination = 0;
 
   function setCellOpacity(cell, opacity) {
     cell.traverse((object) => {
@@ -80,6 +83,7 @@ export function createLabViewer({ onPick, onHover, onSwipe, onPartPick }) {
     fadeTween?.kill();
     fadeTween = null;
     if (!outgoing) return;
+    gsap.killTweensOf(outgoing.position);
     outgoing.visible = false;
     setCellOpacity(outgoing, 1);
     outgoing = null;
@@ -97,10 +101,15 @@ export function createLabViewer({ onPick, onHover, onSwipe, onPartPick }) {
     model.visible = old.visible;
     model.position.copy(old.position);
     const wasMoving = gsap.isTweening(old.position);
+    const movingTween = gsap.getTweensOf(old.position)[0];
+    const remaining = movingTween ? Math.max(0, movingTween.duration() - movingTween.time()) : 0;
     gsap.killTweensOf(old.position);
     if (old === outgoing) {
       outgoing = model;
       setCellOpacity(model, fade.opacity);
+      if (wasMoving && remaining > 0) {
+        gsap.to(model.position, { x: exitDestination, duration: remaining, ease: EASE.inOut });
+      }
     } else if (wasMoving) {
       gsap.to(model.position, { x: 0, duration: DURATION.slow, ease: EASE.inOut });
     }
@@ -215,11 +224,13 @@ export function createLabViewer({ onPick, onHover, onSwipe, onPartPick }) {
     }
     gsap.fromTo(next.position, { x: SLIDE_DISTANCE * direction }, { x: 0, duration: DURATION.slow, ease: EASE.inOut });
     outgoing = previous;
+    exitDestination = -EXIT_SLIDE_DISTANCE * direction;
     fade.opacity = 1;
+    gsap.to(previous.position, { x: exitDestination, duration: DURATION.slow * EXIT_DURATION_FACTOR, ease: EASE.inOut });
     fadeTween = gsap.to(fade, {
       opacity: 0,
-      duration: DURATION.slow * 1.5,
-      ease: EASE.inOut,
+      duration: DURATION.slow * EXIT_DURATION_FACTOR,
+      ease: 'none',
       onUpdate: () => setCellOpacity(outgoing, fade.opacity),
       onComplete: finishFade,
     });
