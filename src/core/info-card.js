@@ -1,5 +1,4 @@
 const CARD_OFFSET = { x: 72, y: -96 };
-const CARD_WIDTH = 260;
 
 export function createInfoCard({ onDetail } = {}) {
   const layer = document.createElement('div');
@@ -28,15 +27,20 @@ export function createInfoCard({ onDetail } = {}) {
     layer.hidden = false;
     layer.querySelector('.info-card__name').textContent = name;
     layer.querySelector('.info-card__text').textContent = short;
-    const flip = x + CARD_OFFSET.x + CARD_WIDTH > window.innerWidth - 16;
-    const cardX = flip ? x - CARD_OFFSET.x - CARD_WIDTH : x + CARD_OFFSET.x;
-    const cardY = Math.max(80, y + CARD_OFFSET.y);
+    const { clientWidth: width, clientHeight: height } = layer;
+    const { offsetWidth: cardWidth, offsetHeight: cardHeight } = card;
+    const gap = parseFloat(getComputedStyle(card).paddingLeft);
+    const navBottom = document.querySelector('.nav')?.getBoundingClientRect().bottom ?? 0;
+    const flip = x + CARD_OFFSET.x + cardWidth > width - gap;
+    const preferredX = flip ? x - CARD_OFFSET.x - cardWidth : x + CARD_OFFSET.x;
+    const cardX = Math.max(gap, Math.min(preferredX, width - cardWidth - gap));
+    const cardY = Math.max(navBottom, Math.min(y + CARD_OFFSET.y, height - cardHeight - gap));
     card.style.transform = `translate(${cardX}px, ${cardY}px)`;
     pin.setAttribute('cx', x);
     pin.setAttribute('cy', y);
     line.setAttribute('x1', x);
     line.setAttribute('y1', y);
-    line.setAttribute('x2', flip ? cardX + CARD_WIDTH : cardX);
+    line.setAttribute('x2', flip ? cardX + cardWidth : cardX);
     line.setAttribute('y2', cardY + 24);
   }
 

@@ -33,6 +33,6 @@ export function applyTier(renderer, tier) {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, max));
 }
 
-export function resizeRenderer(renderer) {
-  renderer.setSize(window.innerWidth, window.innerHeight, false);
+export function resizeRenderer(renderer, width = window.innerWidth, height = window.innerHeight) {
+  renderer.setSize(width, height, false);
 }

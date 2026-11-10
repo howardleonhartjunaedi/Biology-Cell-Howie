@@ -825,3 +825,22 @@ Cadangan kalau WebGL tidak bisa dibuat: `drawImage` ke `<canvas>` biasa. Potonga
 **Bagian penting:** Nilai warna, ukuran, dan token yang sudah digunakan tidak diubah.
 **Kemungkinan pertanyaan guru & jawabannya:**
 - T: Mengapa hover dibatasi? J: Layar sentuh tidak memiliki gerakan menunjuk seperti mouse. Media query mencegah efek hover tersisa setelah ketukan, sementara klik tetap bekerja.
+## Viewport responsif — 10 November 2026
+
+### src/styles/tokens.css, base.css, dan components.css
+
+Ukuran minimum judul turun menjadi `2rem` melalui token `--fs-h1`. Judul boleh membungkus jika teks yang diperbesar tidak muat. Pada layar selebar 360 piksel atau kurang, navigasi memakai jarak yang lebih rapat agar logo, Menu, Suara, dan Mode Tenang muat. Menu terbuka memakai tinggi layar yang sedang terlihat (`100dvh`) dikurangi tinggi bilah navigasi. Isinya bisa digulir saat ruang vertikal terbatas.
+
+### src/pages/landing/main.js dan sequence.css
+
+Angka skala bisa pindah ke baris berikutnya. Setiap angka tetap bersama satuannya. Jika tinggi layar mencapai `30rem` atau kurang, Beranda menampilkan gambar dan teks dalam urutan yang bisa digulir. Saat orientasi berubah, media query diperiksa ulang dan Beranda menyesuaikan cara menampilkan perjalanan.
+
+### src/pages/gerbang/gerbang.css, membrane-viewer.js, dan src/core/renderer.js
+
+Kanvas membran berada di dalam `#gate-stage`. `ResizeObserver` mengukur ulang panggung ketika ukurannya berubah. Renderer menerima ukuran kanvas, lalu kamera menyesuaikan rasio dan zoom. Saat kursor menunjuk atau jari mengetuk, posisi masukan dihitung dari tepi kanvas supaya bagian membran yang diperiksa sesuai dengan posisi di layar. Petunjuk penggunaan pada `src/data/membran.json` menyebut kedua cara tersebut.
+
+### src/core/info-card.js dan src/styles/components.css
+
+Kartu informasi bersama untuk Lab Sel dan Gerbang Sel mengukur ukuran kartu dan ruang layar sebelum menentukan posisinya. Kartu bisa muncul di kiri atau kanan titik pilihan. Posisinya dibatasi agar tetap di dalam layar dan di bawah navigasi.
+
+**Pertanyaan guru. Mengapa kamera mengukur kanvas?** Kanvas Gerbang Sel hanya memakai satu bagian dari halaman. Ukuran kanvas menentukan cara model diproyeksikan dan bagian model yang terkena saat pengguna mengetuk.

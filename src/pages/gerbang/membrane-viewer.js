@@ -16,12 +16,15 @@ const TARGET = new THREE.Vector3(0.4, -0.3, 0);
 const EXPLODE = 0.45;
 const MAX_TILT = 0.12;
 const STEP_SECONDS = 1;
+const MAX_ZOOM = 2;
+const WIDTH_FIT = 0.82;
 
 export function createMembraneViewer({ pump: pumpState }) {
+  const stage = document.getElementById('gate-stage');
   const canvas = document.createElement('canvas');
   canvas.className = 'gate-canvas';
   canvas.setAttribute('aria-hidden', 'true');
-  document.body.prepend(canvas);
+  stage.prepend(canvas);
   let renderer;
   try {
     renderer = createRenderer(canvas, startTier());
@@ -51,22 +54,19 @@ export function createMembraneViewer({ pump: pumpState }) {
   let active = null;
   let playing = true;
   let speed = 1;
-  let hovered = null;
   let visible = true;
   let running = true;
 
   function resize() {
-    resizeRenderer(renderer);
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+    const { clientWidth: width, clientHeight: height } = canvas;
+    if (!width || !height) return;
+    resizeRenderer(renderer, width, height);
     camera.aspect = width / height;
-    const rect = document.getElementById('gate-stage').getBoundingClientRect();
-    const dx = rect.left + rect.width / 2 - width / 2;
-    const dy = rect.top + rect.height / 2 - height / 2;
-    camera.setViewOffset(width, height, -dx, -dy, width, height);
-    camera.position.copy(CAMERA).multiplyScalar(Math.max(1, 0.9 / camera.aspect));
+    camera.zoom = Math.min(MAX_ZOOM, WIDTH_FIT * camera.aspect);
+    camera.position.copy(CAMERA);
     camera.lookAt(TARGET);
     camera.updateProjectionMatrix();
+    card.hide();
   }
 
   function setLayers(apart) {
@@ -101,33 +101,45 @@ export function createMembraneViewer({ pump: pumpState }) {
     else setSides('LUAR SEL', 'DALAM SEL');
   }
 
-  function onPointerMove(event) {
-    pointer.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
-    tilt.set(pointer.x, pointer.y);
-    if (event.target.closest?.('.gate-panel, .gate-chips, .nav')) {
-      if (hovered) card.hide();
-      hovered = null;
-      return;
-    }
+  function pickPart(event) {
+    const { left, top, width, height } = canvas.getBoundingClientRect();
+    pointer.set(((event.clientX - left) / width) * 2 - 1, 1 - ((event.clientY - top) / height) * 2);
+    if (event.pointerType === 'mouse') tilt.copy(pointer);
     raycaster.setFromCamera(pointer, camera);
     const hit = raycaster.intersectObject(parts.membrane, true).find((item) => item.object.userData.part);
     const id = hit?.object.userData.part ?? null;
-    hovered = id;
     if (!id) return card.hide();
     const info = data.parts[id];
     const screen = hit.point.clone().project(camera);
-    card.show(id, { name: info.name, short: `${info.deskripsi} ${info.fungsi}` }, ((screen.x + 1) / 2) * window.innerWidth, ((1 - screen.y) / 2) * window.innerHeight);
+    card.show(id, { name: info.name, short: `${info.deskripsi} ${info.fungsi}` }, left + ((screen.x + 1) / 2) * width, top + ((1 - screen.y) / 2) * height);
   }
 
-  window.addEventListener('pointermove', onPointerMove, { passive: true });
-  window.addEventListener('resize', resize);
+  function onPointerMove(event) {
+    if (event.pointerType === 'mouse') pickPart(event);
+  }
 
+  function onPointerUp(event) {
+    if (event.pointerType !== 'mouse') pickPart(event);
+  }
+
+  canvas.addEventListener('pointermove', onPointerMove);
+  canvas.addEventListener('pointerup', onPointerUp);
+  canvas.addEventListener('pointerleave', (event) => {
+    if (event.pointerType === 'mouse') {
+      tilt.set(0, 0);
+      card.hide();
+    }
+  });
+  window.addEventListener('scroll', card.hide, { passive: true });
+
+  const resizeObserver = new ResizeObserver(resize);
+  resizeObserver.observe(stage);
   const observer = new IntersectionObserver(([entry]) => {
     visible = entry.isIntersecting;
     canvas.style.visibility = visible ? 'visible' : 'hidden';
     if (!visible) card.hide();
   });
-  observer.observe(document.querySelector('.gate-view'));
+  observer.observe(stage);
 
   const timer = new THREE.Timer();
   timer.connect(document);
@@ -163,8 +175,8 @@ export function createMembraneViewer({ pump: pumpState }) {
     dispose: () => {
       running = false;
       observer.disconnect();
-      window.removeEventListener('pointermove', onPointerMove);
-      window.removeEventListener('resize', resize);
+      resizeObserver.disconnect();
+      window.removeEventListener('scroll', card.hide);
       active?.dispose?.();
       card.dispose();
       disposeScene(scene);

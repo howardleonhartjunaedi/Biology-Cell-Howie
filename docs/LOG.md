@@ -257,3 +257,10 @@ Catatan harian untuk laporan (BAB IV Kendala, BAB VI Evaluasi).
 **Diuji:** Audit parser PostCSS atas semua CSS dalam src: 16 blok hover, semuanya terlindungi. Chrome headless pada enam halaman di lebar 1440, 1024, dan 390 px: tidak ada overflow horizontal atau exception JavaScript. Pemaksaan pseudo-state hover pada chip kuis mengubah warna border pada desktop, tetapi tidak pada emulasi sentuh 390 px. State pin terpilih dan organel aktif tetap memakai warna coral pada ketiga lebar. Build produksi berhasil dengan peringatan ukuran chunk di atas 500 kB. Tangkapan layar kuis dalam Mode Tenang: docs/laporan/screenshots/hover-kuis-{1440,1024,390}.png.
 **Batas pengujian:** Emulasi sentuh desktop, belum diuji di HP asli.
 **Langkah berikutnya:** Uji ketukan di HP asli sebelum presentasi; temuan review lain di AGENTS.md bagian 8 masih terpisah dari perbaikan ini.
+## Selasa, 10 November 2026 — Viewport ponsel, tablet, dan desktop
+
+Pada lebar 320 piksel, tombol navigasi, skala Beranda, dan judul Rangkuman melampaui lebar halaman. Jarak navigasi dirapatkan, menu dibuat bisa digulir pada layar pendek, dan skala serta judul bisa membungkus. Beranda memakai rangkaian gambar dan teks yang bisa digulir jika layar terlalu pendek untuk panel animasi yang dipasang tetap.
+
+Kanvas Gerbang Sel sekarang menyesuaikan ukuran panggung. Kamera dan deteksi bagian membran memakai ukuran kanvas, lalu kartu informasi dibatasi agar muat di layar. Ketukan pada model membuka kartu yang sama seperti saat kursor menunjuk model.
+
+Chrome menguji enam halaman dalam Mode Tenang di tujuh ukuran dari 320 × 568 sampai 1920 × 946, termasuk ponsel mendatar 667 × 375. Halaman dan menu muat tanpa gulir horizontal. Gerbang Sel juga diuji dengan WebGL aktif dan emulasi ketuk pada empat ukuran. Pergantian orientasi bolak-balik diuji pada Gerbang Sel dan Beranda. Build produksi berhasil. Tangkapan layar Gerbang Sel ada di `docs/laporan/screenshots/viewport-gerbang-390.png` dan `docs/laporan/screenshots/viewport-gerbang-1920.png`. Pengujian perangkat fisik belum dilakukan.

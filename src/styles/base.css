@@ -66,6 +66,7 @@ p {
   text-transform: uppercase;
   letter-spacing: 0.15em;
   font-size: var(--fs-h1);
+  overflow-wrap: anywhere;
 }
 
 .tagline {

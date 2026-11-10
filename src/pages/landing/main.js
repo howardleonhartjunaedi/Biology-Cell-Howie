@@ -10,6 +10,7 @@ import './hero.css';
 import './sequence.css';
 
 const HERO_PASSED_AT = 0.65;
+const shortViewport = window.matchMedia('(max-height: 30rem)');
 
 // Preloader menunggu dua hal: tekstur adegan hero (permukaan) dan 25% frame walkthrough.
 const loading = { surface: 0, frames: 0, surfaceDone: false, framesDone: false };
@@ -63,7 +64,7 @@ function makeSequence(calm, useCanvas) {
 }
 
 function start() {
-  const calm = isCalmMode() || prefersReducedMotion();
+  const calm = isCalmMode() || prefersReducedMotion() || shortViewport.matches;
   // Tanpa WebGL (Mode Tenang) adegan hero tidak dimuat, jadi bagiannya dianggap selesai.
   if (calm) loading.surfaceDone = true;
   sequence = makeSequence(calm, false);
@@ -86,9 +87,12 @@ function stop() {
   document.documentElement.classList.remove('webgl-on');
 }
 
-window.addEventListener('calmmodechange', () => {
+function restart() {
   stop();
   start();
-});
+}
+
+window.addEventListener('calmmodechange', restart);
+shortViewport.addEventListener('change', restart);
 window.addEventListener('pagehide', stop);
 start();

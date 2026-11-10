@@ -53,19 +53,24 @@
 
 .gate-stage {
   grid-column: 1;
-  min-height: 460px;
+  block-size: clamp(calc(2 * var(--s-16)), 55svh, calc(4 * var(--s-16)));
 }
 
 .gate-canvas {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
+  position: absolute;
+  inset: var(--s-6) 0;
+  width: 100%;
+  height: calc(100% - 2 * var(--s-6));
   z-index: 0;
+}
+
+.gate-page .info-card {
+  pointer-events: none;
 }
 
 .gate-side {
   position: absolute;
+  z-index: 1;
   left: 0;
   font-size: var(--fs-caption);
   font-weight: 600;
@@ -74,7 +79,7 @@
 }
 
 .gate-side--out { top: var(--s-2); }
-.gate-side--in { bottom: var(--s-6); }
+.gate-side--in { bottom: var(--s-3); }
 
 .gate-illustration {
   position: absolute;
@@ -204,8 +209,12 @@
 
 @media (max-width: 900px) {
   .gate-view {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto minmax(360px, 55svh) auto;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto;
+  }
+
+  .gate-stage {
+    block-size: clamp(calc(2 * var(--s-16)), 75vw, 50svh);
   }
 
   .gate-panel {
