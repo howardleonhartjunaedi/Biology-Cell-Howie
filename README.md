@@ -2,7 +2,7 @@
 
 Website edukasi interaktif tentang **sel** untuk mata pelajaran Biologi kelas XI. Pengunjung diajak menyelam ke sebuah laguna tropis, lalu "mengecil" dari ukuran ikan sampai ukuran sel. Setelah itu, mereka menjelajahi organel, membran sel, osmosis, kuis dan rangkuman.
 
-**🔗 Kunjungi website: [biologicchowie.netlify.app](https://biologicchowie.netlify.app)**
+**🔗 Kunjungi website: [biologycellhowie.netlify.app](biologycellhowie.netlify.app)**
 
 Proyek akhir Pengembangan Web, Kelompok 4, kelas XI-A5, Kolese Kanisius Jakarta.
 
