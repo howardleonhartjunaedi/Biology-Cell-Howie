@@ -2,7 +2,7 @@
   {
     "kategori": "materi",
     "judul": "Slide BAB 1 SEL, Biologi XI, TP 25/26",
-    "pembuat": "Guru Biologi SMA Kristen 1 BPK Penabur",
+    "pembuat": "Guru Biologi SMAK 1 BPK Penabur",
     "lisensi": "Materi kelas",
     "url": "",
     "catatan": "",
@@ -149,7 +149,7 @@
     "model": "Opus 5.5, Fable 5.2",
     "lisensi": "",
     "url": "https://claude.ai",
-    "catatan": "Digunakan sebagai asisten coding. Seluruh materi telah diperiksa oleh kelompok berdasarkan slide guru dan sumber yang dicantumkan.",
+    "catatan": "Claude digunakan sebagai asisten dalam proses pengembangan website, mulai dari brainstorming awal, penyusunan konsep desain, hingga pemrograman. Dalam tahap pengembangan, Claude membantu proses debugging, perbaikan bug, serta koreksi kesalahan penulisan. Claude juga dimanfaatkan untuk memperbaiki masalah tampilan dan menyempurnakan desain agar website terlihat lebih rapi dan profesional. Selain itu, Claude membantu proses deployment website melalui GitHub dan Netlify. Seluruh materi yang dimuat telah diperiksa kembali oleh kelompok berdasarkan slide dari guru dan sumber-sumber yang dicantumkan.",
     "dipakaiDi": [
       "semua"
     ]
@@ -158,10 +158,10 @@
     "kategori": "ai",
     "judul": "Codex (OpenAI)",
     "pembuat": "OpenAI",
-    "model": "Astra 6, Sol 6.1, Terra",
+    "model": "Astra 6, Sol 6.1, Terra 6.1",
     "lisensi": "",
     "url": "https://openai.com/codex/",
-    "catatan": "Digunakan sebagai asisten coding.",
+    "catatan": "ChatGPT digunakan sebagai asisten dalam proses pemrograman website. Dalam pembuatannya, ChatGPT membantu penulisan kode selama proses pengembangan, melakukan debugging untuk menemukan penyebab error, memperbaiki bug yang ditemukan pada website, serta mengoreksi kesalahan penulisan. Seluruh materi telah diperiksa kembali oleh kelompok berdasarkan slide dari guru dan sumber-sumber yang dicantumkan.",
     "dipakaiDi": ["semua"]
   },
   {
