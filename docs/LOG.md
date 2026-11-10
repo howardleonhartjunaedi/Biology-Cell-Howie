@@ -318,3 +318,8 @@ Nama ketua diletakkan di baris pertama, mata pelajaran menjadi Biologi & INF (In
 Lenis dimulai dari pengaturan halaman bersama dan gulir di dalam daftar organel tetap didukung. Beranda tidak lagi memulainya secara terpisah.
 
 Chrome menguji roda mouse pada keenam halaman, termasuk daftar organel yang dapat digulir tanpa menggeser Lab Sel. Mode Tenang dan preferensi gerak dikurangi menghentikan Lenis. Build berhasil.
+## Selasa, 10 November 2026 — Ripple lebih lama dan parallax pulau
+
+Menyesuaikan gerakan lensa judul dengan referensi Howard, memperpanjang gema riak menjadi 2,4 detik, serta sedikit menaikkan parallax pulau. Sesuai perubahan permintaan, tidak ada glow tambahan pada teks.
+
+Build dan shader WebGL diuji di Chrome pada 1280 × 800 dan 390 × 844; tidak ada overflow atau error JavaScript. Mode Tenang diperiksa. Tangkapan layar tersedia sebagai `ripple-panjang-1280.png` dan `ripple-panjang-390.png`.

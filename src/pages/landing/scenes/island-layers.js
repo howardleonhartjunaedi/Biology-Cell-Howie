@@ -65,8 +65,8 @@ export function createIslandLayers(loader) {
 
   function update(pointer, scroll) {
     layers.forEach(({ mesh, base, depth }) => {
-      mesh.position.x = base.x - pointer.x * depth * 2.2;
-      mesh.position.y = base.y + pointer.y * depth * 0.6 - scroll * depth * 1.5;
+      mesh.position.x = base.x - pointer.x * depth * 2.8;
+      mesh.position.y = base.y + pointer.y * depth * 0.8 - scroll * depth * 1.5;
     });
   }
 

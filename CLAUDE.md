@@ -322,11 +322,11 @@ ScrollTrigger over a tall pinned section. Text panels are normal HTML positioned
 - Text rendered to a canvas texture (Montserrat 800 "SEL", letter-spaced; Cormorant Garamond Italic tagline below), shown on a full-screen quad.
 - **At rest: 100% sharp, no motion.**
 - **Cursor tilt (updated 10 Nov 2026):** up to 20° per axis with a shared 1000 px perspective for the title and supporting text. Ease back to neutral when the mouse leaves. Deepen the existing background gradient behind the text for contrast over the bright sky.
-- **Cursor lens:** pixels within ~90 px of the cursor are pushed radially outward with a smooth (cosine) falloff — **subtle**, max ~6 px, scaled by cursor speed.
-- **Ripple echo:** cursor movement drops ripple sources every ~40 px; each is a ring expanding at ~120 px/s, Gaussian band ~24 px, sine displacement, **amplitude 1.5–3.5 px**, fades out over **~1.5 s**. Click = one bigger drop (~5 px). Implement as a GPU **ripple height-map** (ping-pong render targets) or summed rings in the fragment shader — choose the one you can explain more simply.
+- **Cursor lens:** pixels within ~90 px of the cursor are displaced with smooth falloff and a slight sideways wave, up to ~20 px depending on cursor speed.
+- **Ripple echo (updated 10 Nov 2026):** movement drops sources every ~40 px; rings expand at ~120 px/s, use a Gaussian band ~24 px, have amplitude 3–8 px, and fade over ~2.4 s. A click produces a 10 px ripple. Use summed rings in the fragment shader.
 - Bilinear sampling (default texture filtering) so the bend looks like refraction, not jagged pixels.
 - Touch: tap = one ripple. On scroll into scene 2, global ripple strength rises and the title sinks/fades.
-- Reference look: unseen.co hero text. **Subtle, not extreme.**
+- Reference look: unseen.co hero text; the ripple has no added glow.
 
 ### 6.2 Page 2 — Lab Sel (`sel.html`)
 > **Update 10 Nov 2026:** Keep the main cell view fixed to the viewport on desktop, with the organelle list independently scrollable when needed. Keep small screens and detail content scrollable. During a cell change, fade the outgoing model out slowly while the incoming model enters.

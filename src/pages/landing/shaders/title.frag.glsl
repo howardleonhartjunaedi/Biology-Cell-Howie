@@ -1,4 +1,4 @@
-#define MAX_RIPPLES 16
+#define MAX_RIPPLES 24
 uniform sampler2D uText;
 uniform vec2 uTextSize;
 uniform vec2 uViewport;
@@ -19,7 +19,7 @@ uniform vec3 uScrimColor;
 const float LENS_RADIUS = 90.0;
 const float RING_SPEED = 120.0;
 const float RING_WIDTH = 24.0;
-const float RING_LIFE = 1.5;
+const float RING_LIFE = 2.4;
 
 void main() {
   vec2 frag = gl_FragCoord.xy / uDpr;
@@ -36,6 +36,8 @@ void main() {
   if (mouseDist < LENS_RADIUS && mouseDist > 0.001) {
     float falloff = 0.5 + 0.5 * cos(3.14159 * mouseDist / LENS_RADIUS);
     offset -= normalize(toMouse) * falloff * uLens;
+    vec2 tangent = vec2(-toMouse.y, toMouse.x) / mouseDist;
+    offset += tangent * sin(mouseDist * 0.07 - uTime * 5.0) * falloff * uLens * 0.35;
   }
 
   for (int i = 0; i < MAX_RIPPLES; i++) {

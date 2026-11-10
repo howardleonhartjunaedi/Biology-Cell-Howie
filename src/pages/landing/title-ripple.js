@@ -2,12 +2,12 @@ import * as THREE from 'three';
 import fragmentShader from './shaders/title.frag.glsl?raw';
 import { settings } from '../../core/settings.js';
 
-const MAX_RIPPLES = 16;
+const MAX_RIPPLES = 24;
 const DROP_EVERY_PX = 40;
-const MIN_AMPLITUDE = 1.5;
-const MAX_AMPLITUDE = 3.5;
-const CLICK_AMPLITUDE = 5;
-const MAX_LENS_PX = 6;
+const MIN_AMPLITUDE = 3;
+const MAX_AMPLITUDE = 8;
+const CLICK_AMPLITUDE = 10;
+const MAX_LENS_PX = 20;
 const SPEED_FOR_MAX = 900;
 // Kemiringan perspektif mengikuti kursor (mirip kemiringan model di Lab Sel).
 const MAX_TILT_DEG = 20;

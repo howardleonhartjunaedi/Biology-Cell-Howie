@@ -894,3 +894,8 @@ Kartu informasi bersama untuk Lab Sel dan Gerbang Sel mengukur ukuran kartu dan 
 ## Lenis pada semua halaman — 10 November 2026
 
 `src/core/page-setup.js` memanggil `setupSmoothScroll()` saat halaman disiapkan. Semua halaman memakai fungsi ini sehingga gulir roda mouse memakai Lenis di seluruh situs. Pemanggilan khusus di `src/pages/landing/main.js` dihapus agar Beranda tidak memulai Lenis dua kali. Opsi `allowNestedScroll` pada `src/core/smooth-scroll.js` menjaga kotak yang bisa digulir sendiri, seperti daftar organel, tetap dapat digunakan. Mode Tenang dan preferensi gerak dikurangi tetap mematikan Lenis.
+## Ripple judul dan parallax — 10 November 2026
+
+- `src/pages/landing/title-ripple.js` mengirim hingga 24 sumber riak ke shader, dengan lensa kursor dan riak yang lebih terlihat saat kursor bergerak atau layar diketuk.
+- `src/pages/landing/shaders/title.frag.glsl` menambahkan sedikit gerakan menyamping pada lensa, lalu mempertahankan gema cincin selama 2,4 detik sebelum menghilang. Efek ini membelokkan tekstur huruf dan tidak menambahkan glow.
+- `src/pages/landing/scenes/island-layers.js` sedikit memperbesar perpindahan horizontal dan vertikal lapisan pulau berdasarkan posisi kursor, sehingga jarak antarlapisan lebih terasa.
