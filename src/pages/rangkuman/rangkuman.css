@@ -1,0 +1,195 @@
+.summary-header {
+  margin-bottom: var(--s-6);
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gap);
+  padding-bottom: var(--s-8);
+}
+
+.summary-card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--s-4);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius);
+  background: var(--c-lab-2);
+}
+
+/* Susunan asimetris: 7+5, 12, 5+7 */
+.summary-card--1 { grid-column: span 7; }
+.summary-card--2 { grid-column: span 5; }
+.summary-card--3 { grid-column: span 12; }
+.summary-card--4 { grid-column: span 5; }
+.summary-card--5 { grid-column: span 7; }
+
+.summary-card__title {
+  font-size: var(--fs-h2);
+  font-weight: 800;
+}
+
+.summary-card__points {
+  margin: 0 0 var(--s-2);
+  padding-left: var(--s-3);
+}
+
+.summary-card__points li {
+  margin-bottom: var(--s-1);
+}
+
+.summary-card .text-link {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+.summary-card .table-wrap {
+  margin: 0 0 var(--s-2);
+}
+
+.summary-table {
+  min-width: 0;
+  font-size: var(--fs-caption);
+}
+
+.summary-table th,
+.summary-table td {
+  padding: var(--s-1);
+}
+
+.organel-groups {
+  display: grid;
+  grid-template-columns: 3fr 5fr 3fr;
+  gap: var(--s-4);
+  margin-bottom: var(--s-2);
+}
+
+.organel-groups__name {
+  margin: 0 0 var(--s-2);
+  padding-bottom: var(--s-1);
+  border-bottom: 1px solid var(--c-line);
+  font-weight: 600;
+  color: var(--c-aqua);
+}
+
+.organel-groups__list {
+  margin: 0;
+}
+
+.organel-groups__list dt {
+  font-weight: 600;
+  color: var(--c-cream);
+}
+
+.organel-groups__list dd {
+  margin: 0 0 var(--s-2);
+}
+
+/* Kredit */
+.credits {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-6) var(--s-4);
+  margin-top: var(--s-4);
+}
+
+.credits__title {
+  font-size: var(--fs-body);
+  font-weight: 800;
+  padding-bottom: var(--s-1);
+  border-bottom: 1px solid var(--c-line);
+}
+
+.credits__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.credit {
+  padding: var(--s-1) 0 var(--s-2);
+}
+
+.credit p {
+  margin: 0;
+}
+
+.credit__title {
+  font-weight: 600;
+  color: var(--c-cream);
+}
+
+.credit__title a {
+  color: inherit;
+  text-decoration-color: var(--c-lagoon);
+}
+
+.credit__meta {
+  font-size: var(--fs-caption);
+  color: var(--c-muted);
+}
+
+/* Anggota */
+.team {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: var(--s-6);
+  align-items: start;
+}
+
+.team__table {
+  min-width: 0;
+}
+
+.team__no {
+  width: 120px;
+  color: var(--c-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.team__role {
+  color: var(--c-muted);
+}
+
+.team__identity {
+  margin-top: var(--s-3);
+}
+
+/* Penutup */
+.closing {
+  padding: var(--s-16) 0 var(--s-8);
+}
+
+.closing__line {
+  margin: 0;
+  max-width: 14ch;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--fs-h1);
+  line-height: 1.05;
+  color: var(--c-cream);
+}
+
+@media (max-width: 900px) {
+  .summary-card--1,
+  .summary-card--2,
+  .summary-card--3,
+  .summary-card--4,
+  .summary-card--5 {
+    grid-column: 1 / -1;
+  }
+
+  .organel-groups,
+  .credits,
+  .team {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .summary-card {
+    padding: var(--s-3);
+  }
+}

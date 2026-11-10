@@ -1,0 +1,106 @@
+{
+  "cards": [
+    {
+      "id": "rangkuman-sel",
+      "title": "Sel",
+      "points": [
+        "Sel adalah unit struktural dan fungsional terkecil makhluk hidup.",
+        "Setiap sel berasal dari sel sebelumnya (Rudolf Virchow, omnis cellula e cellula).",
+        "Sebagian besar sel berukuran 10–100 µm; mikroskop cahaya memperbesar sampai 1000×.",
+        "Prokariotik: tanpa membran inti (nukleoid), ribosom 70S, pembelahan biner. Contoh: bakteri.",
+        "Eukariotik: nukleus sejati bermembran ganda, organel bermembran, ribosom 80S. Contoh: hewan, tumbuhan, jamur, protista."
+      ],
+      "link": { "href": "index.html", "label": "Buka lagi: Beranda" }
+    },
+    {
+      "id": "rangkuman-hewan-tumbuhan",
+      "title": "Sel Hewan & Tumbuhan",
+      "table": [
+        ["Dinding sel", "Tidak ada", "Ada (selulosa)"],
+        ["Plastida (kloroplas)", "Tidak ada", "Ada"],
+        ["Vakuola", "Kecil, tidak permanen", "Besar, permanen"],
+        ["Sentriol", "Ada", "Tidak ada"],
+        ["Lisosom", "Ada", "Umumnya tidak ada"],
+        ["Bentuk", "Tidak tetap", "Tetap"]
+      ],
+      "link": { "href": "sel.html", "label": "Buka lagi: Lab Sel" }
+    },
+    {
+      "id": "rangkuman-organel",
+      "title": "Organel",
+      "groups": [
+        {
+          "name": "Membran ganda",
+          "items": [
+            ["Nukleus", "pusat kendali sel, menyimpan DNA"],
+            ["Mitokondria", "respirasi sel, menghasilkan ATP"],
+            ["Kloroplas", "fotosintesis (tumbuhan)"]
+          ]
+        },
+        {
+          "name": "Membran tunggal",
+          "items": [
+            ["RE kasar / halus", "sintesis protein / sintesis lipid dan menetralkan racun"],
+            ["Badan Golgi", "mengubah, mengemas, dan mengirim protein"],
+            ["Lisosom", "pencernaan di dalam sel"],
+            ["Peroksisom", "mengubah H₂O₂ menjadi H₂O dan O₂"],
+            ["Vakuola", "menjaga tekanan turgor, menyimpan zat"]
+          ]
+        },
+        {
+          "name": "Tidak bermembran",
+          "items": [
+            ["Ribosom", "sintesis protein"],
+            ["Sentriol", "membentuk benang spindel (hewan)"]
+          ]
+        }
+      ],
+      "link": { "href": "sel.html", "label": "Buka lagi: Lab Sel" }
+    },
+    {
+      "id": "rangkuman-membran",
+      "title": "Membran & Transpor",
+      "points": [
+        "Pasif (tanpa ATP, dari konsentrasi tinggi ke rendah): difusi sederhana, difusi terfasilitasi, osmosis.",
+        "Aktif: pompa Na⁺/K⁺, setiap siklus 3 Na⁺ keluar, 2 K⁺ masuk, memakai 1 ATP.",
+        "Kotranspor menumpang perbedaan konsentrasi yang dibuat pompa.",
+        "Endositosis (fagositosis, pinositosis, dengan reseptor) dan eksositosis memakai vesikel."
+      ],
+      "link": { "href": "gerbang-sel.html", "label": "Buka lagi: Gerbang Sel" }
+    },
+    {
+      "id": "rangkuman-osmosis",
+      "title": "Osmosis",
+      "table": [
+        ["Hipotonik", "Lisis (hemolisis)", "Turgid"],
+        ["Isotonik", "Normal", "Flaksid"],
+        ["Hipertonik", "Krenasi", "Plasmolisis"]
+      ],
+      "tableHead": ["Larutan", "Sel hewan", "Sel tumbuhan"],
+      "link": { "href": "lab-osmosis.html", "label": "Buka lagi: Lab Osmosis" }
+    }
+  ],
+  "creditGroups": [
+    { "title": "Sumber materi", "kategori": ["materi"] },
+    { "title": "Model 3D", "kategori": ["model3d"] },
+    { "title": "Video & gambar", "kategori": ["media"] },
+    { "title": "Font & library", "kategori": ["font", "library"] },
+    { "title": "Inspirasi desain", "kategori": ["inspirasi"] },
+    { "title": "Penggunaan AI", "kategori": ["ai"] }
+  ],
+  "members": [
+    ["20", "Howard Leonhart Junaedi", "ketua"],
+    ["17", "Gavin Maruli Wilianata", ""],
+    ["19", "Greg Nigel Kenjiro Pardede", ""],
+    ["21", "Jaden Sutedja", ""],
+    ["33", "Raphael Krisna Rahardian", ""]
+  ],
+  "identity": [
+    ["Kelas", "XI-A5"],
+    ["Sekolah", "Kolese Kanisius, Jakarta"],
+    ["Tahun pelajaran", "2026/2027"],
+    ["Mata pelajaran", "Biologi & INF (Informatika)"],
+    ["Guru Biologi", ""],
+    ["Guru INF (Informatika)", ""]
+  ]
+}

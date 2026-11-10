@@ -1,0 +1,4 @@
+[
+  { "section": "permukaan", "scene": "surface", "from": 0, "to": 1, "sceneStart": 0, "sceneEnd": 0.35 },
+  { "section": "menyelam", "scene": "surface", "from": 0, "to": 1, "sceneStart": 0.35, "sceneEnd": 1, "veilOut": "#04252D" }
+]

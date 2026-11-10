@@ -1,0 +1,208 @@
+.scene--surface {
+  position: relative;
+  overflow: hidden;
+  align-items: flex-start;
+}
+
+.scene__wrap--hero {
+  --grid-column: calc((100vw - 2 * var(--gutter)) / 12);
+  max-width: none;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: calc(var(--nav-height) + 5vh);
+  padding-left: calc(var(--gutter) + var(--grid-column));
+}
+
+@media (max-width: 760px) {
+  .scene__wrap--hero {
+    padding-left: var(--gutter);
+  }
+}
+
+.hero-title {
+  margin: 0;
+  font-weight: 800;
+  font-size: var(--fs-display);
+  line-height: 1;
+  letter-spacing: 0.06em;
+  margin-right: -0.06em;
+  color: var(--c-cream);
+}
+
+.hero-tagline {
+  --webgl-color: #FFF4D6;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--fs-h2);
+  line-height: 1.25;
+  color: var(--c-cream);
+  margin: var(--s-1) 0 0;
+  max-width: none;
+}
+
+/* Label dan kalimat pembuka: teks DOM biasa, dimiringkan mengikuti kursor (--tilt-x/y dari title-ripple.js). */
+.hero-meta {
+  transform: perspective(var(--hero-perspective)) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transform-origin: 50% 100%;
+}
+
+.hero-eyebrow {
+  margin: 0 0 var(--s-2);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-aqua);
+  text-shadow: 0 1px 8px rgb(3 28 36 / 0.5);
+}
+
+.hero-lead {
+  margin: var(--s-3) 0 0;
+  max-width: 34ch;
+  font-size: var(--fs-body);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--c-cream);
+  text-shadow: 0 1px 10px rgb(3 28 36 / 0.6);
+  text-wrap: pretty;
+}
+
+.webgl-on .hero-title,
+.webgl-on .hero-tagline {
+  color: transparent;
+}
+
+.scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: var(--s-4);
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  width: var(--tap-min);
+  height: 72px;
+  transform: translateX(-50%);
+}
+
+.scroll-cue__track {
+  position: relative;
+  width: 1px;
+  height: 100%;
+  background: rgb(255 244 214 / 0.35);
+  overflow: hidden;
+}
+
+.scroll-cue__dot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 24px;
+  background: var(--c-cream);
+  animation: scroll-cue 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes scroll-cue {
+  0% { transform: translateY(-24px); }
+  100% { transform: translateY(72px); }
+}
+
+.calm .scroll-cue__dot {
+  animation: none;
+  transform: translateY(24px);
+}
+
+.skip-intro {
+  position: absolute;
+  right: var(--gutter);
+  bottom: var(--s-3);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-min);
+  padding: 0 var(--s-1);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.04em;
+  color: rgb(255 244 214 / 0.8);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+@media (hover: hover) {
+  .skip-intro:hover {
+    color: var(--c-cream);
+  }
+}
+
+
+.scene__wrap--hero {
+  position: relative;
+  z-index: 2;
+}
+
+.landing .nav {
+  transition-property: background-color, border-color;
+  transition-duration: var(--dur-base);
+  transition-timing-function: var(--ease-out);
+}
+
+.nav-over-hero .nav {
+  background: transparent;
+  border-bottom-color: transparent;
+}
+
+.nav-over-hero .nav__links {
+  display: none;
+}
+
+.nav-over-hero .nav .nav__menu-button {
+  display: flex;
+  margin-left: auto;
+}
+
+.nav-over-hero .nav--open .nav__links {
+  display: flex;
+  position: absolute;
+  top: var(--nav-height);
+  right: var(--gutter);
+  flex-direction: column;
+  padding: var(--s-2);
+  border-radius: var(--radius);
+  background: rgb(14 17 22 / 0.92);
+}
+
+.nav-over-hero .toggle {
+  font-size: var(--fs-caption);
+  border-color: rgb(255 244 214 / 0.35);
+  color: var(--c-cream);
+}
+
+.nav-over-hero .nav__logo {
+  color: var(--c-cream);
+}
+
+.scene--surface::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: calc(var(--nav-height) * 2);
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgb(4 30 40 / 0.45), rgb(4 30 40 / 0));
+}
+
+
+.nav-over-hero .toggle,
+.nav-over-hero .nav__logo {
+  border-color: rgb(255 244 214 / 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue__dot {
+    animation: none;
+    transform: translateY(24px);
+  }
+}

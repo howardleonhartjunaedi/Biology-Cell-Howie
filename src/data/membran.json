@@ -1,0 +1,70 @@
+{
+  "intro": "Membran plasma adalah gerbang sel. Membran ini bersifat selektif permeabel: hanya zat tertentu yang bisa lewat. Susunannya disebut model mozaik fluida: bisa bergerak seperti cairan, dan sisi luar serta dalamnya berbeda (asimetris).",
+  "parts": {
+    "fosfolipid": { "name": "Fosfolipid", "deskripsi": "Dua lapis; kepala hidrofilik (suka air) menghadap keluar, ekor hidrofobik (tidak suka air) di tengah.", "fungsi": "Penghalang utama; jalur difusi sederhana." },
+    "protein-integral": { "name": "Protein integral", "deskripsi": "Menembus membran.", "fungsi": "Saluran (channel), pembawa (carrier), dan pompa." },
+    "protein-perifer": { "name": "Protein perifer", "deskripsi": "Menempel di permukaan membran.", "fungsi": "Enzim dan penahan kerangka sel." },
+    "glikoprotein": { "name": "Glikoprotein", "deskripsi": "Protein + rantai karbohidrat (oligosakarida).", "fungsi": "Identitas sel, pengenalan antarsel, reseptor rangsang." },
+    "glikolipid": { "name": "Glikolipid", "deskripsi": "Lipid + rantai karbohidrat.", "fungsi": "Pengenalan sel dan kestabilan membran." }
+  },
+  "modes": [
+    {
+      "id": "struktur",
+      "label": "Struktur",
+      "title": "Struktur membran",
+      "text": "Arahkan kursor atau ketuk bagian membran untuk melihat nama dan fungsinya."
+    },
+    {
+      "id": "difusi",
+      "label": "Difusi",
+      "kind": "Transpor pasif",
+      "title": "Difusi sederhana",
+      "text": "Molekul kecil (O₂, CO₂, asam lemak) langsung menembus lapisan fosfolipid, dari konsentrasi tinggi ke rendah. Tidak butuh ATP."
+    },
+    {
+      "id": "fasilitasi",
+      "label": "Difusi Terfasilitasi",
+      "kind": "Transpor pasif",
+      "title": "Difusi terfasilitasi",
+      "text": "Dibantu protein: saluran protein (channel) untuk ion, protein pembawa (carrier) untuk glukosa dan asam amino (contoh GLUT). Carrier berubah bentuk saat memindahkan zat. Tidak butuh ATP."
+    },
+    {
+      "id": "osmosis",
+      "label": "Osmosis",
+      "kind": "Transpor pasif",
+      "title": "Osmosis",
+      "text": "Perpindahan air melalui membran semipermeabel dari larutan hipotonik (zat terlarut sedikit) ke larutan hipertonik (zat terlarut banyak). Gampangnya: air bergerak ke tempat yang lebih pekat.",
+      "link": { "text": "Lihat efeknya pada sel → Lab Osmosis", "href": "/lab-osmosis.html" }
+    },
+    {
+      "id": "pompa",
+      "label": "Pompa Na⁺/K⁺",
+      "kind": "Transpor aktif primer",
+      "title": "Pompa Na⁺/K⁺",
+      "text": "Transpor aktif primer: langsung memakai ATP, melawan gradien konsentrasi. Setiap siklus memindahkan 3 Na⁺ keluar dan 2 K⁺ masuk, memakai 1 ATP.",
+      "legend": "Na⁺ = bola oranye · K⁺ = kubus merah · ATP = bintang kuning",
+      "steps": [
+        "3 ion Na⁺ dari sitoplasma menempel pada protein pompa.",
+        "ATP memberi gugus fosfat pada protein (fosforilasi), sehingga bentuk protein berubah.",
+        "3 Na⁺ dilepas ke luar sel.",
+        "2 K⁺ dari luar sel menempel pada protein pompa.",
+        "Menempelnya K⁺ membuat gugus fosfat terlepas; protein kembali ke bentuk awal.",
+        "2 K⁺ dilepas ke dalam sel. Siklus diulang."
+      ],
+      "note": "Tiap siklus mengeluarkan lebih banyak muatan positif daripada yang masuk."
+    }
+  ],
+  "table": [
+    ["O₂/CO₂", "Difusi sederhana"],
+    ["Air", "Osmosis"],
+    ["Glukosa/asam amino", "Difusi terfasilitasi"],
+    ["Ion Na⁺/K⁺", "Saluran protein (pasif) atau pompa ion (aktif)"],
+    ["Molekul besar (enzim, hormon)", "Endositosis/eksositosis"]
+  ],
+  "carriers": "Jenis protein pembawa: uniport (1 zat, 1 arah), simport (2 zat, arah sama), antiport (2 zat, arah berlawanan).",
+  "other": [
+    { "title": "Endositosis", "text": "Memasukkan zat dengan vesikel: fagositosis (zat padat, contoh sel darah putih memakan bakteri), pinositosis (zat cair), endositosis dengan reseptor (contoh masuknya kolesterol LDL). Vesikel kemudian menuju lisosom." },
+    { "title": "Eksositosis", "text": "Vesikel dari badan Golgi bergerak ke membran, menyatu, lalu isinya dikeluarkan. Contoh: sel pankreas mengeluarkan insulin; pelepasan hormon, enzim pencernaan, neurotransmiter, antibodi." },
+    { "title": "Kotranspor (transpor aktif sekunder)", "text": "Zat “menumpang” perbedaan konsentrasi yang dibuat pompa, tidak memakai ATP secara langsung. Contoh: sukrosa masuk ke sel tumbuhan bersama ion H⁺ (pompa proton)." }
+  ]
+}

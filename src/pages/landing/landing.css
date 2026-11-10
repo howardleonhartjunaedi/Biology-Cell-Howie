@@ -1,0 +1,124 @@
+.landing main.dive {
+  position: relative;
+  z-index: 2;
+  max-width: none;
+  padding: 0;
+}
+
+.stage-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+}
+
+.stage-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.webgl-on .scene {
+  background: transparent;
+}
+
+.webgl-on .scene:not(.scene--surface) .scene__wrap > * {
+  max-width: 560px;
+}
+
+.journey-shade {
+  position: relative;
+}
+
+.sequence-live .journey-shade::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, var(--journey-shade-strong), var(--journey-shade-middle) 50%, var(--journey-shade-edge));
+  mask-image: linear-gradient(to bottom, transparent, black 20vh);
+}
+
+.sequence-live .scene--dive {
+  position: relative;
+  background: transparent;
+}
+
+.sequence-live .scene--dive .scene__wrap {
+  position: relative;
+}
+
+.scene--summary .table-wrap {
+  max-width: 640px;
+}
+
+
+.scene {
+  --scene-bg: var(--c-deep);
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  background: var(--scene-bg);
+}
+
+.scene__wrap {
+  width: 100%;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: calc(var(--nav-height) + var(--s-6)) var(--gutter) var(--s-12);
+}
+
+.scene--surface {
+  --scene-bg: #0A5867;
+}
+
+.poetic--large {
+  font-size: var(--fs-h1);
+  line-height: 1.2;
+  color: var(--c-cream);
+}
+
+.reveal-word {
+  display: inline;
+}
+
+.scene--dive { --scene-bg: var(--c-deep); }
+.scene--summary { --scene-bg: #04252D; }
+.scene--end { --scene-bg: #04252D; }
+
+.scene--summary .table th,
+.scene--summary .table td {
+  border-bottom-color: rgb(184 241 236 / 0.16);
+}
+
+.scene__wrap--end {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.scene__wrap--end .poetic {
+  margin-bottom: var(--s-1);
+}
+
+.scene__wrap--end .button {
+  margin-top: var(--s-3);
+}
+
+.scene--end .button {
+  font-size: var(--fs-body);
+  padding: var(--s-2) var(--s-4);
+}
+
+.scene .poetic {
+  max-width: 28ch;
+  margin-top: 0;
+}
+
+.scene__wrap--end .poetic {
+  max-width: none;
+}

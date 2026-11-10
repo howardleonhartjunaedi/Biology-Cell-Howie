@@ -1,0 +1,11 @@
+node_modules/
+dist/
+assets-src/
+.vercel/
+.DS_Store
+Thumbs.db
+*.log
+.agents/
+.claude/
+skills-lock.json
+.playwright-mcp/

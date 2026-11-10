@@ -1,0 +1,65 @@
+{
+  "cells": {
+    "hewan": { "label": "Sel Hewan", "sample": "SEL DARAH MERAH · 400×", "short": "sel darah merah" },
+    "tumbuhan": { "label": "Sel Tumbuhan", "sample": "EPIDERMIS BAWANG MERAH · 400×", "short": "sel epidermis bawang merah" }
+  },
+  "solutions": [
+    { "id": "hipotonik", "label": "Hipotonik", "hint": "lebih encer dari isi sel" },
+    { "id": "isotonik", "label": "Isotonik", "hint": "sama dengan isi sel" },
+    { "id": "hipertonik", "label": "Hipertonik", "hint": "lebih pekat dari isi sel" }
+  ],
+  "states": {
+    "hewan": {
+      "hipotonik": {
+        "name": "Lisis (hemolisis)",
+        "arah": "Air masuk ke dalam sel.",
+        "mengapa": "Zat terlarut di luar sel lebih sedikit. Sel hewan tidak punya dinding sel, jadi sel terus membengkak lalu pecah.",
+        "contoh": "Infus memakai larutan garam 0,9%, bukan air murni, agar sel darah merah tidak pecah.",
+        "water": "in"
+      },
+      "isotonik": {
+        "name": "Normal",
+        "arah": "Air masuk dan keluar seimbang.",
+        "mengapa": "Konsentrasi di dalam dan di luar sel sama, jadi bentuk sel tetap.",
+        "contoh": "Larutan NaCl sekitar 0,9% isotonis dengan darah manusia.",
+        "water": "both"
+      },
+      "hipertonik": {
+        "name": "Krenasi",
+        "arah": "Air keluar dari sel.",
+        "mengapa": "Zat terlarut di luar sel lebih banyak. Sel kehilangan air, mengerut, dan permukaannya bergerigi.",
+        "contoh": "Minum air laut saat haus justru membuat tubuh makin kekurangan air.",
+        "water": "out"
+      }
+    },
+    "tumbuhan": {
+      "hipotonik": {
+        "name": "Turgid",
+        "arah": "Air masuk ke dalam sel.",
+        "mengapa": "Vakuola membesar dan membran menekan dinding sel. Dinding sel menahan tekanan sehingga sel tidak pecah.",
+        "contoh": "Sayur layu bisa segar lagi setelah direndam air.",
+        "water": "in"
+      },
+      "isotonik": {
+        "name": "Flaksid",
+        "arah": "Tidak ada aliran air bersih.",
+        "mengapa": "Konsentrasi seimbang, tekanan turgor rendah, sel lemas.",
+        "contoh": "Tanaman yang kurang disiram menjadi layu.",
+        "water": "both"
+      },
+      "hipertonik": {
+        "name": "Plasmolisis",
+        "arah": "Air keluar dari sel.",
+        "mengapa": "Vakuola mengecil dan membran plasma terlepas dari dinding sel. Jika segera dipindah ke air, sel bisa kembali normal (deplasmolisis).",
+        "contoh": "Sayur yang ditaburi garam menjadi lembek. Ikan asin dan manisan awet karena garam atau gula menarik air keluar dari sel bakteri dan jamur.",
+        "water": "out"
+      }
+    }
+  },
+  "ingat": "Lisis dan krenasi terjadi pada sel hewan; turgid dan plasmolisis pada sel tumbuhan. Bedanya ada pada dinding sel.",
+  "tebak": [
+    { "cell": "tumbuhan", "solution": "hipertonik", "options": ["Turgid", "Plasmolisis", "Krenasi", "Lisis"], "answer": 1, "why": "Membran plasma terlepas dari dinding sel dan vakuola mengecil: air keluar karena larutan di luar lebih pekat." },
+    { "cell": "hewan", "solution": "hipertonik", "options": ["Normal", "Lisis", "Krenasi", "Flaksid"], "answer": 2, "why": "Sel darah merah mengerut dan permukaannya bergerigi: air keluar dari sel." },
+    { "cell": "tumbuhan", "solution": "hipotonik", "options": ["Turgid", "Plasmolisis", "Lisis", "Flaksid"], "answer": 0, "why": "Isi sel menekan penuh dinding sel. Dinding sel menahan tekanan sehingga sel tidak pecah." }
+  ]
+}

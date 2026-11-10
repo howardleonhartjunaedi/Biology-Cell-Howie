@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kuis · SEL</title>
+    <meta name="description" content="Latihan soal dan mode ujian 25 soal tentang sel, organel, membran, dan osmosis, lengkap dengan laporan nilai." />
+    <meta property="og:title" content="Kuis · SEL" />
+    <meta property="og:description" content="Latihan soal dan mode ujian 25 soal tentang sel, organel, membran, dan osmosis." />
+    <meta name="theme-color" content="#0E1116" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script src="/view-transition.js"></script>
+    <script src="/preload-flag.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Montserrat:wght@400;500;600;800&display=swap" rel="stylesheet" />
+  </head>
+  <body data-page="kuis">
+    <noscript><p class="noscript">Website ini memerlukan JavaScript untuk menampilkan materi, simulasi, dan kuis. Aktifkan JavaScript di pengaturan browser, lalu muat ulang halaman.</p></noscript>
+    <main id="main" class="quiz">
+      <header class="quiz-header">
+        <div>
+          <span class="eyebrow">SEL · KUIS</span>
+          <h1 class="display" data-no-reveal>Kuis</h1>
+          <p class="tagline">Uji pemahamanmu tentang sel.</p>
+        </div>
+        <div class="segmented quiz-mode" role="radiogroup" aria-label="Pilih mode kuis">
+          <button class="segmented__item" type="button" role="radio" data-mode="latihan" aria-checked="true">Mode Latihan</button>
+          <button class="segmented__item" type="button" role="radio" data-mode="ujian" aria-checked="false">Mode Ujian</button>
+        </div>
+      </header>
+
+      <!-- MODE LATIHAN -->
+      <section id="latihan" aria-labelledby="judul-latihan">
+        <h2 class="visually-hidden" id="judul-latihan">Mode Latihan</h2>
+
+        <div class="quiz-card" id="practice-setup">
+          <p class="quiz-label" id="label-topik">Topik</p>
+          <div class="chip-row" role="radiogroup" aria-labelledby="label-topik" id="topic-chips"></div>
+          <p class="quiz-label" id="label-jumlah">Jumlah soal</p>
+          <div class="chip-row" role="radiogroup" aria-labelledby="label-jumlah" id="count-chips"></div>
+          <button class="button" type="button" id="practice-start">Mulai latihan</button>
+        </div>
+
+        <div class="quiz-card" id="practice-play" hidden>
+          <div class="quiz-meta">
+            <span id="practice-progress">Soal 1 / 10</span>
+            <span id="practice-score">Benar 0</span>
+          </div>
+          <div class="quiz-bar"><span class="quiz-bar__fill" id="practice-bar"></span></div>
+          <p class="quiz-topic" id="practice-topic"></p>
+          <h3 class="quiz-question" id="practice-question" data-no-reveal></h3>
+          <div class="options" id="practice-options"></div>
+          <div class="feedback" id="practice-feedback" aria-live="polite" hidden>
+            <p class="feedback__verdict" id="practice-verdict"></p>
+            <p id="practice-explain"></p>
+            <a class="text-link" id="practice-link">Pelajari lagi →</a>
+          </div>
+          <button class="button" type="button" id="practice-next" hidden>Soal berikutnya</button>
+        </div>
+
+        <div class="quiz-card" id="practice-end" hidden>
+          <p class="quiz-label">Hasil latihan</p>
+          <p class="big-score" id="practice-final"></p>
+          <p id="practice-message"></p>
+          <div class="button-row">
+            <button class="button" type="button" id="practice-retry">Ulangi soal yang salah</button>
+            <button class="button button--ghost" type="button" id="practice-change">Ganti topik</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- MODE UJIAN -->
+      <section id="ujian" aria-labelledby="judul-ujian" hidden>
+        <h2 class="visually-hidden" id="judul-ujian">Mode Ujian</h2>
+
+        <div class="quiz-card exam-start" id="exam-start">
+          <div>
+            <p class="quiz-label">Aturan ujian</p>
+            <ul class="rules">
+              <li><strong>25 soal</strong> pilihan ganda, waktu <strong>30 menit</strong>.</li>
+              <li>Soal diambil acak: Sel &amp; jenisnya 4 · Organel &amp; bagiannya 8 · Membran &amp; transpor 7 · Osmosis 6.</li>
+              <li>Jawaban benar atau salah baru terlihat setelah ujian dikumpulkan.</li>
+              <li>Tandai soal yang masih ragu-ragu, lalu kembali lewat nomor soal.</li>
+              <li>Saat waktu habis, jawaban dikumpulkan otomatis.</li>
+            </ul>
+            <button class="button" type="button" id="exam-begin">Mulai Ujian</button>
+          </div>
+          <div class="history">
+            <p class="quiz-label">Riwayat ujian</p>
+            <ol class="history__list" id="exam-history"></ol>
+          </div>
+        </div>
+
+        <div class="exam-run" id="exam-run" hidden>
+          <div class="exam-top">
+            <span id="exam-progress">Soal 1 dari 25</span>
+            <span class="timer" id="exam-timer" role="timer" aria-label="Sisa waktu">30:00</span>
+          </div>
+          <div class="exam-layout">
+            <div class="quiz-card">
+              <p class="quiz-topic" id="exam-topic"></p>
+              <h3 class="quiz-question" id="exam-question" data-no-reveal></h3>
+              <div class="options" id="exam-options" role="radiogroup" aria-labelledby="exam-question"></div>
+              <div class="button-row exam-nav">
+                <button class="pill-button" type="button" id="exam-prev">← Sebelumnya</button>
+                <button class="pill-button" type="button" id="exam-flag" aria-pressed="false">Tandai ragu-ragu</button>
+                <button class="pill-button" type="button" id="exam-next">Berikutnya →</button>
+              </div>
+            </div>
+            <aside class="navigator">
+              <p class="quiz-label">Nomor soal</p>
+              <ol class="navigator__grid" id="exam-grid"></ol>
+              <ul class="navigator__legend">
+                <li><span class="swatch swatch--done"></span>Dijawab</li>
+                <li><span class="swatch swatch--flag"></span>Ragu-ragu</li>
+                <li><span class="swatch"></span>Kosong</li>
+              </ul>
+              <button class="button" type="button" id="exam-submit">Kumpulkan</button>
+            </aside>
+          </div>
+        </div>
+
+        <div id="exam-report" hidden></div>
+      </section>
+
+      <dialog class="confirm" id="exam-confirm" aria-labelledby="confirm-title">
+        <h2 class="confirm__title" id="confirm-title" data-no-reveal>Kumpulkan sekarang?</h2>
+        <p id="confirm-text"></p>
+        <div class="button-row">
+          <button class="button" type="button" id="confirm-yes">Ya, kumpulkan</button>
+          <button class="button button--ghost" type="button" id="confirm-no">Kembali ke soal</button>
+        </div>
+      </dialog>
+    </main>
+    <script type="module" src="/src/pages/kuis/main.js"></script>
+  </body>
+</html>

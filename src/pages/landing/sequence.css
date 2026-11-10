@@ -1,0 +1,216 @@
+/* Walkthrough scroll-scrub Beranda: section #perjalanan (di-pin), panel teks di kolom kiri. */
+
+.sequence {
+  position: relative;
+  z-index: 2;
+}
+
+.sequence-live .sequence {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.sequence-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+}
+
+.sequence__panels {
+  position: relative;
+  height: 100%;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  column-gap: var(--grid-gap);
+}
+
+.sequence-live .beat {
+  grid-column: 1 / span 6;
+  grid-row: 1;
+  align-self: center;
+  padding-top: var(--nav-height);
+  opacity: 0;
+}
+
+/* ── Isi panel ── */
+.beat {
+  color: var(--c-text);
+}
+
+.beat__line {
+  margin: 0 0 var(--s-2);
+  will-change: transform, clip-path;
+}
+
+.beat__title {
+  font-size: var(--fs-h1);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--c-cream);
+  line-height: 1.05;
+}
+
+.beat__lead,
+.beat__fact {
+  font-size: var(--fs-body);
+  line-height: 1.6;
+}
+
+.beat__poetic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--fs-h2);
+  line-height: 1.25;
+  color: var(--c-cream);
+}
+
+.beat__poetic strong,
+.beat__lead strong,
+.beat__fact strong {
+  color: var(--c-aqua);
+  font-weight: 600;
+}
+
+.beat__fact {
+  padding-left: var(--s-2);
+  border-left: 2px solid var(--c-lagoon);
+}
+
+.beat__note {
+  font-size: var(--fs-caption);
+  color: var(--c-muted-water);
+}
+
+.beat__quote {
+  margin: 0 0 var(--s-3);
+}
+
+.beat__quote-text {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fs-h2);
+  line-height: 1.25;
+  color: var(--c-cream);
+}
+
+.beat__quote-by {
+  margin-top: var(--s-1);
+  font-size: var(--fs-caption);
+  color: var(--c-muted-water);
+}
+
+.beat__scale {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1);
+  padding: 0;
+  list-style: none;
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  color: var(--c-cream);
+  font-variant-numeric: tabular-nums;
+}
+
+.beat__scale li {
+  flex: none;
+  white-space: nowrap;
+}
+
+.beat__scale li + li::before {
+  content: '›';
+  margin-right: var(--s-1);
+  color: var(--c-lagoon);
+}
+
+.beat__terms {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--s-1) var(--s-2);
+  font-size: var(--fs-caption);
+}
+
+.beat__terms dt {
+  font-weight: 600;
+  color: var(--c-cream);
+}
+
+.beat__terms dd {
+  margin: 0;
+}
+
+/* ── Mode Tenang / gerak dikurangi: 6 gambar diam berurutan ── */
+.sequence__stills {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.still {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  column-gap: var(--grid-gap);
+  align-items: center;
+  margin: 0;
+  padding: var(--s-12) 0;
+  border-top: 1px solid var(--c-line);
+}
+
+.still__image {
+  grid-column: 6 / span 7;
+  grid-row: 1;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+}
+
+.still .beat {
+  grid-column: 1 / span 5;
+  grid-row: 1;
+}
+
+/* ── Setelah walkthrough: ringkasan + tombol di atas frame terakhir ── */
+.sequence-live .scene--summary,
+.sequence-live .scene--end {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+}
+
+.sequence-static .scene--summary,
+.sequence-static .scene--end {
+  background: linear-gradient(rgb(3 22 28 / 0.78), rgb(3 22 28 / 0.78)), var(--last-frame) center / cover;
+}
+
+@media (max-width: 900px) {
+  .beat__scale {
+    gap: calc(var(--s-1) / 2);
+  }
+
+  .beat__scale li + li::before {
+    margin-right: calc(var(--s-1) / 2);
+  }
+
+  .sequence-live .beat {
+    grid-column: 1 / -1;
+    align-self: end;
+    padding-bottom: var(--s-6);
+  }
+
+  .still__image,
+  .still .beat {
+    grid-column: 1 / -1;
+  }
+
+  .still .beat {
+    grid-row: 2;
+    margin-top: var(--s-3);
+  }
+}

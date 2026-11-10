@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SEL · Kecil, tapi menyusun segalanya</title>
+    <meta name="description" content="Website edukasi materi sel Biologi kelas XI: menyelam ke laguna dari ikan sampai sel." />
+    <meta property="og:title" content="SEL · Kecil, tapi menyusun segalanya" />
+    <meta property="og:description" content="Website edukasi materi sel Biologi kelas XI: menyelam ke laguna dari ikan sampai sel." />
+    <meta name="theme-color" content="#063B4C" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script src="/view-transition.js"></script>
+    <script src="/preload-flag.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Montserrat:wght@400;500;600;800&display=swap" rel="stylesheet" />
+  </head>
+  <body data-page="beranda" data-preload="3d" class="theme-water landing">
+    <noscript><p class="noscript">Website ini memerlukan JavaScript untuk menampilkan materi, simulasi, dan kuis. Aktifkan JavaScript di pengaturan browser, lalu muat ulang halaman.</p></noscript>
+    <main id="main" class="dive">
+      <section class="scene scene--surface" id="permukaan" aria-labelledby="judul-sel">
+        <div class="scene__wrap scene__wrap--hero">
+          <div class="hero-meta">
+            <p class="hero-eyebrow">Biologi XI · Bab 1 · Kelompok 4</p>
+          </div>
+          <h1 class="hero-title" id="judul-sel">SEL</h1>
+          <p class="hero-tagline">Kecil, tapi menyusun segalanya.</p>
+          <div class="hero-meta">
+            <p class="hero-lead">Unit struktural dan fungsional terkecil makhluk hidup.</p>
+          </div>
+        </div>
+        <a class="scroll-cue" href="#menyelam" aria-label="Gulir untuk menyelam">
+          <span class="scroll-cue__track" aria-hidden="true"><span class="scroll-cue__dot"></span></span>
+        </a>
+        <a class="skip-intro" href="#gelap">Lewati intro</a>
+      </section>
+
+      <div class="journey-shade">
+      <section class="scene scene--dive" id="menyelam" aria-labelledby="judul-menyelam">
+        <div class="scene__wrap">
+          <h2 class="visually-hidden" id="judul-menyelam">Menyelam</h2>
+          <p class="poetic poetic--large" data-word-reveal>Setiap makhluk hidup di laguna ini, dari ikan kecil sampai pohon di tepi pantai, tersusun dari <strong>sel</strong>.</p>
+          <p class="section__lead">Sel adalah unit struktural dan fungsional terkecil makhluk hidup: bagian terkecil yang mampu menjalankan kegiatan hidup.</p>
+        </div>
+      </section>
+
+      <section class="sequence" id="perjalanan" aria-label="Perjalanan dari laguna sampai sel">
+        <div class="sequence__panels"></div>
+        <div class="sequence__stills"></div>
+      </section>
+
+      <section class="scene scene--summary" id="ringkasan" aria-labelledby="judul-ringkasan">
+        <div class="scene__wrap">
+          <h2 class="section__title" id="judul-ringkasan">Dua sel, satu laguna</h2>
+          <p class="section__lead">Sel ikan dan sel lamun sama-sama <strong>eukariotik</strong>: punya nukleus bermembran, mitokondria, RE, badan Golgi, dan ribosom. Bedanya:</p>
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr><th scope="col">Ciri</th><th scope="col">Sel hewan (ikan)</th><th scope="col">Sel tumbuhan (lamun)</th></tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Dinding sel</th><td>Tidak ada</td><td>Ada (selulosa)</td></tr>
+                <tr><th scope="row">Plastida (kloroplas)</th><td>Tidak ada</td><td>Ada</td></tr>
+                <tr><th scope="row">Vakuola</th><td>Kecil, tidak permanen</td><td>Besar, permanen</td></tr>
+                <tr><th scope="row">Sentriol</th><td>Ada</td><td>Tidak ada (sentrosom tanpa sentriol)</td></tr>
+                <tr><th scope="row">Lisosom</th><td>Ada</td><td>Umumnya tidak ada; vakuola tengah dapat berperan seperti lisosom</td></tr>
+                <tr><th scope="row">Bentuk</th><td>Tidak tetap</td><td>Tetap</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene scene--end" id="gelap" aria-labelledby="judul-gelap">
+        <div class="scene__wrap scene__wrap--end">
+          <p class="poetic">Ini baru permukaannya.</p>
+          <h2 class="section__title" id="judul-gelap">Siap melihat lebih dalam?</h2>
+          <a class="button" href="/sel.html">Lanjut: Lab Sel →</a>
+        </div>
+      </section>
+      </div>
+    </main>
+    <script type="module" src="/src/pages/landing/main.js"></script>
+  </body>
+</html>

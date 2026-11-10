@@ -1,0 +1,8 @@
+[
+  { "id": "beranda", "file": "index.html", "label": "Beranda", "preview": "Menyelam ke laguna, dari ikan sampai sel." },
+  { "id": "sel", "file": "sel.html", "label": "Lab Sel", "preview": "Sel hewan dan sel tumbuhan beserta organelnya." },
+  { "id": "gerbang", "file": "gerbang-sel.html", "label": "Gerbang Sel", "preview": "Membran plasma dan cara zat keluar masuk sel." },
+  { "id": "osmosis", "file": "lab-osmosis.html", "label": "Lab Osmosis", "preview": "Amati sel di larutan hipotonik, isotonik, hipertonik." },
+  { "id": "kuis", "file": "kuis.html", "label": "Kuis", "preview": "Latihan soal dan mode ujian dengan laporan nilai." },
+  { "id": "rangkuman", "file": "rangkuman.html", "label": "Rangkuman", "preview": "Ringkasan materi, sumber, kredit, dan anggota." }
+]

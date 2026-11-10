@@ -1,0 +1,333 @@
+[
+  {
+    "kategori": "materi",
+    "judul": "Slide BAB 1 SEL, Biologi XI, TP 25/26",
+    "pembuat": "Guru Biologi SMAK 1 BPK Penabur",
+    "lisensi": "Materi kelas",
+    "url": "",
+    "catatan": "",
+    "dipakaiDi": [
+      "semua"
+    ]
+  },
+  {
+    "kategori": "materi",
+    "judul": "Slide SEL Update 2, Biologi XI",
+    "pembuat": "Guru Biologi Kolese Kanisius",
+    "lisensi": "Materi kelas",
+    "url": "",
+    "catatan": "",
+    "dipakaiDi": [
+      "semua"
+    ]
+  },
+  {
+    "kategori": "materi",
+    "judul": "Rangkuman Biologi Sel",
+    "pembuat": "Kelompok 4 XI-A5",
+    "lisensi": "Karya kelompok",
+    "url": "",
+    "catatan": "",
+    "dipakaiDi": [
+      "semua"
+    ]
+  },
+  {
+    "kategori": "materi",
+    "judul": "Rancangan Website Sel Kelompok 4 (Pertemuan 2)",
+    "pembuat": "Kelompok 4 XI-A5",
+    "lisensi": "Karya kelompok",
+    "url": "",
+    "catatan": "",
+    "dipakaiDi": [
+      "semua"
+    ]
+  },
+  {
+    "kategori": "materi",
+    "judul": "Cell Size and Scale",
+    "pembuat": "Genetic Science Learning Center, University of Utah",
+    "lisensi": "Rujukan",
+    "url": "https://learn.genetics.utah.edu/content/cells/scale/",
+    "catatan": "",
+    "dipakaiDi": [
+      "index.html"
+    ]
+  },
+  {
+    "kategori": "font",
+    "judul": "Montserrat",
+    "pembuat": "Julieta Ulanovsky dkk. (Google Fonts)",
+    "lisensi": "SIL Open Font License 1.1",
+    "url": "https://fonts.google.com/specimen/Montserrat",
+    "catatan": "",
+    "dipakaiDi": [
+      "semua"
+    ]
+  },
+  {
+    "kategori": "font",
+    "judul": "Cormorant Garamond",
+    "pembuat": "Christian Thalmann (Google Fonts)",
+    "lisensi": "SIL Open Font License 1.1",
+    "url": "https://fonts.google.com/specimen/Cormorant+Garamond",
+    "catatan": "",
+    "dipakaiDi": [
+      "semua"
+    ]
+  },
+  {
+    "kategori": "library",
+    "judul": "Vite",
+    "pembuat": "Evan You & kontributor Vite",
+    "lisensi": "MIT",
+    "url": "https://vite.dev",
+    "catatan": "Alat build",
+    "dipakaiDi": [
+      "semua"
+    ]
+  },
+  {
+    "kategori": "library",
+    "judul": "three.js",
+    "pembuat": "mrdoob & kontributor three.js",
+    "lisensi": "MIT",
+    "url": "https://threejs.org",
+    "catatan": "",
+    "dipakaiDi": [
+      "index.html",
+      "sel.html",
+      "gerbang-sel.html"
+    ]
+  },
+  {
+    "kategori": "library",
+    "judul": "Draco 3D (dekoder)",
+    "pembuat": "Google",
+    "lisensi": "Apache-2.0",
+    "url": "https://github.com/google/draco",
+    "catatan": "Membuka model 3D yang dikompresi. File dekoder disalin dari paket three.js ke public/draco/.",
+    "dipakaiDi": [
+      "sel.html"
+    ]
+  },
+  {
+    "kategori": "library",
+    "judul": "GSAP + ScrollTrigger",
+    "pembuat": "GreenSock (Webflow)",
+    "lisensi": "GSAP Standard License (gratis)",
+    "url": "https://gsap.com",
+    "catatan": "",
+    "dipakaiDi": [
+      "semua"
+    ]
+  },
+  {
+    "kategori": "library",
+    "judul": "Lenis",
+    "pembuat": "darkroom.engineering",
+    "lisensi": "MIT",
+    "url": "https://lenis.darkroom.engineering",
+    "catatan": "",
+    "dipakaiDi": [
+      "index.html"
+    ]
+  },
+  {
+    "kategori": "library",
+    "judul": "glTF-Transform",
+    "pembuat": "Don McCurdy",
+    "lisensi": "MIT",
+    "url": "https://gltf-transform.dev",
+    "catatan": "Alat kompres model, tidak dikirim ke browser",
+    "dipakaiDi": []
+  },
+  {
+    "kategori": "ai",
+    "judul": "Claude Code (Anthropic)",
+    "pembuat": "Anthropic",
+    "model": "Opus 5.5, Fable 5.2",
+    "lisensi": "",
+    "url": "https://claude.ai",
+    "catatan": "Claude digunakan sebagai asisten dalam proses pengembangan website, mulai dari brainstorming awal, penyusunan konsep desain, hingga pemrograman. Dalam tahap pengembangan, Claude membantu proses debugging, perbaikan bug, serta koreksi kesalahan penulisan. Claude juga dimanfaatkan untuk memperbaiki masalah tampilan dan menyempurnakan desain agar website terlihat lebih rapi dan profesional. Selain itu, Claude membantu proses deployment website melalui GitHub dan Netlify. Seluruh materi yang dimuat telah diperiksa kembali oleh kelompok berdasarkan slide dari guru dan sumber-sumber yang dicantumkan.",
+    "dipakaiDi": [
+      "semua"
+    ]
+  },
+  {
+    "kategori": "ai",
+    "judul": "Codex (OpenAI)",
+    "pembuat": "OpenAI",
+    "model": "Astra 6, Sol 6.1, Terra 6.1",
+    "lisensi": "",
+    "url": "https://openai.com/codex/",
+    "catatan": "ChatGPT digunakan sebagai asisten dalam proses pemrograman website. Dalam pembuatannya, ChatGPT membantu penulisan kode selama proses pengembangan, melakukan debugging untuk menemukan penyebab error, memperbaiki bug yang ditemukan pada website, serta mengoreksi kesalahan penulisan. Seluruh materi telah diperiksa kembali oleh kelompok berdasarkan slide dari guru dan sumber-sumber yang dicantumkan.",
+    "dipakaiDi": ["semua"]
+  },
+  {
+    "kategori": "model3d",
+    "judul": "Adegan 3D permukaan laguna Beranda (air, cahaya, partikel) dan render sel untuk video walkthrough",
+    "pembuat": "Kelompok 4 XI-A5 (dibuat dengan kode Three.js)",
+    "lisensi": "Karya sendiri",
+    "url": "",
+    "catatan": "Dibuat dari kode Three.js. Klip sel hewan dan sel tumbuhan di video walkthrough adalah render model Lab Sel (montanna dan okchs, lihat entri model 3D). Ilustrasi, bukan skala sebenarnya.",
+    "dipakaiDi": [
+      "index.html"
+    ]
+  },
+  {
+    "kategori": "media",
+    "judul": "Qwantani Morning (Pure Sky), HDRI langit pagi",
+    "pembuat": "Jarod Guest (Poly Haven)",
+    "lisensi": "CC0",
+    "url": "https://polyhaven.com/a/qwantani_morning_puresky",
+    "catatan": "Versi 1k, dipakai sebagai langit dan pencahayaan lingkungan adegan 1.",
+    "dipakaiDi": [
+      "index.html"
+    ]
+  },
+  {
+    "kategori": "media",
+    "judul": "A body of water surrounded by trees and rocks (Waisilip, Raja Ampat)",
+    "pembuat": "Simon Spring (Unsplash)",
+    "lisensi": "Unsplash License",
+    "url": "https://unsplash.com/photos/a-body-of-water-surrounded-by-trees-and-rocks-x3F81F-1ih8",
+    "catatan": "Dipotong, langit dihapus dengan shader, diberi kabut biru (dimodifikasi). Lapisan pulau dekat dan jauh.",
+    "dipakaiDi": [
+      "index.html"
+    ]
+  },
+  {
+    "kategori": "media",
+    "judul": "A group of rocks sitting on top of a body of water (Raja Ampat)",
+    "pembuat": "Simon Spring (Unsplash)",
+    "lisensi": "Unsplash License",
+    "url": "https://unsplash.com/photos/a-group-of-rocks-sitting-on-top-of-a-body-of-water-xg1GQCErGhs",
+    "catatan": "Dipotong, langit dihapus dengan shader, diberi kabut biru (dimodifikasi). Lapisan pulau tengah.",
+    "dipakaiDi": [
+      "index.html"
+    ]
+  },
+  {
+    "kategori": "media",
+    "judul": "waternormals.jpg (tekstur normal air)",
+    "pembuat": "three.js examples",
+    "lisensi": "MIT",
+    "url": "https://github.com/mrdoob/three.js/blob/r170/examples/textures/waternormals.jpg",
+    "catatan": "Dipakai oleh Water.js untuk riak permukaan air.",
+    "dipakaiDi": [
+      "index.html"
+    ]
+  },
+  {
+    "kategori": "media",
+    "judul": "Ocean Surface (klip video)",
+    "pembuat": "Pavel Danilyuk",
+    "lisensi": "Pexels License (bebas dipakai, atribusi tidak wajib tetapi dicantumkan)",
+    "url": "https://www.pexels.com/video/ocean-surface-7318087/",
+    "catatan": "Dipotong dan diberi grade warna teal seragam untuk video walkthrough Beranda (dimodifikasi). Detik 2–7, adegan masuk ke bawah permukaan.",
+    "dipakaiDi": [
+      "index.html"
+    ]
+  },
+  {
+    "kategori": "media",
+    "judul": "Underwater Footage of a Shoal of Fish Swimming in a Coral Reef (klip video)",
+    "pembuat": "Adrien JACTA",
+    "lisensi": "Pexels License (bebas dipakai, atribusi tidak wajib tetapi dicantumkan)",
+    "url": "https://www.pexels.com/video/underwater-footage-of-a-shoal-of-fish-swimming-in-a-coral-reef-14920040/",
+    "catatan": "Dipotong dan diberi grade warna teal seragam untuk video walkthrough Beranda (dimodifikasi). Detik 5–11, kawanan ikan.",
+    "dipakaiDi": [
+      "index.html"
+    ]
+  },
+  {
+    "kategori": "media",
+    "judul": "Vibrant Underwater Scene in Gili Islands (klip video)",
+    "pembuat": "Sunda Manda",
+    "lisensi": "Pexels License (bebas dipakai, atribusi tidak wajib tetapi dicantumkan)",
+    "url": "https://www.pexels.com/video/vibrant-underwater-scene-in-gili-islands-31141544/",
+    "catatan": "Dipotong dan diberi grade warna teal seragam untuk video walkthrough Beranda (dimodifikasi). Detik 8–14, terumbu karang di Gili, Indonesia.",
+    "dipakaiDi": [
+      "index.html"
+    ]
+  },
+  {
+    "kategori": "media",
+    "judul": "Turtle eating sea grass - Mayotte (klip video)",
+    "pembuat": "Adrien JACTA",
+    "lisensi": "Pexels License (bebas dipakai, atribusi tidak wajib tetapi dicantumkan)",
+    "url": "https://www.pexels.com/video/turtle-eating-sea-grass-mayotte-17801322/",
+    "catatan": "Dipotong dan diberi grade warna teal seragam untuk video walkthrough Beranda (dimodifikasi). Detik 4–10, padang lamun.",
+    "dipakaiDi": [
+      "index.html"
+    ]
+  },
+  {
+    "kategori": "media",
+    "judul": "Time Lapse of a Sandy Seabed (klip video)",
+    "pembuat": "Markus Winkler",
+    "lisensi": "Pexels License (bebas dipakai, atribusi tidak wajib tetapi dicantumkan)",
+    "url": "https://www.pexels.com/video/time-lapse-of-a-sandy-seabed-11781634/",
+    "catatan": "Dipotong dan diberi grade warna teal seragam untuk video walkthrough Beranda (dimodifikasi). Detik 10–15, dasar laguna.",
+    "dipakaiDi": [
+      "index.html"
+    ]
+  },
+  {
+    "kategori": "media",
+    "judul": "Microscope Close-Up of Cells (foto mikroskop)",
+    "pembuat": "Lidija Ostojić",
+    "lisensi": "Pexels License (bebas dipakai, atribusi tidak wajib tetapi dicantumkan)",
+    "url": "https://www.pexels.com/photo/microscope-close-up-of-cells-16328884/",
+    "catatan": "Dipotong 16:9 dan diberi zoom pelan di video walkthrough (dimodifikasi). Contoh sel tumbuhan (daun dengan stomata), bukan sel lamun.",
+    "dipakaiDi": [
+      "index.html"
+    ]
+  },
+  {
+    "kategori": "model3d",
+    "judul": "Model 3D buatan sendiri: detail organel, peroksisom, membran plasma Gerbang Sel, ion Na⁺/K⁺",
+    "pembuat": "Kelompok 4 XI-A5 (dibuat dengan kode Three.js)",
+    "lisensi": "Karya sendiri",
+    "url": "",
+    "catatan": "Dibuat dari kode Three.js. Sel hewan dan sel tumbuhan di Lab Sel memakai model montanna dan okchs (lihat entri di bawah); model buatan sendiri dipakai sebagai cadangan. Ilustrasi, bukan skala sebenarnya.",
+    "dipakaiDi": [
+      "sel.html",
+      "gerbang-sel.html"
+    ]
+  },
+  {
+    "kategori": "model3d",
+    "judul": "Animal cell 2.0 - annotated in English",
+    "pembuat": "montanna (remix dari model Lauri Purhonen)",
+    "lisensi": "CC BY 4.0",
+    "url": "https://sketchfab.com/3d-models/animal-cell-20-annotated-in-english-0d9f7f4257224975b2ef83a283709b2f",
+    "catatan": "Dikompresi & material dimodifikasi (Draco, 70,6 MB → 1,8 MB; warna dan bahan diganti agar cocok dengan lab gelap). Salinan diunduh dari repositori GitHub BiologySimulation/BiologySimulation.",
+    "dipakaiDi": [
+      "sel.html"
+    ]
+  },
+  {
+    "kategori": "model3d",
+    "judul": "Plant Cell | Biology",
+    "pembuat": "Oliver (okchs)",
+    "lisensi": "CC BY 4.0",
+    "url": "https://sketchfab.com/3d-models/plant-cell-biology-0640c7a14f41400fbdac382c7de1d776",
+    "catatan": "Dikompresi & material dimodifikasi (Draco, 8,7 MB → 0,76 MB; warna dan bahan diganti; sitoskeleton dan lisosom tidak ditampilkan).",
+    "dipakaiDi": [
+      "sel.html"
+    ]
+  },
+  {
+    "kategori": "media",
+    "judul": "Animasi mikroskop Lab Osmosis (sel darah merah dan sel bawang merah)",
+    "pembuat": "Kelompok 4 XI-A5 (digambar dengan kode Canvas 2D)",
+    "lisensi": "Karya sendiri",
+    "url": "",
+    "catatan": "Ilustrasi animasi, bukan foto mikroskop.",
+    "dipakaiDi": [
+      "lab-osmosis.html"
+    ]
+  }
+]
