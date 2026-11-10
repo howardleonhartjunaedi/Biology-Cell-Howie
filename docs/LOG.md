@@ -323,3 +323,8 @@ Chrome menguji roda mouse pada keenam halaman, termasuk daftar organel yang dapa
 Menyesuaikan gerakan lensa judul dengan referensi Howard, memperpanjang gema riak menjadi 2,4 detik, serta sedikit menaikkan parallax pulau. Sesuai perubahan permintaan, tidak ada glow tambahan pada teks.
 
 Build dan shader WebGL diuji di Chrome pada 1280 × 800 dan 390 × 844; tidak ada overflow atau error JavaScript. Mode Tenang diperiksa. Tangkapan layar tersedia sebagai `ripple-panjang-1280.png` dan `ripple-panjang-390.png`.
+## Selasa, 10 November 2026 — Animasi pertukaran sel
+
+Gerakan keluar sel dibuat lebih jauh ke samping dan ke belakang sambil memudar, sehingga pergantian tampak seperti kedua model bertukar tempat. Gerakan masuk tetap menggunakan animasi yang sudah ada.
+
+Build berhasil. Chrome WebGL memeriksa pertukaran kedua arah pada desktop, pertukaran pada lebar 390 piksel, penggantian cepat, detail organel, dan Mode Tenang tanpa exception JavaScript. Dokumentasi tampilan akhir disimpan di `docs/laporan/screenshots/lab-swap-selesai.png`. Belum diuji pada perangkat fisik.

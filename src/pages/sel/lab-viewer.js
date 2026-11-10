@@ -18,7 +18,8 @@ const MAX_PITCH = THREE.MathUtils.degToRad(15);
 const CELL_CAMERA = new THREE.Vector3(0, 0.8, 13);
 const DETAIL_CAMERA = new THREE.Vector3(0, 0.4, 9);
 const SLIDE_DISTANCE = 9;
-const EXIT_SLIDE_DISTANCE = 3.5;
+const EXIT_SLIDE_DISTANCE = 9;
+const EXIT_DEPTH = 5;
 const EXIT_DURATION_FACTOR = 1.5;
 const SWIPE_MIN_PX = 60;
 const NARROW_ASPECT = 0.8;
@@ -86,6 +87,7 @@ export function createLabViewer({ onPick, onHover, onSwipe, onPartPick }) {
     gsap.killTweensOf(outgoing.position);
     outgoing.visible = false;
     setCellOpacity(outgoing, 1);
+    outgoing.position.z = 0;
     outgoing = null;
     fade.opacity = 1;
   }
@@ -108,7 +110,7 @@ export function createLabViewer({ onPick, onHover, onSwipe, onPartPick }) {
       outgoing = model;
       setCellOpacity(model, fade.opacity);
       if (wasMoving && remaining > 0) {
-        gsap.to(model.position, { x: exitDestination, duration: remaining, ease: EASE.inOut });
+        gsap.to(model.position, { x: exitDestination, z: -EXIT_DEPTH, duration: remaining, ease: EASE.inOut });
       }
     } else if (wasMoving) {
       gsap.to(model.position, { x: 0, duration: DURATION.slow, ease: EASE.inOut });
@@ -216,6 +218,7 @@ export function createLabViewer({ onPick, onHover, onSwipe, onPartPick }) {
     current = id;
     card.hide();
     next.visible = true;
+    next.position.z = 0;
     setCellOpacity(next, 1);
     if (!previous || reduce) {
       if (previous) previous.visible = false;
@@ -226,7 +229,7 @@ export function createLabViewer({ onPick, onHover, onSwipe, onPartPick }) {
     outgoing = previous;
     exitDestination = -EXIT_SLIDE_DISTANCE * direction;
     fade.opacity = 1;
-    gsap.to(previous.position, { x: exitDestination, duration: DURATION.slow * EXIT_DURATION_FACTOR, ease: EASE.inOut });
+    gsap.to(previous.position, { x: exitDestination, z: -EXIT_DEPTH, duration: DURATION.slow * EXIT_DURATION_FACTOR, ease: EASE.inOut });
     fadeTween = gsap.to(fade, {
       opacity: 0,
       duration: DURATION.slow * EXIT_DURATION_FACTOR,
@@ -290,6 +293,7 @@ export function createLabViewer({ onPick, onHover, onSwipe, onPartPick }) {
     }
     cells[current].visible = true;
     cells[current].position.x = 0;
+    cells[current].position.z = 0;
     camera.position.copy(CELL_CAMERA);
     requestAnimationFrame(resize);
   }

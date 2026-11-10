@@ -899,3 +899,6 @@ Kartu informasi bersama untuk Lab Sel dan Gerbang Sel mengukur ukuran kartu dan 
 - `src/pages/landing/title-ripple.js` mengirim hingga 24 sumber riak ke shader, dengan lensa kursor dan riak yang lebih terlihat saat kursor bergerak atau layar diketuk.
 - `src/pages/landing/shaders/title.frag.glsl` menambahkan sedikit gerakan menyamping pada lensa, lalu mempertahankan gema cincin selama 2,4 detik sebelum menghilang. Efek ini membelokkan tekstur huruf dan tidak menambahkan glow.
 - `src/pages/landing/scenes/island-layers.js` sedikit memperbesar perpindahan horizontal dan vertikal lapisan pulau berdasarkan posisi kursor, sehingga jarak antarlapisan lebih terasa.
+## Animasi pertukaran sel — 10 November 2026
+
+`src/pages/sel/lab-viewer.js` menggerakkan model lama ke samping sejauh 9 unit dan menjauh dari kamera sejauh 5 unit sambil memudarkannya selama 1,35 detik. Sel baru masuk dari sisi yang berlawanan. Pergerakan seluruh grup membuat organel ikut bergerak bersama sel. Saat model yang memudar selesai diganti oleh model yang baru dimuat, posisi dan tujuan geraknya tetap dilanjutkan. Posisi kedalaman model dikembalikan saat model dipilih lagi atau ketika kembali dari detail.
