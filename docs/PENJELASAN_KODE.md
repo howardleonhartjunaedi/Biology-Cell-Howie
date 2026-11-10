@@ -863,3 +863,7 @@ Kartu informasi bersama untuk Lab Sel dan Gerbang Sel mengukur ukuran kartu dan 
 
 - `src/pages/landing/landing.css` memindahkan lapisan gelap adegan menyelam ke elemen semu `::before`. Masker gradien membuat lapisan memudar pada bagian atas dan bawah, sehingga batas dengan pemandangan air tidak tampak sebagai garis mendadak. Teks tetap berada di atas lapisan.
 - `src/core/smooth-scroll.js` mengubah `WHEEL_MULTIPLIER` dari 0,9 menjadi 0,55. Putaran roda mouse menghasilkan jarak gulir yang lebih pendek. `LERP` turun dari 0,1 menjadi 0,075 agar gerak menuju posisi baru lebih perlahan. Mode Tenang dan preferensi gerak dikurangi tetap memakai pengaturan gulir sebelumnya.
+## Transisi walkthrough dan gulir — 10 November 2026
+
+- `src/pages/landing/sequence.css` memakai masker gradien pada lapisan gelap walkthrough agar lapisan itu memudar di batas awal dan akhir. Latar ringkasan memakai gradien yang berawal transparan lalu menjadi gelap secara bertahap. Latar bagian penutup dimulai dengan warna dan opasitas yang sama dengan akhir ringkasan. Warna gelap menggunakan token `--c-lab`.
+- `src/core/smooth-scroll.js` menurunkan `WHEEL_MULTIPLIER` dari 0,55 ke 0,4 agar satu putaran roda menghasilkan jarak lebih pendek. `LERP` turun dari 0,075 ke 0,05 sehingga pergerakan menuju posisi baru lebih halus.

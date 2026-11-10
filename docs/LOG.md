@@ -278,3 +278,8 @@ Build berhasil. Chrome WebGL pada 1280 × 800 mencapai 19,84° di dekat tepi kan
 Lapisan gelap adegan menyelam kini memudar di batas atas dan bawah untuk mengurangi garis mendadak di atas air. Kecepatan gulir roda dan faktor peralihan Lenis dikurangi.
 
 Build berhasil. Chrome WebGL memeriksa transisi pada 1280 × 800 dan menyimpan `docs/laporan/screenshots/transisi-beranda.png`. Masukan roda 400 piksel menghasilkan perpindahan sekitar 220 piksel. Mode Tenang dapat diaktifkan dan tidak ditemukan exception JavaScript.
+## Selasa, 10 November 2026 — Transisi walkthrough ke ringkasan
+
+Lapisan gelap walkthrough memudar pada kedua ujungnya dan latar ringkasan berubah gelap secara bertahap. Warna latar akhir ringkasan disamakan dengan awal penutup. Lenis diperlambat dan pelunakannya ditingkatkan.
+
+Build berhasil. Chrome WebGL pada 1280 × 800 memeriksa transisi menuju ringkasan dan menyimpan `docs/laporan/screenshots/transisi-ringkasan.png`. Masukan roda 400 piksel menghasilkan perpindahan 160 piksel. Mode Tenang dapat diaktifkan dan tidak ditemukan exception JavaScript.

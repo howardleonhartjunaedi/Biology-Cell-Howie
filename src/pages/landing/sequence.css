@@ -24,6 +24,7 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(90deg, rgb(3 22 28 / 0.88) 0%, rgb(3 22 28 / 0.6) 34%, rgb(3 22 28 / 0) 58%);
+  mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
   pointer-events: none;
 }
 
@@ -190,11 +191,15 @@
 .sequence-live .scene--end {
   position: relative;
   z-index: 2;
-  background: rgb(3 22 28 / 0.72);
+  background: color-mix(in srgb, var(--c-lab) 72%, transparent);
+}
+
+.sequence-live .scene--summary {
+  background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--c-lab) 72%, transparent) 25%);
 }
 
 .sequence-live .scene--end {
-  background: linear-gradient(180deg, rgb(3 22 28 / 0.72), rgb(3 22 28 / 0.35));
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c-lab) 72%, transparent), color-mix(in srgb, var(--c-lab) 35%, transparent));
 }
 
 .sequence-static .scene--summary,
