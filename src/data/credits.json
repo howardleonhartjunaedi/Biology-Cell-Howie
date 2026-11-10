@@ -144,14 +144,23 @@
   },
   {
     "kategori": "ai",
-    "judul": "Claude (Anthropic)",
+    "judul": "Claude Code (Anthropic)",
     "pembuat": "Anthropic",
     "lisensi": "-",
     "url": "https://claude.ai",
-    "catatan": "Website ini dibuat dengan bantuan Claude (Anthropic) sebagai asisten pemrograman. Seluruh materi telah diperiksa oleh kelompok berdasarkan slide guru dan sumber yang dicantumkan.",
+    "catatan": "Digunakan sebagai asisten pemrograman dengan model Opus 5.5 dan Fable 5.2. Seluruh materi telah diperiksa oleh kelompok berdasarkan slide guru dan sumber yang dicantumkan.",
     "dipakaiDi": [
       "semua"
     ]
+  },
+  {
+    "kategori": "ai",
+    "judul": "Codex (OpenAI)",
+    "pembuat": "OpenAI",
+    "lisensi": "",
+    "url": "https://openai.com/codex/",
+    "catatan": "Digunakan sebagai asisten pemrograman dengan model Astra 6, Sol 6.1, dan Terra.",
+    "dipakaiDi": ["semua"]
   },
   {
     "kategori": "model3d",

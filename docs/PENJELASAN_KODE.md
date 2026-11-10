@@ -882,3 +882,6 @@ Kartu informasi bersama untuk Lab Sel dan Gerbang Sel mengukur ukuran kartu dan 
 ## Fade model sel yang keluar — 10 November 2026
 
 `src/pages/sel/lab-viewer.js` menggerakkan model lama ke samping dengan jarak lebih pendek sambil menurunkan opacity secara merata selama 1,35 detik. Model lama disembunyikan setelah opacity mencapai nol. Animasi masuk model baru tetap memakai jarak dan durasi sebelumnya. Jika model selesai dimuat di tengah transisi, posisi, sisa gerakan keluar, dan opacity diterapkan ke model pengganti.
+## Kredit penggunaan AI — 10 November 2026
+
+`src/data/credits.json` mencatat Claude Code dan Codex sebagai dua entri kategori `ai`, beserta nama model yang diberikan Howard. `src/pages/rangkuman/main.js` membaca dan menampilkan entri tersebut otomatis di kelompok Penggunaan AI. Pernyataan di `docs/KONTEN-MATERI.md` diperbarui agar sesuai dengan kredit.

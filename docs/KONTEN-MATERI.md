@@ -259,7 +259,7 @@ Contoh soal (sudah dari rancangan Pertemuan 2):
   - 33 — Raphael Krisna Rahardian
 - Sekolah: Kolese Kanisius, Jakarta · Tahun pelajaran 2025/2026 · Mata pelajaran: Biologi & Web Development
 - Guru: [ISI nama guru Biologi] · [ISI nama guru Web Development]
-- Pernyataan AI: "Website ini dibuat dengan bantuan Claude (Anthropic) sebagai asisten pemrograman. Seluruh materi telah diperiksa oleh kelompok berdasarkan slide guru dan sumber yang dicantumkan."
+- Pernyataan AI: "Website ini dibuat dengan bantuan Claude Code dari Anthropic menggunakan model Opus 5.5 dan Fable 5.2, serta Codex dari OpenAI menggunakan model Astra 6, Sol 6.1, dan Terra, sebagai asisten pemrograman. Seluruh materi telah diperiksa oleh kelompok berdasarkan slide guru dan sumber yang dicantumkan."
 
 ---
 

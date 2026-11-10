@@ -300,3 +300,8 @@ Build berhasil. Chrome menguji 1440 × 900 dan 1024 × 768 dengan roda mouse, ta
 Menyesuaikan permintaan Howard: model sel lama bergerak ke samping dan memudar perlahan sampai hilang, sedangkan animasi masuk model baru tetap. Gerakan model lama dipersingkat agar fade terlihat sebelum model keluar dari layar.
 
 Build berhasil. Chrome WebGL mencatat 29 pembaruan opacity selama transisi 1,35 detik, dari 0,82 hingga 0,02 pada sampel yang teramati. Pergantian cepat diuji tanpa exception JavaScript.
+## Selasa, 10 November 2026 — Kredit Claude Code dan Codex
+
+Menambahkan nama Claude Code dengan model Opus 5.5 dan Fable 5.2, serta Codex dengan model Astra 6, Sol 6.1, dan Terra sesuai keterangan Howard. Data kredit dan pernyataan AI di KONTEN-MATERI diperbarui.
+
+Build berhasil dan halaman Rangkuman di Chrome menampilkan kedua alat serta seluruh nama model.
