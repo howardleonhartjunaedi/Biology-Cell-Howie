@@ -42,6 +42,8 @@
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --ease-in: cubic-bezier(0.55, 0, 1, 0.45);
+  --hero-perspective: 1000px;
+  --hero-scrim-opacity: 0.74;
 
   /* Grid 12 kolom */
   --grid-columns: 12;

@@ -10,9 +10,9 @@ const CLICK_AMPLITUDE = 5;
 const MAX_LENS_PX = 6;
 const SPEED_FOR_MAX = 900;
 // Kemiringan perspektif mengikuti kursor (mirip kemiringan model di Lab Sel).
-const MAX_TILT_DEG = 7;
-const PERSPECTIVE_PX = 1400;
-const TILT_EASE = 6;
+const MAX_TILT_DEG = 20;
+const TILT_LIMIT = Math.sin(THREE.MathUtils.degToRad(MAX_TILT_DEG));
+const TILT_EASE = 8;
 
 function drawText(canvas, title, tagline, dpr) {
   canvas.width = window.innerWidth * dpr;
@@ -38,6 +38,8 @@ function drawText(canvas, title, tagline, dpr) {
 }
 
 export function createTitleRipple(title, tagline) {
+  const heroText = title.parentElement;
+  const style = getComputedStyle(heroText);
   const canvas = document.createElement('canvas');
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
@@ -59,10 +61,11 @@ export function createTitleRipple(title, tagline) {
     uRipples: { value: ripples },
     uTilt: { value: new THREE.Vector2() },
     uTiltCenter: { value: new THREE.Vector2() },
-    uPerspective: { value: PERSPECTIVE_PX },
+    uPerspective: { value: parseFloat(style.getPropertyValue('--hero-perspective')) },
+    uScrimOpacity: { value: parseFloat(style.getPropertyValue('--hero-scrim-opacity')) },
+    uScrimColor: { value: new THREE.Color(style.getPropertyValue('--c-lab').trim()) },
   };
   const tiltTarget = new THREE.Vector2();
-  const tiltLayer = document.querySelector('.hero-meta');
   const calm = () => document.documentElement.classList.contains('calm')
     || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -99,6 +102,7 @@ export function createTitleRipple(title, tagline) {
     lastMove = { x: event.clientX, y: event.clientY, t: now };
     if (event.pointerType === 'mouse') {
       tiltTarget.set((event.clientX / window.innerWidth) * 2 - 1, (event.clientY / window.innerHeight) * 2 - 1);
+      tiltTarget.clampScalar(-1, 1);
     }
     uniforms.uMouse.value.set(event.clientX, event.clientY);
 
@@ -111,6 +115,10 @@ export function createTitleRipple(title, tagline) {
 
   function onPointerDown(event) {
     addRipple(event.clientX, event.clientY, CLICK_AMPLITUDE);
+  }
+
+  function onPointerLeave(event) {
+    if (event.pointerType === 'mouse') tiltTarget.set(0, 0);
   }
 
   function redraw(pixelRatio) {
@@ -135,23 +143,24 @@ export function createTitleRipple(title, tagline) {
 
     const goal = calm() ? 0 : 1;
     const ease = 1 - Math.exp(-TILT_EASE * dt);
-    const k = Math.sin(THREE.MathUtils.degToRad(MAX_TILT_DEG)) * goal;
+    const k = TILT_LIMIT * goal;
     uniforms.uTilt.value.x += (tiltTarget.x * k - uniforms.uTilt.value.x) * ease;
     uniforms.uTilt.value.y += (tiltTarget.y * k - uniforms.uTilt.value.y) * ease;
-    if (tiltLayer) {
-      // Teks DOM (label & kalimat) dimiringkan dengan sudut yang sama lewat CSS.
-      const toDeg = MAX_TILT_DEG / Math.max(Math.sin(THREE.MathUtils.degToRad(MAX_TILT_DEG)), 1e-4);
-      tiltLayer.style.setProperty('--tilt-y', `${(uniforms.uTilt.value.x * toDeg).toFixed(2)}deg`);
-      tiltLayer.style.setProperty('--tilt-x', `${(-uniforms.uTilt.value.y * toDeg).toFixed(2)}deg`);
-    }
+    const tilt = uniforms.uTilt.value;
+    heroText.style.setProperty('--tilt-y', `${THREE.MathUtils.radToDeg(Math.asin(tilt.x)).toFixed(2)}deg`);
+    heroText.style.setProperty('--tilt-x', `${THREE.MathUtils.radToDeg(Math.asin(-tilt.y)).toFixed(2)}deg`);
   }
 
   window.addEventListener('pointermove', onPointerMove, { passive: true });
   window.addEventListener('pointerdown', onPointerDown, { passive: true });
+  document.documentElement.addEventListener('pointerleave', onPointerLeave);
 
   function dispose() {
     window.removeEventListener('pointermove', onPointerMove);
     window.removeEventListener('pointerdown', onPointerDown);
+    document.documentElement.removeEventListener('pointerleave', onPointerLeave);
+    heroText.style.removeProperty('--tilt-x');
+    heroText.style.removeProperty('--tilt-y');
     texture.dispose();
     material.dispose();
   }

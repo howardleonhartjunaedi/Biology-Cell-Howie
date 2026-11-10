@@ -45,7 +45,7 @@
 
 /* Label dan kalimat pembuka: teks DOM biasa, dimiringkan mengikuti kursor (--tilt-x/y dari title-ripple.js). */
 .hero-meta {
-  transform: perspective(1400px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transform: perspective(var(--hero-perspective)) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
   transform-origin: 50% 100%;
 }
 

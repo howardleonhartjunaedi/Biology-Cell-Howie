@@ -320,6 +320,7 @@ ScrollTrigger over a tall pinned section. Text panels are normal HTML positioned
 - Real `<h1>SEL</h1>` and tagline exist in HTML (for SEO, screen readers, Mode Tenang); the WebGL version is drawn on top.
 - Text rendered to a canvas texture (Montserrat 800 "SEL", letter-spaced; Cormorant Garamond Italic tagline below), shown on a full-screen quad.
 - **At rest: 100% sharp, no motion.**
+- **Cursor tilt (updated 10 Nov 2026):** up to 20° per axis with a shared 1000 px perspective for the title and supporting text. Ease back to neutral when the mouse leaves. Deepen the existing background gradient behind the text for contrast over the bright sky.
 - **Cursor lens:** pixels within ~90 px of the cursor are pushed radially outward with a smooth (cosine) falloff — **subtle**, max ~6 px, scaled by cursor speed.
 - **Ripple echo:** cursor movement drops ripple sources every ~40 px; each is a ring expanding at ~120 px/s, Gaussian band ~24 px, sine displacement, **amplitude 1.5–3.5 px**, fades out over **~1.5 s**. Click = one bigger drop (~5 px). Implement as a GPU **ripple height-map** (ping-pong render targets) or summed rings in the fragment shader — choose the one you can explain more simply.
 - Bilinear sampling (default texture filtering) so the bend looks like refraction, not jagged pixels.

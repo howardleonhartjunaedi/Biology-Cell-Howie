@@ -268,3 +268,8 @@ Chrome menguji enam halaman dalam Mode Tenang di tujuh ukuran dari 320 × 568 sa
 ## 10 November 2026 — Hero Beranda diperbarui
 
 Pulau di latar sekarang menyambung dari tepi kiri ke tepi kanan (foto diulang bolak-balik), tidak lagi terpotong. Teks hero ditata ulang: label kecil, judul dengan jarak huruf lebih rapat, slogan, dan kalimat pembuka dari KONTEN §1. Kontras dinaikkan dengan bayangan teks dan elips gelap di belakang judul. Judul, slogan, label, dan kalimat miring mengikuti kursor (maks. 7°, mati di Mode Tenang). Diuji di Playwright pada 1600 × 800 dan 390 × 800 tanpa gulir horizontal dan tanpa error konsol. Tangkapan layar: `docs/laporan/screenshots/fase8-hero-*.png`.
+## Selasa, 10 November 2026 — Judul Beranda lebih responsif terhadap kursor
+
+Kemiringan maksimum naik dari 7° ke 20° per sumbu. Perspektif diperkuat dan kedua blok teks pendamping sekarang mengikuti kemiringan judul. Gradasi di belakang teks dibuat lebih gelap dan menjangkau kalimat pembuka agar teks lebih mudah dibaca di atas pemandangan terang.
+
+Build berhasil. Chrome WebGL pada 1280 × 800 mencapai 19,84° di dekat tepi kanan. Kedua blok teks pendamping mengikuti sudut tersebut, kembali ke 0° setelah mouse keluar, dan berhenti miring ketika Mode Tenang diaktifkan. Tampilan diperiksa lewat `docs/laporan/screenshots/hero-tilt-contrast.png`.

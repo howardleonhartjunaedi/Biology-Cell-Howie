@@ -854,3 +854,8 @@ Kartu informasi bersama untuk Lab Sel dan Gerbang Sel mengukur ukuran kartu dan 
 **Kontras.** Judul dan slogan digambar lewat WebGL (`title-ripple.js`), jadi kontrasnya diatur di sana: kanvas teks diberi bayangan lembut, dan shader `title.frag.glsl` menggambar elips gelap transparan di belakang judul sebelum teks. Label dan kalimat DOM memakai `text-shadow`.
 
 **Perspektif mengikuti kursor.** Shader judul menghitung `depth = 1 - dot(jarak dari pusat, uTilt) / perspektif`, lalu membagi posisi dengan `depth`: sisi yang dekat kursor menjauh dan sisi lain mendekat, seperti model di Lab Sel. Label dan kalimat (`.hero-meta`) dimiringkan dengan sudut yang sama lewat variabel CSS `--tilt-x` dan `--tilt-y`. Kemiringan maksimal 7°, dihaluskan tiap frame, hanya untuk mouse, dan dimatikan di Mode Tenang atau saat gerak dikurangi.
+## Kemiringan dan kontras judul Beranda — 10 November 2026
+
+- `src/pages/landing/title-ripple.js` mengubah posisi mouse menjadi target kemiringan hingga 20° per sumbu. Perubahan sudut tetap bertahap. Saat mouse meninggalkan halaman, sudut kembali ke nol. Label dan kalimat pembuka membaca variabel CSS yang sama dari pembungkus teks. Ketika efek dilepas, misalnya saat Mode Tenang dinyalakan, variabel kemiringan dibersihkan.
+- `src/styles/tokens.css` menyimpan jarak perspektif 1000 px yang dipakai oleh shader dan `src/pages/landing/hero.css`. Jarak yang lebih pendek membuat perubahan ukuran sisi dekat dan sisi jauh terlihat lebih jelas.
+- `src/pages/landing/shaders/title.frag.glsl` memperlebar gradasi gelap yang sudah ada di belakang teks. Opasitas pusat naik dari 42% ke 74% dan warna diambil dari token `--c-lab`. Tepi gradasi tetap memudar ke pemandangan.

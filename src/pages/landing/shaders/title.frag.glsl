@@ -13,6 +13,8 @@ uniform vec4 uRipples[MAX_RIPPLES];
 uniform vec2 uTilt;
 uniform vec2 uTiltCenter;
 uniform float uPerspective;
+uniform float uScrimOpacity;
+uniform vec3 uScrimColor;
 
 const float LENS_RADIUS = 90.0;
 const float RING_SPEED = 120.0;
@@ -58,13 +60,12 @@ void main() {
 
   // Scrim: elips gelap lembut di belakang judul supaya krem kontras dengan langit terang.
   vec2 scrimPos = (gl_FragCoord.xy / uDpr) * vec2(1.0, -1.0) + vec2(0.0, uViewport.y) + vec2(0.0, uScroll);
-  vec2 scrimUv = (scrimPos - (uTiltCenter - vec2(0.0, uViewport.y * 0.12))) / (uViewport * vec2(0.55, 0.5));
-  float scrim = 0.42 * (1.0 - smoothstep(0.0, 1.0, length(scrimUv)));
-  vec3 scrimColor = vec3(0.016, 0.157, 0.204);
+  vec2 scrimUv = (scrimPos - (uTiltCenter - vec2(0.0, uViewport.y * 0.12))) / (uViewport * vec2(0.55, 0.58));
+  float scrim = uScrimOpacity * (1.0 - smoothstep(0.15, 1.0, length(scrimUv)));
 
   float alpha = color.a + scrim * (1.0 - color.a);
   if (alpha < 0.002) discard;
-  vec3 rgb = (color.rgb * color.a + scrimColor * scrim * (1.0 - color.a)) / alpha;
+  vec3 rgb = (color.rgb * color.a + uScrimColor * scrim * (1.0 - color.a)) / alpha;
   gl_FragColor = vec4(rgb, alpha * uOpacity);
   #include <colorspace_fragment>
 }
